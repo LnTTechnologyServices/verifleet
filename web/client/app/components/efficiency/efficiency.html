@@ -19,9 +19,26 @@
             <div flex-xs="100" flex="50" style="border: 1px solid gainsboro;">
                 <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height:40px;">
                     <div class="md-toolbar-tools">
-                    <h2>Distance to Empty</h2>
+                    <h2>Last Trip</h2>
                     </div>
                 </md-toolbar>
+
+            <center>
+                <div class="alert alert-info" style="margin-top:5px;" flex="95">
+                    <p>Engine Hours :<b>9:30</b></p>
+                </div>
+                 <div class="alert alert-info" style="margin-top:5px;" flex="95">
+                    <p>Miles Driven <b>12</b> </p>
+                </div>
+                 <div class="alert alert-info" style="margin-top:5px;" flex="95">
+                    <p>Fault Code <b>1</b> </p>                    
+                </div>
+                 <div class="alert alert-info" style="margin-top:5px;" flex="95">
+                    <p>Total Gas used  <b>34 Gallons</b> </p>                    
+                </div>
+            </center>
+
+
                 </div>
         </div>        
         <div flex="100" lex-xs="100" style="border: 1px solid gainsboro;">
@@ -48,6 +65,42 @@
                 </span>
                 <barline-chart layout-fill data="vm.milesGallonsData" title="barChart"></barline-chart>
             </div>
+             <div flex="100" style="margin-top: 5px;border: 1px solid gainsboro;">
+                    <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 50px;">
+                        <div class="md-toolbar-tools">
+                            <h2>Site View</h2>
+                        </div>
+                    </md-toolbar>
+                    <br>
+
+                    <div layout="column" style="float:right;">
+                        <md-select placeholder="Vehicle Id" ng-model="vm.vehicle" ng-change="vm.onVehicleChange()">
+                            <md-option ng-repeat="vehicle in vm.vehicleList" value="{{vehicle}}">
+                                {{vehicle}}
+                            </md-option>
+                        </md-select>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div layout="column" style="float:right;">
+                        <md-select placeholder="DGE" ng-model="vm.dge" ng-change="vm.onDgeChange()">
+                            <md-option ng-repeat="dge in vm.dgeList" value="{{dge}}">
+                                {{dge}}
+                            </md-option>
+                        </md-select>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div layout="column" style="float:right;">
+                        <md-select placeholder="Last Week" ng-model="vm.time" ng-change="vm.onTimeChange()">
+                            <md-option ng-repeat="time in vm.timeList" value="{{time}}">
+                                {{time}}
+                            </md-option>
+                        </md-select>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    </span>
+                    <br>
+                    <basic-line-chart data="vm.lineChartData"></basic-line-chart>
+                </div>
   </md-card-content>
 </md-card>
 

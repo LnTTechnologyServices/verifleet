@@ -95,7 +95,7 @@ class FuelChartController {
         rotation: 'auto'
       },
       title: {
-        text: 'km/h'
+        text: 'Fuel Guage'
       },
       plotBands: [{
         from: 0,
@@ -116,7 +116,7 @@ class FuelChartController {
       name: 'Speed',
       data: [this.data.value],
       tooltip: {
-        valueSuffix: ' km/h'
+        valueSuffix: 'Fuel Guage'
       }
     }],
     func: function(chart) {
@@ -133,13 +133,13 @@ class FuelChartController {
         this.config.series.data =  changes.data.currentValue.value;
     }
 
-    if(changes.data.currentValue.max) {
-        this.config.yAxis.min =  changes.data.currentValue.min;
-    }    
+    // if(changes.data.currentValue.max) {
+    //     this.config.yAxis.max =  changes.data.currentValue.max;
+    // }    
 
-    if(changes.data.currentValue.min) {
-        this.config.yAxis.max  =  changes.data.currentValue.max;
-    }
+    // if(changes.data.currentValue.min) {
+    //     this.config.yAxis.min  =  changes.data.currentValue.min;
+    // }
 
   } 
 

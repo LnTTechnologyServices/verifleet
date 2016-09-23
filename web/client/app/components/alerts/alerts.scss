@@ -4,4 +4,42 @@ alerts {
       margin-right: 5px;
     }
 
+
+.groupX {
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 3px 15px 3px 15px;
+    color: white;
+    background-color: #007095;
+    border-color: #007095;
+    text-transform: none;
+    font-weight: 400;
+    min-width:100px;
+}
+
+.md-button.left {
+    border-radius: 10px 0 0 10px;
+    border-left: 1px solid;
+    border-color: rgba(255, 255, 255, 0.5);
+
+}
+
+.md-button.middle {
+    border-radius: 0;
+    border-left: 1px solid rgba(230, 230, 230, 0.96);
+    border-right: 1px solid rgba(230, 230, 230, 0.96);
+}
+
+.md-button.right {
+    border-radius: 0 10px 10px 0;
+}
+
+#category .md-button:not([disabled]):hover {
+    background-color: salmon;
+    color: brown;
+    transition: 0.3s;
+
+}
+
+
 }

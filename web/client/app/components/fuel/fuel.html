@@ -128,10 +128,19 @@
             </md-toolbar>
                 <div  layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" style="padding-right: 5px;">
                     <div flex="100" flex-xs="100">
-                    <section layout="row" layout-align="end end">
+                    <section layout="row" layout-align="end end" style="margin-top: 5px;margin-bottom: 5px;">
+
+                        <div flex-gt-xs>
+                            <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+                        </div>
+                        <div flex-gt-xs>
+                            <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
+                        </div>
+                        
+                        <!--
                         <md-button  ng-class="{active: vm.paramsGU == 'GUlasWeek' }" ng-click="vm.filtersValue('lasWeek')" class="groupX left">Last Week</md-button>
                         <md-button ng-class="{active: vm.paramsGU == 'GUcurWeek' }"  ng-click="vm.filtersValue('preWeek')" class="groupX middle">Present Week</md-button>
-                        <md-button ng-class="{active: vm.paramsGU == 'GUmonthly' }" ng-click="vm.filtersValue('monthly')" class="groupX right">Monthly</md-button>
+                        <md-button ng-class="{active: vm.paramsGU == 'GUmonthly' }" ng-click="vm.filtersValue('monthly')" class="groupX right">Monthly</md-button>-->
                     </section>
                     </div>
                 </div>
@@ -153,19 +162,19 @@
             </div>
      </div>
 
- <div style="margin-top: 5px;" layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
-
-            <div flex-xs="100" flex="50" style="border: 1px solid gainsboro;">
+    <div style="margin-top: 5px;" layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
+            <div flex-xs="100" flex="100" style="border: 1px solid gainsboro;">
                 <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 40px;">
                     <div style="min-height: 40px;" class="md-toolbar-tools">
                     <h2>Vehicle Details</h2>
                     </div>
                 </md-toolbar>
-
-                <md-input-container class="md-icon-float">
+                <md-input-container class="md-icon-float" style="height: 34px;margin-top:17px;width:100%;">
                     <label>Global Search</label>
                  <md-icon style="font-size: 28px;margin: -2px;" md-font-icon="icon-search"></md-icon>
                 <input style="padding-left: 33px;" ng-model="searchFish" id="sInput" ng-change="filterCartoList(searchInput)" my-enter="filterCartoList(searchInput)" />
+                 </md-input-container>
+
                 <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -194,8 +203,9 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <tr ng-repeat="roll in vm.sushi | orderBy:vm.sortType:vm.sortReverse | filter:searchFish">
-                    <td>{{ roll.name }}</td>
+                    <td><a ui-sref="efficiency({vechicle_id: 'M-675'})">{{ roll.name }}</a></td>
                     <td>{{ roll.fish }}</td>
                     <td>{{ roll.tastiness }}  <md-icon style="font-size: 35px;" title="Click to check" md-font-icon="icon-location"></md-icon>  </td>
                     </tr>
@@ -204,8 +214,8 @@
                 <center>
                       <div ng-if="(vm.sushi | filter:searchFish).length == 0">No Vehicle to Display</div>
                 </center>    
-            </div>
-            <div flex-xs="100" flex="50" style="margin-left:2px;border: 1px solid gainsboro;">
+                </div>
+            <!--<div flex-xs="100" flex="50" style="margin-left:2px;border: 1px solid gainsboro;">
             <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 40px;">
                 <div style="min-height: 40px;" class="md-toolbar-tools">
                 <h2>Map</h2>
@@ -214,5 +224,5 @@
                 <div>
                       <img style="width: 100%;" src="{{vm.headerUrl}}">
                     </div>
-            </div>
+            </div>-->
      </div>

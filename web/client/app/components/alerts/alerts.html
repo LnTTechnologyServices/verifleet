@@ -2,61 +2,22 @@
     <md-card-content>
         <div layout-align="end start" layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" flex="70">
         </div>
+
+                <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
+            <div flex-xs="100" flex="100">
+                <div flex="100" id="category">
+                    <section flex-xs="100" flex="100" layout="row" layout-align="center center">
+                    <md-button style="background-color: salmon;" class="groupX left">Engine Alerts</md-button>
+                    <md-button class="groupX right">Schedule Maintenance </md-button>
+                    </section>
+                </div>
+            </div>
+                </div>            
+
+
+
         <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
             <div flex-xs="100" flex="100">
-                <div flex="100" style="border: 1px solid gainsboro;">
-                    <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 50px;">
-                        <div class="md-toolbar-tools">
-                            <h2>Summary</h2>
-                        </div>
-                    </md-toolbar>
-                    <div layout="column" style="float:right;">
-                        <md-select ng-model="vm.summary" ng-change="vm.onSummaryChange()">
-                            <md-option ng-repeat="summary in vm.summaryList" value="{{summary}}">
-                                {{summary}}
-                            </md-option>
-                        </md-select>
-                    </div>
-                    </span>
-                    <br>
-                    <stacked-column-chart layout-fill data="vm.stackedChartdata"></stacked-column-chart>
-                </div>
-                <div flex="100" style="margin-top: 5px;border: 1px solid gainsboro;">
-                    <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 50px;">
-                        <div class="md-toolbar-tools">
-                            <h2>Site View</h2>
-                        </div>
-                    </md-toolbar>
-                    <br>
-
-                    <div layout="column" style="float:right;">
-                        <md-select placeholder="Vehicle Id" ng-model="vm.vehicle" ng-change="vm.onVehicleChange()">
-                            <md-option ng-repeat="vehicle in vm.vehicleList" value="{{vehicle}}">
-                                {{vehicle}}
-                            </md-option>
-                        </md-select>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;
-                    <div layout="column" style="float:right;">
-                        <md-select placeholder="DGE" ng-model="vm.dge" ng-change="vm.onDgeChange()">
-                            <md-option ng-repeat="dge in vm.dgeList" value="{{dge}}">
-                                {{dge}}
-                            </md-option>
-                        </md-select>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;
-                    <div layout="column" style="float:right;">
-                        <md-select placeholder="Last Week" ng-model="vm.time" ng-change="vm.onTimeChange()">
-                            <md-option ng-repeat="time in vm.timeList" value="{{time}}">
-                                {{time}}
-                            </md-option>
-                        </md-select>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;
-                    </span>
-                    <br>
-                    <basic-line-chart data="vm.lineChartData"></basic-line-chart>
-                </div>
                 <div flex="100" style="margin-top: 5px;border: 1px solid gainsboro;">
                     <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 50px;">
                         <div class="md-toolbar-tools">
@@ -73,8 +34,6 @@
                             <p>No items to display.</p>
                         </div>
                     </md-list>
-                    
-
                  <md-list>
                     <div ng-repeat="item in vm.filteredActivityAlarmItems | orderBy: '-timestamp'">
                         <alarm-list-item ng-if="item.type === 'alarm'" alarm="item"></alarm-list-item>
@@ -85,9 +44,6 @@
                         <p>No items match your search.</p>
                     </div>
                 </md-list>
-
-
-
                 </div>
             </div>
     </md-card-content>

@@ -13,7 +13,7 @@ let efficiencyModule = angular.module('efficiency', [
   $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('efficiency', {
-      url: '/efficiency',
+      url: '/efficiency/:vechicle_id',
       template: '<efficiencyfile></efficiencyfile>',
       data: { requiresLogin: true }
     });

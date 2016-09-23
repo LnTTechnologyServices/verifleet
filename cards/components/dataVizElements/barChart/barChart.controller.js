@@ -6,7 +6,7 @@ class BarChartController {
     this.$scope = $scope
     this.config = {
        options: {
-chart: {
+            chart: {
                 renderTo: 'container',
                 defaultSeriesType: 'bar',
                 plotBorderWidth: 2,
@@ -50,7 +50,7 @@ chart: {
             },
             plotOptions: {},
        },
-                   series: [{
+            series: [{
                 borderColor: '#7070B8',
                 borderRadius: 3,
                 borderWidth: 1,
@@ -70,15 +70,12 @@ chart: {
                 },
                 pointWidth: 50,
                 data: [this.data.value]}],
-
-                 func: function(chart) {
+                func: function(chart) {
                         $timeout(function() {
                             chart.reflow();
-            },10);
+                },10);
         }
-    
-    
-}
+    }
 }
 
 $onChanges(changes) {
