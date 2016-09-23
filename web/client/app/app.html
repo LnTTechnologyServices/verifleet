@@ -5,8 +5,8 @@ that would be done in this file
 
 <div layout="column" layout-fill ng-class="{'login': vm.isLogin}">
 <header ng-if="vm.authenticated"></header>
-<section layout="row" ng-style="{'margin-top': vm.marginTop, 'height': vm.isMap ? '100%' : ''}">
-  <navbar layout ng-if="vm.authenticated" flex-gt-md="10"></navbar>
+<section layout="row" ng-style="{'margin-top': vm.marginTop, 'height': vm.isMap ? '100%' : ''}" flex style="margin-top: 70px;">
+  <navbar layout ng-if="vm.authenticated" flex-gt-md="6"></navbar>
   <md-content
     class="container"
     ui-view
@@ -14,7 +14,7 @@ that would be done in this file
     noanimation="true"
     layout-fill
     flex
-    flex-gt-md="{{ vm.isMap ? 100 : 80 }}"
+    flex-gt-md="{{100}}"
     flex-offset-gt-md="{{ vm.offsetGtMd }}">
   </md-content>
 </section>

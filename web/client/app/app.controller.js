@@ -8,7 +8,7 @@ class AppController {
   constructor($ngRedux, $state, $rootScope) {
     "ngInject";
     this.authenticated = false
-    this.marginTop = '100px';
+    this.marginTop = '70px';
 
     $rootScope.$on("$stateChangeStart", (event, toState) => {
       console.log("State: ", toState.name);
@@ -25,14 +25,14 @@ class AppController {
 
   setAuthedMargin() {
     if(this.isMap) {
-      this.marginTop = '65px'
+      this.marginTop = '70px'
       this.offsetGtMd = 0
     } else if(this.isLogin) {
       this.marginTop = "0px"
-      this.offsetGtMd = 10
+      this.offsetGtMd = 0
     } else {
-      this.marginTop = '100px'
-      this.offsetGtMd = 5
+      this.marginTop = '70px'
+      this.offsetGtMd = 0
     }
   }
 

@@ -1,4 +1,4 @@
-<md-sidenav class="md-sidenav-left md-whiteframe-z2 sidebar-max-width parkerSideNav" style="position: fixed" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" layout-fill>
+<md-sidenav class="md-sidenav-left md-whiteframe-z2 sidebar-md-width parkerSideNav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" layout-fill>
   <md-content class="parker-slate" flex layout="column" layout-align="space-between stretch">
     <div layout="column" layout-align="start">
         <md-button ui-sref="fuel" ui-sref-active="{'active-controller': 'controller','active':'fuel','active-gateway':'gateway'}">
@@ -22,11 +22,13 @@
         </a>
       </md-button>
       
-      <md-button ng-click="vm.logout()">
+    </div>
+      <div layout="column" layout-align="start">
+              <md-button ng-click="vm.logout()">
         <a class="sidebar-font" layout="column" layout-align="center center">
           <span>Logout</span>
         </a>
       </md-button>
-    </div>
+        </div>
   </md-content>
 </md-sidenav>
