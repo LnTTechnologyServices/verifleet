@@ -1,0 +1,19 @@
+<ion-item ng-click="vm.user.onClick()" ng-class="{
+		'item-icon-left': vm.user.icon,
+		'item-icon-right': vm.user.onClick,
+	}">
+  <list-item-status status="vm.user.status"></list-item-status>
+  <i ng-if="vm.user.icon" ng-class="vm.user.icon" class="icon"></i>
+  <div class="item-note text-right">
+    <p ng-if="vm.user.lastReported && !vm.user.sideText">last reported</p>
+    <p ng-if="vm.user.lastReported && !vm.user.sideText">{{ vm.user.lastReported }}</p>
+    <p ng-if="vm.user.sideText">{{ vm.user.sideText }}</p>
+  </div>
+  <div>
+    <h3><b>{{ vm.user.title }}</b></h3>
+    <h4>{{ vm.user.subtitle }}</h4>
+    <p>{{ vm.user.description }}</p>
+  </div>
+  <i ng-if="vm.user.onClick" class="icon ion-android-more-vertical"></i>
+</ion-item>
+

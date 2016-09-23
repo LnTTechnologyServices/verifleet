@@ -1,0 +1,15 @@
+<ion-item ng-click="vm.alarm.onClick()" ng-class="{
+		'item-icon-left': vm.alarm.icon,
+		'item-icon-right': vm.alarm.onClick,
+	}">
+  <list-item-status status="vm.alarm.status"></list-item-status>
+  <i ng-if="vm.alarm.icon" ng-class="vm.alarm.icon" class="icon"></i>
+  <div class="item-note text-right" am-time-ago="vm.alarm.timestamp"></div>
+  <div>
+    <h3><b>{{ vm.alarm.title }}</b></h3>
+    <h4>{{ vm.alarm.subtitle }}</h4>
+    <p>{{ vm.alarm.description }}</p>
+  </div>
+  <i ng-if="vm.alarm.onClick" class="icon ion-ios-arrow-right"></i>
+</ion-item>
+

@@ -1,0 +1,13 @@
+<md-menu>
+  <md-button aria-label="More Options" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+    <ng-md-icon md-menu-origin icon="more_vert" class="md-secondary"></ng-md-icon>
+  </md-button>
+  <md-menu-content width="4">
+    <md-menu-item ng-repeat="option in vm.options">
+      <md-button ng-click="option.onClick()">
+        <ng-md-icon ng-if="option.icon" icon="{{option.icon}}" md-menu-align-target></ng-md-icon>
+        {{option.text}}
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+</md-menu>

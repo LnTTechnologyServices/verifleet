@@ -1,0 +1,277 @@
+$gold: #FFB91D;
+$black: #424242;
+$white: #FFFFFF;
+$gray: #F1F5F8;
+$red: #D11515;
+$gap: 15px;
+
+@font-face {
+  font-family: 'DINOT-Bold';
+  src: url(/font/DINOT-Bold.otf);
+}
+
+#a0-lock.a0-theme-parker {
+  display: none;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .a0-overlay.a0-active {
+    background: rgba(0, 0, 0, .5);
+  }
+
+  .a0-panel {
+    position: relative;
+    width: $gap * 20;
+    background: #001342 url(/img/login-background.png);
+    background-size: cover;
+    border-radius: 3px;
+    color: $white;
+  }
+
+  .a0-mode-container {
+    position: relative;
+    padding-bottom: $gap * 7;
+  }
+
+  .a0-image {
+    text-align: center;
+
+    img {
+      margin-top: $gap * 2;
+      width: 50%;
+    }
+  }
+
+  .a0-icon-container {
+    margin-bottom: $gap * 3;
+
+    img {
+      width: 60%;
+    }
+  }
+
+  .a0-body-content {
+    padding: $gap * 2;
+
+    > div:first-child {
+      position: absolute;
+      left: $gap * 2;
+      bottom: $gap * 2;
+
+      a span {
+        &:first-child ,
+        &.a0-active {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .a0-options .a0-switch {
+    &:before {
+      content: 'BACK';
+    }
+  }
+
+  .a0-icon-container h1 {
+    display: none;
+  }
+
+  .a0-inputs {
+    label {
+      display: none;
+    }
+  }
+
+  .a0-input-box {
+    position: relative;
+    margin-bottom: $gap * 2;
+
+    i {
+      position: absolute;
+      right: 0;
+    }
+
+    img {
+      height: 32px;
+      vertical-align: middle;
+      display: none;
+    }
+
+    input {
+      font-size: 14px;
+      width: 100%;
+      padding: .5em;
+      box-sizing: border-box;
+      border: 1px solid $gray;
+
+      &:focus {
+        border-color: $gold;
+      }
+    }
+
+    &.a0-error-input {
+      img {
+        display: block;
+      }
+
+      input {
+        border-color: $red;
+      }
+    }
+  }
+
+  .a0-password .a0-input-box {
+    margin-bottom: 0;
+  }
+
+  .a0-inputs-wrapper {
+    position: relative;
+  }
+
+  .a0-password_policy ul {
+    position: absolute;
+    top: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: $red;
+  }
+
+  .a0-action {
+    text-align: center;
+
+    button {
+      background: $gold !important;
+      color: $black;
+      position: relative;
+      border-radius: 17.5px;
+      font-family: 'DINOT-Bold';
+      font-size: 14px;
+      text-transform: uppercase;
+      padding: 0 15px;
+      line-height: 35px;
+      min-width: 7em;
+      width: auto !important;
+    }
+  }
+
+  .a0-forgot-pass {
+    position: absolute;
+    right: $gap * 2;
+    bottom: $gap * 2;
+  }
+
+  .a0-instructions ,
+  .a0-separator {
+    text-align: center;
+    margin: $gap 0;
+  }
+
+  .a0-back {
+    &:after {
+      content: 'BACK';
+    }
+
+    svg {
+      display: none;
+    }
+  }
+
+  .a0-last-time {
+    display: block;
+    margin-bottom: $gap;
+  }
+
+  .a0-all {
+    display: block;
+    margin-top: $gap * 6;
+    text-align: center;
+  }
+
+  .a0-spin-message {
+    display: block;
+    margin: auto;
+
+    span {
+      color: $white;
+    }
+  }
+
+  .a0-zocial {
+    text-align: left;
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+    position: relative;
+    display: block;
+    border-radius: 3px;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    transition: opacity .2s ease;
+
+    &:before {
+      font: 14px zocial;
+      font-weight: 400;
+      float: left;
+      display: inline-block;
+      line-height: 40px;
+      width: 16%;
+      cursor: pointer;
+      text-align: center;
+      background: rgba(0,0,0,.3);
+      transition: all .2s ease;
+      text-rendering: auto;
+    }
+
+    &.a0-googleplus {
+      background-color: $gold;
+
+      &:before {
+        content: '+';
+      }
+    }
+
+    &.a0-icon {
+      width: auto;
+      display: inline-block;
+      margin: 5px;
+
+      &:before {
+        width: 40px;
+        background-color: transparent;
+      }
+
+    }
+
+    span {
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: .3px;
+      line-height: 40px;
+      display: inline-block;
+      padding-left: 4%;
+      width: 86%;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #a0-lock.a0-theme-parker {
+    .a0-overlay.a0-active {
+      background: #001342 url(/img/login-background.png);
+      background-size: cover;
+    }
+
+    .a0-panel {
+      background: transparent;
+      width: auto;
+    }
+  }
+}

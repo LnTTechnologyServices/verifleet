@@ -1,0 +1,35 @@
+<md-card>
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Device List</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <md-list>
+      <div ng-repeat="device in vm.deviceListItems">
+        <device-list-item data-qa="{{device.rid.substr(0,10)}}" device="device"></device-list-item>
+        <md-divider>
+      </div>
+    </md-list>
+  </md-card-content>
+</md-card>
+
+<md-card ng-if="vm.activityAlarmItems">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Logs</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <md-list>
+      <div ng-repeat="item in vm.activityAlarmItems | orderBy: '-timestamp' | limitTo: 6">
+        <alarm-list-item data-qa="{{ item.did.substr(0,10) + '_alarm_'+item.timestamp }}" ng-if="item.type === 'alarm'" alarm="item"></alarm-list-item>
+        <activity-list-item data-qa="{{ item.did.substr(0,10) + '_activity_'+item.timestamp }}" ng-if="item.type === 'activity'" activity="item"></activity-list-item>
+        <md-divider>
+      </div>
+    </md-list>
+  </md-card-content>
+  <md-card-actions layout="row" layout-align="end center" class="layout-align-end-center layout-row">
+    <button class="md-raised md-button md-ink-ripple" type="button" ui-sref="logs" aria-label="Logs"><span class="ng-scope">Go to Logs</span><div class="md-ripple-container"></div></button>
+  </md-card-actions>
+</md-card>

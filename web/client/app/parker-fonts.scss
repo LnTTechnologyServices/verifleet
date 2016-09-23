@@ -1,0 +1,49 @@
+@font-face {
+  font-family: DINOTL;
+  src: url(require('../font/DINOT-Light.otf'));
+  font-weight: light;
+}
+@font-face {
+  font-family: DINOT;
+  src: url(require('../font/DINOT-Bold.otf'));
+  font-weight: bold;
+}
+@font-face {
+  font-family: DINOT;
+  src: url(require('../font/DINOT-Regular.otf'));
+}
+
+$font-white: white;
+$font-black: #424242;
+$font-dinot: 'DINOT','Oxygen',Arial,sans-serif;
+$font-sans: Arial,sans-serif;
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+body{
+	color: $font-black;
+}
+h1{
+	font-family:  $font-dinot;
+	font-weight: 100;
+	font-size: 4em !important;
+	margin: .67em 0 .335em .335em !important;
+	text-transform: capitalize;
+}
+h2, .md-headline{
+	font-weight: 600;
+	font-family:  $font-dinot;
+    text-transform: uppercase!important;
+}
+h3{
+	font-family:  $font-dinot;
+}
+text.highcharts-subtitle{
+	font-family: $font-sans;
+	font-size: small;
+	@include opacity(0.8);
+}

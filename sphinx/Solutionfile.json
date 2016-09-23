@@ -1,0 +1,24 @@
+{
+  "default_page": "index.html",
+  "file_dir": "dist",
+  "custom_api": "api/api.lua",
+  "modules": {
+    "auth": "modules/auth.lua",
+    "common": "modules/common.lua",
+    "device": "modules/device.lua",
+    "debug": "modules/debug.lua",
+    "websocket": "modules/websocket.lua",
+    "user": "modules/user.lua",
+    "tsq": "modules/TSQ/tsq.lua",
+    "tsw": "modules/TSQ/tsw.lua",
+    "product": "modules/product.lua"
+  },
+  "event_handler": {
+    "device": {
+      "datapoint": "event_handler/product.lua"
+    },
+    "timer": {
+      "timer": "event_handler/timer.lua"
+    }
+  }
+}

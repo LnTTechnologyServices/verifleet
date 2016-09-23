@@ -1,0 +1,19 @@
+<h1 flex-offset-gt-md="0" flex-offset="5">Users</h1>
+
+<md-card ng-if="vm.users">
+  <md-card-title>
+    <md-card-title-text>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <md-list>
+      <div ng-repeat="user in vm.users">
+        <user-list-item user="user"></user-list-item>
+        <md-divider >
+      </div>
+    </md-list>
+  </md-card-content>
+</md-card>
+<div ng-if="!vm.users || vm.users.length === 0">
+  <p>No users to display.</p>
+</div>

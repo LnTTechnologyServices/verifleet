@@ -1,0 +1,56 @@
+<md-sidenav layout ng-if="auth.isAuthenticated" class="md-sidenav-left md-whiteframe-z2 parker-slate" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+  <md-content flex layout="column" layout-align="space-between stretch" class="parker-slate">
+    <div layout="column" layout-align="start">
+      <md-button ui-sref="map" ui-sref-active="active">
+        <a class="sidebar-font" layout="column" layout-align="center center">
+          <ng-md-icon class="sidebar-icon" icon="search" aria-label="Lookup"></ng-md-icon>
+          <span>Lookup</span>
+        </a>
+      </md-button>
+
+      <md-button ui-sref="home" ui-sref-active="{'active-controller': 'controller','active':'home','active-gateway':'gateway'}">
+        <a class="sidebar-font" layout="column" layout-align="center center">
+          <ng-md-icon class="sidebar-icon" icon="storage" aria-label="Home"></ng-md-icon>
+          <span>Browse</span>
+        </a>
+      </md-button>
+
+      <md-button ui-sref="trends" ui-sref-active="active">
+        <a class="sidebar-font" layout="column" layout-align="center center">
+          <i class="parker-icon sidebar-icon trends" aria-label="Trends"></i>
+          <span>Trends</span>
+        </a>
+      </md-button>
+
+      <md-button ui-sref="logs" ui-sref-active="active">
+        <a class="sidebar-font" layout="column" layout-align="center center">
+          <i class="parker-icon sidebar-icon log" aria-label="Logs"></i>
+          <span>Logs</span>
+        </a>
+      </md-button>
+
+      <md-button ui-sref="reports" ui-sref-active="active">
+        <a class="sidebar-font" layout="column" layout-align="center center">
+          <i class="parker-icon sidebar-icon download" aria-label="Reports"></i>
+          <span>Reports</span>
+        </a>
+      </md-button>
+
+    </div>
+    <div layout="column" layout-align="start">
+      <md-button ui-sref="myaccount" ui-sref-active="active">
+        <a class="sidebar-font" layout="column" layout-align="center center">
+          <i class="parker-icon sidebar-icon user" aria-label="Account"></i>
+          <span>Account</span>
+        </a>
+      </md-button>
+      <md-button ng-click="logout()">
+        <a class="sidebar-font" layout="column" layout-align="center center">
+          <md-icon class="sidebar-icon" md-svg-src="/styles/images/icons/logout.svg" aria-label="Logout"></md-icon>
+          <span>Logout</span>
+        </a>
+      </md-button>
+    </div>
+  </md-content>
+</md-sidenav>
+

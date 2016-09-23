@@ -1,0 +1,35 @@
+body, html {
+	height: 100%;
+	width: 100%;
+}
+.full-height {
+  height: 100%;
+}
+
+.md-button.md-raised {
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-o-border-radius: 20px;
+	background-color: #ffb91d;
+	color:#424242;
+	font-weight: bold;
+	font-variant: uppercase;
+	letter-spacing: 0.05em;
+	font-size: 0.87em;
+	margin: 5px 15px 15px !important;
+	padding: 0 16px;
+}
+.md-button.md-raised:not([disabled]):hover{
+	background-color: #FFCD40;
+}
+md-card-title{
+	padding: 16px !important;
+}
+
+md-divider {
+	background-color: #DFDFDF
+}
+
+
+@import 'auth0'

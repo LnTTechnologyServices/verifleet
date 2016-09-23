@@ -1,0 +1,24 @@
+<div class="card">
+  <ion-item class="cardtitle">
+    fleet health
+  </ion-item>
+  <ion-item style="height:390px;background-image:url('img/fleet_health_bg.svg') !important; background-position:bottom; background-repeat: no-repeat">
+    <parker-pie data="vm.fleet"></parker-pie>
+    <section class="info section ">
+      <div class="text-center fleet-text" ng-class="{'fleet-green': vm.fleetType == 'Healthy', 'fleet-red': vm.fleetType == 'Alarm'}">{{vm.fleetCount}} Case<span ng-if="vm.fleetCount != 1">s</span><br /><br />{{vm.fleetCount != 1 ? 'are' : 'is'}} {{vm.fleetType}}</div>
+      <button ng-click="goTo()" class="button button-gold">view</button>
+    </section>
+    <section class="total text-center">
+      <h1>{{vm.fleet.total}}</h1>
+      <div>Device{{vm.fleet.total == 1 ? '' : 's'}}</div>
+      <div>Registered</div>
+    </section>
+    <section class="connection text-center">
+      <h1>{{vm.fleet.active_gateways}}</h1>
+      <div>Gateway{{vm.fleet.active_gateways == 1 ? '' : 's'}}</div>
+      <div>Reporting</div>
+    </section>
+  </ion-item>
+  <info-tooltip ng-show="false" src="templates/info-fleet.html"></info-tooltip>
+</div>
+

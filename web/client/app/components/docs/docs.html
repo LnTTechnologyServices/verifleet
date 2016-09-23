@@ -1,0 +1,93 @@
+<div>
+  <h2>Listing Items</h2>
+
+  <div>
+    <h3>Device List Item</h3>
+    <device-list-item device="vm.device"></device-list-item>
+  </div>
+
+  <div>
+    <h3>Activity List Item</h3>
+    <activity-list-item activity="vm.activity"></activity-list-item>
+  </div>
+
+  <div>
+    <h3>Alarm List Item</h3>
+    <alarm-list-item alarm="vm.alarm"></alarm-list-item>
+  </div>
+
+  <div>
+    <h3>User List Item</h3>
+    <user-list-item user="vm.user"></user-list-item>
+  </div>
+</div>
+
+<div style="margin-top:50px">
+  <h2>Data Visualization</h2>
+
+  <div ng-if="vm.datatable">
+    <h3>Web Data Table</h3>
+    <div layout-fill>
+      <exo-table title="vm.table.title" rows="vm.table.rows" rowsColorFn="vm.table.rowColorFn"></exo-table>
+    </div>
+    <md-divider>
+  </div>
+
+  <div ng-if="vm.bignumbers">
+    <h3>Big Number</h3>
+    <div layout="row" layout-align="space-between">
+      <big-number
+        ng-repeat="number in vm.bigNumbers"
+        title="Viscosity"
+        unit="%"
+        value="number.value"></big-number>
+    </div>
+    <md-divider>
+  </div>
+
+  <div ng-if="vm.bigicons">
+    <h3>Big Icon</h3>
+    <div layout="row" layout-align="space-between" flex="50" flex-offset="25">
+      <big-icon ng-repeat="icon in vm.icon_list" icon="icon" state="vm.state" coloron="vm.oncolor" coloroff="vm.oncolor"></big-icon>
+    </div>
+    <md-divider>
+  </div>
+
+  <div ng-if="vm.moons">
+    <h3>Moon Gauge</h3>
+    <div layout="row">
+      <moon-gauge layout-fill flex="33" ng-repeat="moon in vm.moons"
+        value="moon.value"
+        text="moon.text"
+        unit="moon.unit"
+        decimals="moon.decimals">
+      </moon-gauge>
+    </div>
+    <md-divider>
+  </div>
+
+    <div ng-if="vm.moons">
+    <h3>Moon Gauge</h3>
+    <div layout="row">
+       <bar-chart flex="100" layout-fill data="vm.barData" title="barChart"></bar-chart>
+       
+    </div>
+    <md-divider>
+  </div>
+
+  <div ng-if="vm.linechart">
+    <h3>Line Chart (static data, custom color)</h3>
+    <line-chart layout-fill data="vm.lineDataStatic"></line-chart>
+    <h3>Line Chart (dynamic data, default colors)</h3>
+    <line-chart layout-fill data="vm.lineDataDynamic"></line-chart>
+
+    <md-divider>
+
+  </div>
+
+  <div ng-if="vm.fleetHealth">
+    <h2>Fleet Health</h2>
+    <fleet-health flex="100" layout-fill data="vm.fleetHealthData" on-view-data="vm.viewData(status)" warning-label="Look-out" normal-label="All Good" alarm-label="Uh-Oh"></fleet-health>
+    <md-divider>
+
+</div>

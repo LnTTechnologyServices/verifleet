@@ -1,0 +1,24 @@
+<h1 flex-offset-gt-md="0" flex-offset="5">Logs</h1>
+<md-card ng-if="vm.activityAlarmItems">
+    <md-card-title>
+        <md-card-title-text>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <md-input-container class="md-icon-float md-icon-right md-block md-primary" flex-offset-gt-md="75">
+            <label>Search</label>
+            <input name="Search" ng-model="vm.search" ng-change="vm.updateResults()">
+            <md-icon md-font-icon="icon icon-search"></md-icon>
+        </md-input-container>
+        <md-list>
+            <div ng-repeat="item in vm.filteredActivityAlarmItems | orderBy: '-timestamp'">
+                <alarm-list-item ng-if="item.type === 'alarm'" alarm="item"></alarm-list-item>
+                <activity-list-item ng-if="item.type === 'activity'" activity="item"></activity-list-item>
+                <md-divider ng-if="item.type === 'alarm' || item.type === 'activity'">
+            </div>
+            <div ng-if="!vm.filteredActivityAlarmItems.length && vm.search !== ''">
+                <p>No items match your search.</p>
+            </div>
+        </md-list>
+    </md-card-content>
+</md-card>

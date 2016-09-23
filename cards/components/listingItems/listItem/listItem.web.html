@@ -1,0 +1,30 @@
+<md-list-item class="md-2-line list-item-component" ng-click="vm.item.onClick()" layout="row">
+  <list-item-status status="vm.item.status"></list-item-status>
+  <ng-md-icon ng-if="vm.item.icon" class="list-item-component-icon" icon="{{vm.item.icon}}" size="40"></ng-md-icon>
+  <div class="md-list-item-text list-item-component-text"
+       layout-gt-md="row"
+       layout-align-gt-md="start start">
+    <h3 class="md-headline" flex-gt-md="30"><b>{{ vm.item.title }}</b></h3>
+    <h4 class="md-subhead" flex-gt-md="30">{{ vm.item.subtitle }}</h4>
+    <p class="md-caption">{{ vm.item.description }}</p>
+  </div>
+  <div
+    class="md-list-item-text"
+    ng-class="(!vm.item.onClick && !vm.item.moreOptions) ? 'right-margin' : ''"
+    flex
+    layout-gt-md="row"
+    layout="column"
+    layout-align="end end">
+    <p ng-if="vm.item.timestamp && !vm.item.sideText" class="md-subhead">{{ vm.item.ts_text || 'last reported' }}</p>
+    <p ng-if="vm.item.timestamp && !vm.item.sideText" class="md-caption">&nbsp{{ vm.item.timestamp_formatted || vm.item.timestamp }}</p>
+    <p ng-if="vm.item.sideText" class="md-caption">{{ vm.item.sideText }}</p>
+  </div>
+  <div ng-if="vm.item.onClick || vm.item.moreOptions"
+       class="list-item-component-secondary-options" layout="row" layout-align="end end">
+    <ng-md-icon ng-if="vm.item.onClick && !vm.item.moreOptions"
+                icon="chevron_right"
+                class="md-secondary action-icon">
+     </ng-md-icon>
+     <more-options ng-if="vm.item.moreOptions" class="md-secondary"></more-options>
+   </div>
+</md-list-item>

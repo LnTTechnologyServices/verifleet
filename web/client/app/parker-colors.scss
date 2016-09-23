@@ -1,0 +1,26 @@
+$parker-yellow: #ffb91d;
+$parker-red: #c01a00;
+$parker-dark-blue: #001342;
+$parker-slate: #1b202d;
+$parker-ice: #F1F5F8;
+$font-white: white;
+
+body, md-content.md-default-theme, md-content, html {
+	background-color:  $parker-ice !important;
+}
+.parker-red {
+  background-color: $parker-red !important;
+}
+
+.parker-yellow {
+  background-color: $parker-yellow !important;
+}
+
+.parker-slate {
+  background-color: $parker-slate !important;
+  color: $font-white;
+}
+
+.parker-dark-blue {
+  background-color: $parker-dark-blue !important;
+}

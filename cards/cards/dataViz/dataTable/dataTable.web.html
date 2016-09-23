@@ -1,0 +1,13 @@
+<div layout-fill>
+  <h3 class="exo-table-title">{{ vm.title }}</h3>
+  <table class="exo-table" layout="column" flex>
+    <tr layout="row" class="table-header">
+      <td flex></td>
+      <td flex="20" ng-repeat="timestamp in vm.timestamps">{{ timestamp }}</td>
+    </tr>
+    <tr layout="row" class="exo-table-body" ng-repeat="parameter in vm.rows" ng-style="{'background-color': vm.rowColorFn(parameter.data)}">
+      <td ng-if="parameter.name" flex>{{parameter.name}}</td>
+      <td ng-if="parameter.name" flex="20" ng-repeat="value in parameter.data">{{ value.value }}</td>
+    </tr>
+  </table>
+</div>

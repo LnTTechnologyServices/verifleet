@@ -1,0 +1,9 @@
+
+node_modules
+*.swp
+*.swo
+.idea/
+*.iml
+.Solutionfile.secret
+sphinx/test/*.js
+sphinx/test/*.js.map

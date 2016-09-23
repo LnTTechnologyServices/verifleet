@@ -1,0 +1,14 @@
+<ion-item ng-click="vm.activity.onClick()" ng-class="{
+		'item-icon-left': vm.activity.icon,
+		'item-icon-right': vm.activity.onClick,
+	}">
+  <i ng-if="vm.activity.icon" ng-class="vm.activity.icon" class="icon"></i>
+  <div class="item-note text-right" am-time-ago="vm.activity.timestamp"></div>
+  <div>
+    <h3><b>{{ vm.activity.title }}</b></h3>
+    <h4>{{ vm.activity.subtitle }}</h4>
+    <p>{{ vm.activity.description }}</p>
+  </div>
+  <i ng-if="vm.activity.onClick" class="icon ion-ios-arrow-right"></i>
+</ion-item>
+

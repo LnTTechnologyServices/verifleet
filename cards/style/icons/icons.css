@@ -1,0 +1,324 @@
+@font-face {
+    font-family: 'Parker-Icons';
+    src:    url('fonts/Parker-Icons.eot');
+    src:    url('fonts/Parker-Icons.eot#iefix') format('embedded-opentype'),
+        url('fonts/Parker-Icons.ttf') format('truetype'),
+        url('fonts/Parker-Icons.woff') format('woff'),
+        url('fonts/Parker-Icons.svg#Parker-Icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'Parker-Icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ac-plugin-power:before {
+    content: "\e900";
+}
+.icon-account:before {
+    content: "\e901";
+}
+.icon-activity-logs:before {
+    content: "\e902";
+}
+.icon-battery-0:before {
+    content: "\e903";
+}
+.icon-battery-20:before {
+    content: "\e904";
+}
+.icon-battery-40:before {
+    content: "\e905";
+}
+.icon-battery-60:before {
+    content: "\e906";
+}
+.icon-battery-80:before {
+    content: "\e907";
+}
+.icon-battery-100:before {
+    content: "\e908";
+}
+.icon-calendar:before {
+    content: "\e909";
+}
+.icon-cancel:before {
+    content: "\e90a";
+}
+.icon-change-state-horizontal:before {
+    content: "\e90b";
+}
+.icon-change-state-vertical:before {
+    content: "\e90c";
+}
+.icon-check:before {
+    content: "\e90d";
+}
+.icon-clear-search:before {
+    content: "\e90e";
+}
+.icon-clients:before {
+    content: "\e90f";
+}
+.icon-clock:before {
+    content: "\e910";
+}
+.icon-device-case-cooler:before {
+    content: "\e911";
+}
+.icon-device:before {
+    content: "\e912";
+}
+.icon-disconnected:before {
+    content: "\e913";
+}
+.icon-down:before {
+    content: "\e914";
+}
+.icon-download-csv:before {
+    content: "\e915";
+}
+.icon-download:before {
+    content: "\e916";
+}
+.icon-edit:before {
+    content: "\e917";
+}
+.icon-enter-service-mode:before {
+    content: "\e918";
+}
+.icon-exit-service-mode:before {
+    content: "\e919";
+}
+.icon-expand:before {
+    content: "\e91a";
+}
+.icon-eye:before {
+    content: "\e91b";
+}
+.icon-fan:before {
+    content: "\e91c";
+}
+.icon-health:before {
+    content: "\e91d";
+}
+.icon-information:before {
+    content: "\e91e";
+}
+.icon-left:before {
+    content: "\e91f";
+}
+.icon-lightbulb:before {
+    content: "\e920";
+}
+.icon-list-menu:before {
+    content: "\e921";
+}
+.icon-location:before {
+    content: "\e922";
+}
+.icon-logout:before {
+    content: "\e923";
+}
+.icon-menu:before {
+    content: "\e924";
+}
+.icon-power:before {
+    content: "\e925";
+}
+.icon-qr-code-reader:before {
+    content: "\e926";
+}
+.icon-recent:before {
+    content: "\e927";
+}
+.icon-right:before {
+    content: "\e928";
+}
+.icon-running:before {
+    content: "\e929";
+}
+.icon-screen:before {
+    content: "\e92a";
+}
+.icon-search-bar:before {
+    content: "\e92b";
+}
+.icon-search:before {
+    content: "\e92c";
+}
+.icon-send:before {
+    content: "\e92d";
+}
+.icon-settings:before {
+    content: "\e92e";
+}
+.icon-share:before {
+    content: "\e92f";
+}
+.icon-signal-strength-25:before {
+    content: "\e930";
+}
+.icon-signal-strength-50:before {
+    content: "\e931";
+}
+.icon-signal-strength-75:before {
+    content: "\e932";
+}
+.icon-strong-connectivity:before {
+    content: "\e933";
+}
+.icon-temperature-high:before {
+    content: "\e934";
+}
+.icon-temperature-low:before {
+    content: "\e935";
+}
+.icon-trash:before {
+    content: "\e936";
+}
+.icon-trends:before {
+    content: "\e937";
+}
+.icon-up:before {
+    content: "\e938";
+}
+.icon-users:before {
+    content: "\e939";
+}
+.icon-warning-general:before {
+    content: "\e93a";
+}
+.icon-warning-large:before {
+    content: "\e93b";
+}
+.icon-ac-plugin-power-filled:before {
+    content: "\e93c";
+}
+.icon-alarm-filled:before {
+    content: "\e93d";
+}
+.icon-calendar-flled:before {
+    content: "\e93e";
+}
+.icon-cancel-filled:before {
+    content: "\e93f";
+}
+.icon-case-cooler-filled:before {
+    content: "\e940";
+}
+.icon-change-state-horizontal-filled:before {
+    content: "\e941";
+}
+.icon-change-state-vertical-filled:before {
+    content: "\e942";
+}
+.icon-check-filled:before {
+    content: "\e943";
+}
+.icon-clear-search-filled:before {
+    content: "\e944";
+}
+.icon-clock-filled:before {
+    content: "\e945";
+}
+.icon-down-filled:before {
+    content: "\e946";
+}
+.icon-download-filled:before {
+    content: "\e947";
+}
+.icon-edit-filled:before {
+    content: "\e948";
+}
+.icon-enter-service-mode-filled:before {
+    content: "\e949";
+}
+.icon-exit-service-mode-filled:before {
+    content: "\e94a";
+}
+.icon-expand-filled:before {
+    content: "\e94b";
+}
+.icon-health-filled:before {
+    content: "\e94c";
+}
+.icon-left-filled:before {
+    content: "\e94d";
+}
+.icon-lightbulb-filled:before {
+    content: "\e94e";
+}
+.icon-list-menu-filled:before {
+    content: "\e94f";
+}
+.icon-location-filled:before {
+    content: "\e950";
+}
+.icon-logout-filled:before {
+    content: "\e951";
+}
+.icon-logs-filled:before {
+    content: "\e952";
+}
+.icon-maintenance-filled:before {
+    content: "\e953";
+}
+.icon-monitor-filled:before {
+    content: "\e954";
+}
+.icon-power-filled:before {
+    content: "\e955";
+}
+.icon-recent-filled:before {
+    content: "\e956";
+}
+.icon-right-filled:before {
+    content: "\e957";
+}
+.icon-running-filled:before {
+    content: "\e958";
+}
+.icon-search-bar-filled:before {
+    content: "\e959";
+}
+.icon-search-filled:before {
+    content: "\e95a";
+}
+.icon-send-filled:before {
+    content: "\e95b";
+}
+.icon-settings-filled:before {
+    content: "\e95c";
+}
+.icon-share-filled:before {
+    content: "\e95d";
+}
+.icon-trash-filled:before {
+    content: "\e95e";
+}
+.icon-trends-filled:before {
+    content: "\e95f";
+}
+.icon-user-filled:before {
+    content: "\e960";
+}
+.icon-users-filled:before {
+    content: "\e961";
+}
+.icon-view-filled:before {
+    content: "\e962";
+}
+

@@ -1,0 +1,26 @@
+<md-list-item class="md-2-line user-list-item" ng-click="vm.user.onClick()" layout="row">
+  <div flex-gt-md="10">
+    <span class="user-initials-icon">{{ vm.user.icon }}</span>
+  </div>
+
+  <div class="md-list-item-text user-list-item-text"
+       layout-gt-md="row"
+       layout-align-gt-md="start center"
+       layout="column"
+       flex="70">
+    <h3 class="md-headline" flex-gt-md="40"><b>{{ vm.user.title }}</b></h3>
+    <h4 class="md-subhead" flex-gt-md="40">{{ vm.user.subtitle }}</h4>
+    <p class="md-caption" flex-gt-md="30">{{ vm.user.description }}</p>
+  </div>
+
+  <div class="md-list-item-text addition-info"
+       flex
+       layout-gt-md="row"
+       layout-align-gt-md="end center"
+       layout="column"
+       layout-align="center end">
+    <p class="md-subhead">{{ vm.user.sideText }}</p>
+    <more-options ng-if="vm.user.moreOptions" class="md-secondary"></more-options>
+  </div>
+
+</md-list-item>

@@ -1,0 +1,66 @@
+<h1 flex-offset-gt-md="0" flex-offset="5">My Account</h1>
+
+<div layout="row">
+  <div flex>
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>Change Your Password</md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-input-container class="md-block" >
+          <label>Current Password</label>
+          <input name="CurrentPassword" ng-model="vm.currentPassword">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>New Password</label>
+          <input name="NewPassword" ng-model="vm.newPassword">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Confirm New Password</label>
+          <input name="ConfirmNewPassword" ng-model="vm.confirmNewPassword">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <md-button class="md-raised md-button">Change</md-button>
+        </md-input-container>
+      </md-card-content>
+    </md-card>
+  </div>
+  <div flex>
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>Notifications</md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <div layout="row">
+          <md-switch flex="10" ng-model="vm.myNotificationPreferences.receive_email" ng-change="vm.toggleNotifications()" class="md-primary" aria-label="Enable Email Notifications"></md-switch>
+          <md-input-container flex='90' class=" md-block" >
+            <label>Email Address</label>
+            <input name="EmailAddress" ng-model="vm.userProfile.email">
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <md-switch flex="10" ng-model="vm.myNotificationPreferences.sms" ng-change="vm.toggleNotifications()" class="md-primary" aria-label="Enable Phone Notifications"></md-switch>
+          <md-input-container flex='90' class="md-block" >
+            <label>Phone Number</label>
+            <input name="PhoneNumber" ng-model="vm.userProfile.phone">
+          </md-input-container>
+        </div>
+
+      </md-card-content>
+    </md-card>
+
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>Units</md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-radio-group ng-model="vm.units">
+          <md-radio-button value="IMPERICAL" class="md-primary">IMPERICAL</md-radio-button>
+          <md-radio-button value="METRIC" class="md-primary"> METRIC </md-radio-button>
+        </md-radio-group>
+
+      </md-card-content>
+    </md-card>
+  </div>
+
+</div>

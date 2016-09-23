@@ -1,0 +1,228 @@
+.fleet-health-content {
+  $primaryTextColor: #333333;
+  $mutedTextColor: #aaaaaa;
+  $alarmColor: #BC0E00;
+  $normalColor: #37C91A;
+  $warningColor: #F4CB00;
+
+  max-width:800px;
+  position:relative;
+  background: linear-gradient(#ffffff, #bbbbbb);
+
+  .highcharts-container {
+    margin: 0 auto;     //make sure the chart is always centered in the containing div
+  }
+
+  .info-overlay-control {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+    font-size: 40px;
+    font-family: monospace, serif;
+    color: $mutedTextColor;
+    outline:none;
+
+    $hoverColor: darken($mutedTextColor, 20%);
+    &:hover {
+      cursor: pointer;
+      color: $hoverColor;
+    }
+
+    span {
+      padding:10px 20px;
+      border: 3px solid $mutedTextColor;
+      border-radius: 80px;
+
+      &:hover {
+        border: 3px solid $hoverColor;
+      }
+    }
+
+    &.close-btn span {
+      border: 3px solid white;
+      color: white;
+      font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+      padding:0px 20px;
+    }
+  }
+
+  .title {
+    color: $primaryTextColor;
+    font-size: 25px;
+    padding:15px;
+  }
+
+  .donut {
+    position: relative;
+
+    .summary {
+      color: $primaryTextColor;
+      text-align: center;
+      width:180px;
+      height:180px;
+
+      margin: auto;
+      position: absolute;
+      top: -30px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+      .percent {
+        font-size: 60px;
+      }
+
+      .label {
+        font-size: 20px;
+      }
+
+      .view-btn {
+        display:inline-block;
+        margin-top: 40px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        span {
+          background-color: $primaryTextColor;
+          border-radius: 40px;
+          color: white;
+          font-size:20px;
+          font-weight:bold;
+          padding:20px 35px;
+        }
+      }
+    }
+  }
+
+  .stat-boxes {
+    $canvasContainerHeight: 150px;
+
+    width:100%;
+    text-align: center;
+    margin-top: -1 * $canvasContainerHeight;
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+
+    .canvas-container {
+      width:100%;
+      height: $canvasContainerHeight;
+
+      canvas {
+        width:100%;
+        height:100%;
+      }
+    }
+
+    .stat-box {
+      background-color: #ffffff;
+      padding: 30px;
+      color: $mutedTextColor;
+      outline: none;
+      min-height:90px;
+
+      &.center {
+        border-left: 2px solid #999999;
+        border-right: 2px solid #999999;
+      }
+
+      &.active {
+        color: $primaryTextColor;
+
+        &.normal {
+          border-bottom: 8px solid $normalColor;
+        }
+
+        &.warning {
+          border-bottom: 8px solid $warningColor;
+        }
+
+        &.alarm {
+          border-bottom: 8px solid $alarmColor;
+        }
+      }
+
+      .value {
+        font-size:28px;
+        font-weight: bold;
+      }
+
+      .label {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .info-overlay {
+    width: 100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: rgba(0,0,0, 0.6);
+    color: rgba(255,255,255, 255);
+    font-size: 20px;
+    font-weight:bold;
+
+    .instruction {
+      position: absolute;
+      height: auto;
+      opacity: 1.0;
+    }
+
+    .category-summary-instruction {
+      left: 80px;
+      top: 80px;
+      width: 300px;
+
+      .arrow {
+        position: absolute;
+        top: 60px;
+        left: 230px;
+      }
+    }
+
+    .view-button-instruction {
+      margin: auto;
+      position: absolute;
+      top: 25%;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+      left: -300px;
+      top: 250px;
+      width: 280px;
+
+      .arrow {
+        position: absolute;
+        top: 80px;
+        left: 120px;
+      }
+    }
+
+    .stat-box-instruction {
+      margin: auto;
+      position: absolute;
+      top: 25%;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+      left:-355px;
+      top: 420px;
+
+      width: 180px;
+
+      .arrow {
+        position: absolute;
+        top: 55px;
+        left: 110px;
+        transform:rotate(15deg);
+      }
+    }
+  }
+
+}

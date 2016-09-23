@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Jacelyn Doe",
+    "subtitle": "jacelyndoe@parker.com",
+    "description": "Technician",
+    "icon": "JD",
+    "sideText": "Admin",
+    "moreOptions": [
+      {
+        "text": "Delete"
+      }
+    ]
+  },
+  {
+    "title": "John Smith",
+    "subtitle": "johnsmith@parker.com",
+    "description": "Manager",
+    "icon": "JS",
+    "sideText": "Guest",
+    "moreOptions": [
+      {
+        "text": "Delete"
+      }
+    ]
+  }
+]
+

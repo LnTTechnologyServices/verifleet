@@ -1,0 +1,22 @@
+icons = [
+  {
+    "icon": "light_bulb",
+    "state": "on"
+  },
+  {
+    "icon": "light_bulb",
+    "state": "off"
+  },
+  {
+    "icon": "light_bulb",
+    "state": 1
+  },
+  {
+    "icon": "light_bulb",
+    "state": 0
+  },
+  {
+    "icon": "light_bulb",
+    "color": "#00FF00"
+  }
+]

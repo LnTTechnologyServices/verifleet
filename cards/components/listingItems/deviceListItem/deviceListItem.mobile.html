@@ -1,0 +1,19 @@
+<ion-item ng-click="vm.device.onClick()" ng-class="{
+		'item-icon-left': vm.device.icon,
+		'item-icon-right': vm.device.onClick,
+	}">
+  <list-item-status status="vm.device.status"></list-item-status>
+  <i ng-if="vm.device.icon" ng-class="vm.device.icon" class="icon"></i>
+  <div class="item-note text-right">
+    <p ng-if="vm.device.lastReported && !vm.device.sideText">last reported</p>
+    <p ng-if="vm.device.lastReported && !vm.device.sideText">{{ vm.device.lastReported }}</p>
+    <p ng-if="vm.device.sideText">{{ vm.device.sideText }}</p>
+  </div>
+  <div>
+    <h3><b>{{ vm.device.title }}</b></h3>
+    <h4>{{ vm.device.subtitle }}</h4>
+    <p>{{ vm.device.description }}</p>
+  </div>
+  <i ng-if="vm.device.onClick" class="icon ion-ios-arrow-right"></i>
+</ion-item>
+

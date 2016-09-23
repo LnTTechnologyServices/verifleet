@@ -1,0 +1,57 @@
+<md-card>
+  <md-card-content>
+        <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" >  
+            <div flex-xs="100" flex="50" style="border: 1px solid gainsboro;">
+            <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height:40px;">
+                    <div class="md-toolbar-tools">
+                    <h2>Fuel Guage</h2>
+                    </div>
+                </md-toolbar>
+                 <fuel-chart layout-fill data="vm.gaugeData"></fuel-chart>
+                 <center>
+                 <div  flex="100" style="padding-bottom: 8px;">
+                 <h4>Distance to Empty</h4>
+                 <bar-chart layout-fill data="vm.gaugeData"></bar-chart>
+                 </div>
+                 </center>
+                 
+            </div>
+            <div flex-xs="100" flex="50" style="border: 1px solid gainsboro;">
+                <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height:40px;">
+                    <div class="md-toolbar-tools">
+                    <h2>Distance to Empty</h2>
+                    </div>
+                </md-toolbar>
+                </div>
+        </div>        
+        <div flex="100" lex-xs="100" style="border: 1px solid gainsboro;">
+                <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 40px;">
+                    <div class="md-toolbar-tools">
+                    <h2>Miles/Gallon</h2>
+                    </div>
+                </md-toolbar>
+                <div  layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" style="padding-right: 5px;">
+                    <div flex="100" flex-xs="100">
+                        <section layout="row" layout-align="end end">
+                            <md-button ng-class="{active: vm.paramsMG == 'MGlasWeek' }" ng-click="vm.filtersValue('MGlasWeek')"  class="groupX left">Last Week</md-button>
+                            <md-button ng-class="{active: vm.paramsMG == 'MGcurWeek' }" ng-click="vm.filtersValue('MGcurWeek')" class="groupX middle">Current Week</md-button>
+                            <md-button ng-class="{active: vm.paramsMG == 'MGmonthly' }" ng-click="vm.filtersValue('MGmonthly')" class="groupX right">Monthly</md-button>
+                        </section>
+                    </div>
+                </div>
+                <span layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" style="float: right;">
+                    <md-select style="margin:0px;" ng-model="vm.barChartFiltersValue" ng-change="">
+                      <md-option ng-repeat="filtersValue in vm.barChartFilters" value="{{vm.barChartFiltersValue}}">
+                      {{filtersValue.value}}
+                      </md-option>
+                    </md-select>
+                </span>
+                <barline-chart layout-fill data="vm.milesGallonsData" title="barChart"></barline-chart>
+            </div>
+  </md-card-content>
+</md-card>
+
+
+
+
+    

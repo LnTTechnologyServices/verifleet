@@ -1,0 +1,9 @@
+{
+  "rid": "abcdefghijklmnopqrstuvwxyz",
+  "name": "Device 2245",
+  "description": "region / customer / division",
+  "lastReported": "30 sec ago",
+  "moreOptions": [{"text": "option test"}],
+  "status": "healthy",
+  "icon": "power_plug"
+}

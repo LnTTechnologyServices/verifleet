@@ -1,0 +1,20 @@
+<div flex="80" flex-offset="10" flex-gt-md="50" flex-offset-gt-md="25" layout-align="center center" style="height:100%">
+<md-card style="margin-top:150px">
+  <md-toolbar class="parker-yellow login-toolbar" style="min-height:42px" >
+  </md-toolbar>
+  <md-card-content>
+    <div layout="row" layout-align="center center">
+      <img flex-gt-sm="20" flex="50" style="max-width:190px; width:100%; height:auto" ng-src="{{vm.loginLogo}}" class="" alt="{{ vm.projectConfig.name }}">
+    </div>
+    <md-card-header class="login-card-header">
+      <md-card-header-text layout="column" layout-align="start center">
+        <span class="md-title">Please log in.</span>
+      </md-card-header-text>
+    </md-card-header>
+  </md-card-content>
+  <md-card-actions layout="row" layout-align="center center">
+    <md-button data-qa="login-button" class="md-raised" ng-click="vm.signin()">Login</md-button>
+  </md-card-actions>
+  <br />
+</md-card>
+</div>

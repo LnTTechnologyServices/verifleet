@@ -1,0 +1,47 @@
+$parker-yellow: #ffb91d;
+$parker-red: #c01a00;
+$parker-dark-blue: #001342;
+$parker-slate: #1b202d;
+$font-white: white;
+
+.icon {
+  font-size: 36px;
+}
+
+.sidebar-max-width {
+  max-width: 120px;
+}
+
+.active {
+  background: #ffffff !important;
+
+  .icon {
+      color: $parker-yellow;
+  }
+
+  span {
+      color: #1b202d;
+  }
+}
+
+.md-sidenav{
+	background-color: $parker-yellow;
+	position: fixed !important;
+  .md-sidenav-left {
+    .parkerSideNav {
+      position: fixed !important;
+      height: 100%;
+      padding: 64px 0 0 ;
+    }
+  }
+}
+.navbar-margin {
+    width:130px;
+    height: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+	md-content.parker-slate._md.layout-align-space-between-stretch.layout-column.flex{
+		height:100%;
+	}
+}

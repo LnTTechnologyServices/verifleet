@@ -1,0 +1,8 @@
+{
+  "title": "Device 2245",
+  "subtitle": "Low Temperature",
+  "description": "38 minutes - Active",
+  "icon": "exclamation",
+  "status": {"state": "critical"},
+  "timestamp": "Today 6:38p"
+}

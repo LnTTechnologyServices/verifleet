@@ -1,0 +1,8 @@
+{
+  "max": 150,
+  "min": 0,
+  "value": 100,
+  "unit": "°F",
+  "title": "Temperature",
+  "stops": [ [0.15, "#0000FF"], [0.85, "#FF0000"] ]
+}

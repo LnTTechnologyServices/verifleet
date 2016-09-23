@@ -1,0 +1,73 @@
+{
+  "title": "case parameters",
+  "rows": [
+      {
+        "name": "Discharge Temperature (L):",
+        "data": [
+          {"value": 36, "timestamp": "9:10A"},
+          {"value": 36, "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "Discharge Temperature (C):",
+        "data": [
+          {"value": 34, "timestamp": "9:10A"},
+          {"value": 34, "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "Discharge Temperature (R):",
+        "data": [
+          {"value": 38, "timestamp": "9:10A"},
+          {"value": 44, "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "Superheat (L):",
+        "data": [
+          {"value": 30, "timestamp": "9:10A"},
+          {"value": 30, "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "Superheat (C):",
+        "data": [
+          {"value": 32, "timestamp": "9:10A"},
+          {"value": 32, "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "Superheat (R):",
+        "data": [
+          {"value": 35, "timestamp": "9:10A"},
+          {"value": 35, "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "Operating Mode:",
+        "data": [
+          {"value": "Cool", "timestamp": "9:10A"},
+          {"value": "Cool", "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "Suction Pressure:",
+        "data": [
+          {"value": 14.8, "timestamp": "9:10A"},
+          {"value": 14.8, "timestamp": "9:41A"}
+        ]
+      },
+      {
+        "name": "EEPR Position (% Open):",
+        "data": [
+          {"value": 72, "timestamp": "9:10A"},
+          {"value": 72, "timestamp": "9:41A"}
+        ]
+      }
+  ],
+  "rowColorFunction": function(data) {
+    if(data[0] !== data[data.length-1]) {
+      return "#FF0000"
+    }
+  }
+}

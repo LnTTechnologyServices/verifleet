@@ -1,0 +1,25 @@
+<md-list-item class="md-2-line activity-list-item" ng-click="vm.activity.onClick()" layout="row">
+  <icon class="list-icon" ng-class="vm.activity.icon"></icon>
+
+  <div class="md-list-item-text activity-list-item-text"
+       layout-gt-md="row"
+       layout-align-gt-md="start center"
+       layout="column"
+       flex-gt-md="70">
+    <h3 class="md-headline act-title" flex-gt-md="50"><b>{{ vm.activity.title }}</b></h3>
+    <h4 class="md-subhead act-subtitle" flex-gt-md="30">{{ vm.activity.subtitle }}</h4>
+    <p class="md-caption act-description">{{ vm.activity.description }}</p>
+  </div>
+  <div class="md-list-item-text addition-info"
+       flex
+       layout-gt-md="row"
+       layout-align-gt-md="end center"
+       layout="column"
+       layout-align="center end">
+    <p class="md-subhead act-timestamp" am-time-ago="vm.activity.timestamp"></p>
+
+    <ng-md-icon hide show-gt-sm ng-if="vm.activity.onClick && !vm.activity.moreOptions"
+                icon="chevron_right"
+                class="md-secondary action-icon"></ng-md-icon>
+  </div>
+</md-list-item>

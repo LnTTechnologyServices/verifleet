@@ -1,0 +1,62 @@
+efficiency {
+.border {
+        border: 1px solid red; 
+    }
+
+    .select-class {
+    margin: 0 !important;
+}
+
+.progress {
+    position: absolute;
+    color: #bbb;
+    font-weight: 100;
+    line-height: 1;
+}
+
+.md-toolbar {
+       position: inherit !important;
+}
+
+
+}
+
+.alert-box {
+    color:#555;
+    border-radius:1px;
+    padding:10px 10px 10px 10px;
+    margin:10px;
+}
+
+.alert-box span {
+    float: right;
+    width: 100px;
+    height: 20px;
+    font-weight: bold;
+    color: rgb(255, 185, 29);
+}
+
+.notice {
+    border:1px solid #f2c779;
+}
+
+.md-toolbar-tools {
+    max-height: 40px !important;
+}
+
+.md-select-value {
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-bottom-color: #ffb91d !important;
+}
+
+.md-select-icon{
+    border-top-color: #ffb91d;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    color: #ffb91d;
+}
+
+.active {
+    border: 1px solid gainsboro;
+}

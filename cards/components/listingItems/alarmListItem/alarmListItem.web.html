@@ -1,0 +1,25 @@
+<md-list-item class="md-2-line alarm-list-item" ng-click="vm.alarm.onClick()" layout="row">
+  <list-item-status status="vm.alarm.status"></list-item-status>
+  <icon class="alarm-list-icon list-icon" ng-class="vm.alarm.icon"></icon>
+  <div class="md-list-item-text alarm-list-item-text"
+       layout-gt-md="row"
+       layout-align-gt-md="start center"
+       layout="column"
+       flex="70">
+    <h3 class="md-headline" flex-gt-md="50"><b>{{ vm.alarm.title }}</b></h3>
+    <h4 class="md-subhead" flex-gt-md="30">{{ vm.alarm.subtitle }}</h4>
+    <p class="md-caption">{{ vm.alarm.description }}</p>
+  </div>
+  <div class="md-list-item-text addition-info"
+       flex
+       layout-gt-md="row"
+       layout-align-gt-md="end center"
+       layout="column"
+       layout-align="center end">
+    <p ng-if="vm.alarm.timestamp" class="md-subhead" am-time-ago="vm.alarm.timestamp"></p>
+    <ng-md-icon hide show-gt-sm ng-if="vm.alarm.onClick && !vm.alarm.moreOptions"
+                icon="chevron_right"
+                class="md-secondary action-icon"></ng-md-icon>
+     <more-options ng-if="vm.alarm.moreOptions" class="md-secondary"></more-options>
+   </div>
+</md-list-item>

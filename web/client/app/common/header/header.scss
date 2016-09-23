@@ -1,0 +1,23 @@
+.header {
+  height: 6.5rem;
+  padding: 1rem;
+  min-height: 130px;
+}
+
+.parkerTopBar{
+	position: fixed;
+	height: 56px;
+	.md-toolbar-tools.layout-fill.layout-align-space-between-center.layout-row{
+		padding: 0;
+	}
+	.logo{
+		height: 36px;
+	}	
+}
+
+
+
+.progress-linear {
+  margin-top: -5px;
+  z-index: 10;
+}

@@ -1,0 +1,26 @@
+
+.list-item-status {
+  width: 10px;
+  height: 100%;
+}
+
+list-item-status{
+  margin-right: 16px;
+
+  .healthy {
+    background-color: #0AC410;
+  }
+
+  .critical {
+    background-color: #D11515;
+  }
+
+  .inactive {
+    background-color: #BFCCDD;
+  }
+
+  .warning {
+    background-color: #ECC800;
+  }
+
+}

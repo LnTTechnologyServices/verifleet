@@ -1,0 +1,58 @@
+<!--
+This is the page that gets displayed when the /devices/$DEVICE_ID page is loaded.
+Any modifications here will only be available to the <device></device> component
+Modification to device.controller.js may also be necessary
+-->
+
+<div layout="row" layout-align="space-between" flex-offset-gt-md="0" flex-offset="5" flex="90" flex-gt-md="100">
+  <h1>{{ vm.device.did }}</h1>
+  <h3 style="text-align: right" layout="column" layout-align="end center"><p>Last heard <span am-time-ago="vm.device.lastReported"></span></p></h3>
+</div>
+
+<md-card ng-if="vm.alarmListItems.length">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Recent Alarms</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <md-list>
+      <alarm-list-item ng-repeat="alarm in vm.alarmListItems | orderBy: '-timestamp' | limitTo: 4" alarm="alarm"></alarm-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+
+<md-card ng-if="vm.device.data">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Device Data</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content layout="column" ng-if='vm.device.pid == "w1j9zky3zwljtt9"'>
+    <div layout="row" layout-align="center center" ng-repeat="series in vm.plotData">
+      <line-chart flex="80" data="[series]"></line-chart>
+      <big-number value="series.data.last()[1]" decimals="2" title="{{series.name.capitalize()}}"></big-number>
+    </div>
+  </md-card-content>
+
+  <md-card-content layout="column" ng-if="vm.device.pid !== 'w1j9zky3zwljtt9'">
+    <div layout="row" layout-align="space-around" ng-if="vm.device.data.raw_data">
+      <moon-gauge value="vm.device.data.raw_data.last().pressure_left" max="1" min="0" decimals="2" title="'Left Pressure'"></moon-gauge>
+      <moon-gauge value="vm.device.data.raw_data.last().pressure" max="1" min="0" decimals="2" title="'Center Pressure'"></moon-gauge>
+      <moon-gauge value="vm.device.data.raw_data.last().pressure_right" max="1" min="0" decimals="2" title="'Right Pressure'"></moon-gauge>
+    </div>
+  </md-card-content>
+</md-card>
+
+<md-card ng-if="vm.activityListItems.length">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Recent Activities</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <md-list>
+      <activity-list-item ng-repeat="activityListItem in vm.activityListItems | orderBy: '-timestamp'" activity="activityListItem"></activity-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>

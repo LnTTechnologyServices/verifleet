@@ -1,0 +1,6 @@
+[
+  {"text": "test item",
+   "onClick": function() {
+     console.log("Clicked the test item");
+   }}
+]

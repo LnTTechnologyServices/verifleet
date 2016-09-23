@@ -1,0 +1,50 @@
+<ion-view view-title="Data Visualization" class="dataviz">
+  <ion-content>
+
+    <div class="card">
+      <div class="item item-divider">Big Number</div>
+      <div class="item item-text-wrap">
+        <big-number ng-repeat="number in vm.bigNumbers"
+          title="Viscosity"
+          unit="%"
+          decimals="0"
+          value="number.value">
+        </big-number>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">Big Icon</div>
+      <div class="item item-text-wrap">
+        <big-icon ng-repeat="icon in vm.icon_list"
+          icon="icon"
+          state="vm.state"
+          coloron="vm.oncolor"
+          coloroff="vm.oncolor">
+        </big-icon>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">Moon Gauge</div>
+      <div class="item item-text-wrap">
+        <moon-gauge ng-repeat="x in vm.numMoons"
+          value="vm.gaugeData.value"
+          title="vm.gaugeData.title"
+          decimals="vm.gaugeData.decimals"
+          subtitle="vm.gaugeData.subtitle"
+          stops="vm.gaugeData.stops">
+        </moon-gauge>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">Line Chart</div>
+      <div class="item item-text-wrap">
+        <line-chart data="vm.lineData"></line-chart>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>
+
