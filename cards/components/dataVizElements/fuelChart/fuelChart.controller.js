@@ -6,119 +6,96 @@ class FuelChartController {
     this.$timeout = $timeout
     this.config = {
       options: {
-    chart: {
-        type: 'gauge',
-        plotBackgroundColor: null,
-        plotBackgroundImage: null,
-        plotBorderWidth: 0,
-        plotShadow: false
-      },
-    title: {
-      text: null,
-    },
-    plotOptions: {
-      gauge: {
-        allowPointSelect: true,
-        states: {
-          hover: {
-            enabled: true,
-            marker: {
-              fillColor: "#FF0000",
-              lineColor: "#0000FF",
-              lineWidth: 5
+         chart: {
+            type: 'solidgauge',
+            marginTop: 50
+        },
+        title: {
+            text: 'Activity',
+            style: {
+                fontSize: '24px'
             }
-          }
-        }
-      }
-    },
-
-    pane: {
-      startAngle: -150,
-      endAngle: 150,
-      background: [{
-        backgroundColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1
-          },
-          stops: [
-            [0, '#FFF'],
-            [1, '#333']
-          ]
         },
-        borderWidth: 0,
-        outerRadius: '109%'
-      }, {
-        backgroundColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1
-          },
-          stops: [
-            [0, '#333'],
-            [1, '#FFF']
-          ]
+        tooltip: {
+            borderWidth: 0,
+            backgroundColor: 'none',
+            shadow: false,
+            style: {
+                fontSize: '16px'
+            },
+            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}%</span>',
+            positioner: function (labelWidth) {
+                return {
+                    x: 270 - labelWidth / 2,
+                    y: 180
+                };
+            }
         },
-        borderWidth: 1,
-        outerRadius: '107%'
-      }, {
-        // default background
-      }, {
-        backgroundColor: '#DDD',
-        borderWidth: 0,
-        outerRadius: '105%',
-        innerRadius: '103%'
-      }]
-    },
-
-    // the value axis
-    yAxis: {
-      min: this.data.min,
-      max: this.data.max,
-
-      minorTickInterval: 'auto',
-      minorTickWidth: 1,
-      minorTickLength: 10,
-      minorTickPosition: 'inside',
-      minorTickColor: '#666',
-      tickPixelInterval: 30,
-      tickWidth: 2,
-      tickPosition: 'inside',
-      tickLength: 10,
-      tickColor: '#666',
-      labels: {
-        step: 2,
-        rotation: 'auto'
-      },
-      title: {
-        text: 'Fuel Guage'
-      },
-      plotBands: [{
-        from: 0,
-        to: 30,
-        color: '#55BF3B' // green
-      }, {
-        from: 30,
-        to: 40,
-        color: '#DDDF0D' // yellow
-      }, {
-        from: 40,
-        to: 60,
-        color: '#DF5353' // red
-      }]
-    },
+        pane: {
+            startAngle: 0,
+            endAngle: 360,
+            background: [{ // Track for Move
+                outerRadius: '112%',
+                innerRadius: '88%',
+                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
+                borderWidth: 0
+            }, { // Track for Exercise
+                outerRadius: '87%',
+                innerRadius: '63%',
+                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1]).setOpacity(0.3).get(),
+                borderWidth: 0
+            }, { // Track for Stand
+                outerRadius: '62%',
+                innerRadius: '38%',
+                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.3).get(),
+                borderWidth: 0
+            }]
+        },
+        yAxis: {
+            min: 0,
+            max: 100,
+            lineWidth: 0,
+            tickPositions: []
+        },
+        plotOptions: {
+            solidgauge: {
+                borderWidth: '34px',
+                dataLabels: {
+                    enabled: false
+                },
+                linecap: 'round',
+                stickyTracking: false
+            }
+        },
       },
     series: [{
-      name: 'Speed',
-      data: [this.data.value],
-      tooltip: {
-        valueSuffix: 'Fuel Guage'
-      }
-    }],
+            name: 'Total',
+            borderColor: Highcharts.getOptions().colors[0],
+            data: [{
+                color: Highcharts.getOptions().colors[0],
+                radius: '100%',
+                innerRadius: '100%',
+                y: 100
+            }]
+        }, {
+            name: 'Exercise',
+            borderColor: Highcharts.getOptions().colors[1],
+            data: [{
+                color: Highcharts.getOptions().colors[1],
+                radius: '75%',
+                innerRadius: '75%',
+                y: 65
+            }]
+        }, {
+            name: 'Stand',
+            borderColor: Highcharts.getOptions().colors[2],
+            data: [{
+                color: Highcharts.getOptions().colors[2],
+                radius: '50%',
+                innerRadius: '50%',
+                y: this.data.value
+            }]
+        }],
     func: function(chart) {
             $timeout(function() {
                 chart.reflow();
