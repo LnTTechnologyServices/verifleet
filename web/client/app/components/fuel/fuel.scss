@@ -1,5 +1,76 @@
 
 fuel {
+  .filter-text {
+      width: 100px;
+      background-color: #1b202d;
+      color: white;
+      font-weight: bold;
+      padding-left: 25px;
+      padding-top: 10px;
+  }
+    .fuel-gradient {
+        background: rgba(76,76,76,1);
+background: -moz-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(44,44,44,1) 89%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(76,76,76,1)), color-stop(12%, rgba(89,89,89,1)), color-stop(25%, rgba(102,102,102,1)), color-stop(39%, rgba(71,71,71,1)), color-stop(51%, rgba(0,0,0,1)), color-stop(60%, rgba(17,17,17,1)), color-stop(76%, rgba(43,43,43,1)), color-stop(89%, rgba(44,44,44,1)), color-stop(91%, rgba(28,28,28,1)), color-stop(100%, rgba(19,19,19,1)));
+background: -webkit-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(44,44,44,1) 89%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: -o-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(44,44,44,1) 89%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: -ms-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(44,44,44,1) 89%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: linear-gradient(to bottom, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(44,44,44,1) 89%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313', GradientType=0 );
+    }
+   .button-bar {
+       background-color: #424242;
+       width: 100%;
+       
+       .md-datepicker-input-container {
+           border-bottom: none;
+           width: 100px;
+       }
+       .md-datepicker-triangle-button .md-datepicker-expand-triangle {
+           border-top-color: white;
+       }
+       .md-datepicker-expand-triangle {
+           border-left: 8px solid transparent;
+           border-right: 8px solid transparent;
+           border-top: 8px solid;
+       }
+       .md-datepicker-input {
+           color: white;
+       }
+       .md-datepicker-triangle-button.md-button.md-icon-button {
+           margin-top: -3px;
+           border: 2px solid grey;
+           //border-right : 4px solid grey;
+       }
+       .md-button.md-icon-button {
+           border-radius: 20%;
+       }
+       
+       /* do not group these rules */
+       *::-webkit-input-placeholder {
+         color:#A9A9A9;
+         font-weight: bold;
+       }
+       *:-moz-placeholder {
+       /* FF 4-18 */
+          color: #A9A9A9;
+          font-weight: bold;
+       }
+      *::-moz-placeholder {
+         /* FF 19+ */
+         color: #A9A9A9;
+         font-weight: bold;
+       }
+      *:-ms-input-placeholder {
+        /* IE 10+ */
+        color: #A9A9A9;
+        font-weight: bold;
+       }
+       md-icon {
+           color:#A9A9A9;
+       }
+   }
+    
     // Common css Start
 
     .md-button {

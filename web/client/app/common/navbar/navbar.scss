@@ -13,14 +13,14 @@ $font-white: white;
 }
 
 .active {
-  background: #ffffff !important;
+  color: $parker-yellow !important;
 
   .icon {
       color: $parker-yellow;
   }
 
   span {
-      color: #1b202d;
+      color: $parker-yellow;
   }
 }
 

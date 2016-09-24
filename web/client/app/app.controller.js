@@ -25,13 +25,13 @@ class AppController {
 
   setAuthedMargin() {
     if(this.isMap) {
-      this.marginTop = '70px'
+      this.marginTop = '50px'
       this.offsetGtMd = 0
     } else if(this.isLogin) {
       this.marginTop = "0px"
       this.offsetGtMd = 0
     } else {
-      this.marginTop = '70px'
+      this.marginTop = '50px'
       this.offsetGtMd = 0
     }
   }

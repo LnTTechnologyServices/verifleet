@@ -1,18 +1,18 @@
- <md-card id="fuelContainer">
-  <md-card-content>
-
-    
-    <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row"">
-        <div flex-xs="50" flex="48" style="border: 1px solid gainsboro;" >
-            <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+ <div class="button-bar "  layout="row">
+     <div layout="row" class="filter-text">Filters</div>
+ <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row"">
+        <div flex-xs="50" flex="48" style="min-width: 250px">
+            <md-datepicker ng-model="startDate" md-placeholder="Start Date"></md-datepicker>
         </div> &nbsp; &nbsp; &nbsp;
         
-        <div flex-xs="50" flex="48" style="border: 1px solid gainsboro;">
-            <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
+        <div flex-xs="50" flex="48"  style="min-width: 250px">
+            <md-datepicker ng-model="endDate" md-placeholder="End Date"></md-datepicker>
         </div>
     </div>        
     <br>
-
+ </div>
+ <md-card id="fuelContainer">
+  <md-card-content>
     <div  layout-align="end start" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" flex="70">
     </div>
     <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row"  style="border: 1px solid gainsboro;">
