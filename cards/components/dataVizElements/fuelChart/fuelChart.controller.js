@@ -23,7 +23,7 @@ class FuelChartController {
             style: {
                 fontSize: '16px'
             },
-            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}%</span>',
+            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
             positioner: function (labelWidth) {
                 return {
                     x: 270 - labelWidth / 2,
@@ -44,16 +44,11 @@ class FuelChartController {
                 innerRadius: '63%',
                 backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1]).setOpacity(0.3).get(),
                 borderWidth: 0
-            }, { // Track for Stand
-                outerRadius: '62%',
-                innerRadius: '38%',
-                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.3).get(),
-                borderWidth: 0
             }]
         },
         yAxis: {
             min: 0,
-            max: 100,
+            max: 60,
             lineWidth: 0,
             tickPositions: []
         },
@@ -75,25 +70,16 @@ class FuelChartController {
                 color: Highcharts.getOptions().colors[0],
                 radius: '100%',
                 innerRadius: '100%',
-                y: 100
+                y: 60
             }]
         }, {
-            name: 'Exercise',
+            name: 'Availiable',
             borderColor: Highcharts.getOptions().colors[1],
             data: [{
                 color: Highcharts.getOptions().colors[1],
                 radius: '75%',
                 innerRadius: '75%',
-                y: 65
-            }]
-        }, {
-            name: 'Stand',
-            borderColor: Highcharts.getOptions().colors[2],
-            data: [{
-                color: Highcharts.getOptions().colors[2],
-                radius: '50%',
-                innerRadius: '50%',
-                y: this.data.value
+                y: 53
             }]
         }],
     func: function(chart) {

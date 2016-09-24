@@ -1,113 +1,110 @@
 efficiencyFile {
-.border {
-        border: 1px solid red; 
+    .border {
+            border: 1px solid red; 
+        }
+
+        .select-class {
+        margin: 0 !important;
     }
 
-    .select-class {
-    margin: 0 !important;
-}
+    .progress {
+        position: absolute;
+        color: #bbb;
+        font-weight: 100;
+        line-height: 1;
+    }
 
-.progress {
-    position: absolute;
-    color: #bbb;
-    font-weight: 100;
-    line-height: 1;
-}
+    .md-toolbar {
+        position: inherit !important;
+    }
 
-.md-toolbar {
-       position: inherit !important;
-}
+    .panel-primary {
+            border-color: #001441 !important;
+    }
 
+    .panel {
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-top: 5px solid;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
 
+    .panel-title {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 16px;
+        color: inherit;
+    }
 
-.panel-primary {
-        border-color: #001441 !important;
-}
+    .panel-primary>.panel-heading {
+        color: #001441;
+        background-color: #E6EAED;
+    }
 
-.panel {
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-top: 5px solid;
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
-}
+    .panel-heading {
+        padding: 10px 15px;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
 
-.panel-title {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 16px;
-    color: inherit;
-}
-
-.panel-primary>.panel-heading {
-    color: #001441;
-    background-color: #E6EAED;
-}
-
-.panel-heading {
-    padding: 10px 15px;
-    border-bottom: 1px solid transparent;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-}
-
-.panel-body {
-    padding: 15px;
-}
+    .panel-body {
+        padding: 15px;
+    }
 
 
-.alert-box {
-    color:#555;
-    border-radius:1px;
-    padding:10px 10px 10px 10px;
-    margin:10px;
-}
+    .alert-box {
+        color:#555;
+        border-radius:1px;
+        padding:10px 10px 10px 10px;
+        margin:10px;
+    }
 
-.alert-box span {
-    float: right;
-    width: 100px;
-    height: 20px;
-    font-weight: bold;
-    color: rgb(255, 185, 29);
-}
+    .alert-box span {
+        float: right;
+        width: 100px;
+        height: 20px;
+        font-weight: bold;
+        color: rgb(255, 185, 29);
+    }
 
-.notice {
-    border:1px solid #f2c779;
-}
+    .notice {
+        border:1px solid #f2c779;
+    }
 
-.md-toolbar-tools {
-    max-height: 40px !important;
-}
+    .md-toolbar-tools {
+        max-height: 40px !important;
+    }
 
-.md-select-value {
-    border-bottom-style: solid;
-    border-bottom-width: 4px;
-    border-bottom-color: #ffb91d !important;
-}
+    .md-select-value {
+        border-bottom-style: solid;
+        border-bottom-width: 4px;
+        border-bottom-color: #ffb91d !important;
+    }
 
-.md-select-icon{
-    border-top-color: #ffb91d;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    color: #ffb91d;
-}
+    .md-select-icon{
+        border-top-color: #ffb91d;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        color: #ffb91d;
+    }
 
-.active {
-    border: 1px solid gainsboro;
-}
+    .active {
+        border: 1px solid gainsboro;
+    }
 
-.alert, .alert h4 {
-    color: #8a6d3b;
-}
-.alert {
-   padding: 5px 5px 5px 10px;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-    background-color: bisque;
-    border: 1px solid burlywood;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
+    .alert, .alert h4 {
+        color: #8a6d3b;
+    }
+    .alert {
+    padding: 5px 5px 5px 10px;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        background-color: bisque;
+        border: 1px solid burlywood;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
 
-P { text-align: left; } 
-
+    P { text-align: left; } 
 }

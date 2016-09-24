@@ -174,5 +174,4 @@ class LogsController {
   }
 
 }
-
 export default LogsController;
