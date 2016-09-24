@@ -8,9 +8,7 @@ class BasicLineChartController {
     this.configs = {
       options: {
         chart: {
-          type: 'line',
-          backgroundColor: 'transparent',   
-          
+          zoomType: 'x'
         },
         title: {
             text: '',
@@ -19,27 +17,44 @@ class BasicLineChartController {
             text: '',
         },
         xAxis: {
-            categories: ['0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20']
+            type: 'datetime',
+            labels: {
+            //You can format the label according to your need
+            format: '{value:%m/%d - %H:%m}'
         },
-        yAxis: {
-            title: {
-                text: 'DGE'
+
+        },
+        plotOptions: {
+            area: {
+               fillColor: {
+                   linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, '#87CEFA'],
+                        [1, '#F0F8FF']
+                    ]
+                 },
+                 marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                    threshold: null
+                }
             },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
+
         tooltip: {
             valueSuffix: ''
         },
-         legend: {
-            layout: 'horizontal',
-            align: 'center',
-            verticalAlign: 'bottom',
-            borderWidth: 0
-        }
+
       },
       series: this.data,
         func: function(chart) {
