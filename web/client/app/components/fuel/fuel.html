@@ -1,10 +1,23 @@
  <md-card id="fuelContainer">
   <md-card-content>
+
+    
+    <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row"">
+        <div flex-xs="50" flex="48" style="border: 1px solid gainsboro;" >
+            <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+        </div> &nbsp; &nbsp; &nbsp;
+        
+        <div flex-xs="50" flex="48" style="border: 1px solid gainsboro;">
+            <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
+        </div>
+    </div>        
+    <br>
+
     <div  layout-align="end start" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" flex="70">
     </div>
     <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row"  style="border: 1px solid gainsboro;">
         <ul class="stats_box"  flex-xs="100" flex="100" style="margin-bottom: 0px;">
-        <li >
+        <li>
             <div class="sparkline bar_week">
                 <md-icon style="font-size: 45px;" md-font-icon="icon-trends"></md-icon>
             </div>
@@ -129,14 +142,6 @@
                 <div  layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" style="padding-right: 5px;">
                     <div flex="100" flex-xs="100">
                     <section layout="row" layout-align="end end" style="margin-top: 5px;margin-bottom: 5px;">
-
-                        <div flex-gt-xs>
-                            <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
-                        </div>
-                        <div flex-gt-xs>
-                            <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
-                        </div>
-                        
                         <!--
                         <md-button  ng-class="{active: vm.paramsGU == 'GUlasWeek' }" ng-click="vm.filtersValue('lasWeek')" class="groupX left">Last Week</md-button>
                         <md-button ng-class="{active: vm.paramsGU == 'GUcurWeek' }"  ng-click="vm.filtersValue('preWeek')" class="groupX middle">Present Week</md-button>
@@ -152,11 +157,11 @@
                     <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 40px;">
             <div style="min-height: 40px;" class="md-toolbar-tools">DGE Used/Day</div>
             </md-toolbar>
-                                <section layout="row" layout-align="end end">
+                    <!--<section layout="row" layout-align="end end">
                         <md-button  ng-class="{active: vm.paramsGU == 'GUlasWeek' }" ng-click="vm.filtersValue('lasWeek')" class="groupX left">Last Week</md-button>
                         <md-button ng-class="{active: vm.paramsGU == 'GUcurWeek' }"  ng-click="vm.filtersValue('preWeek')" class="groupX middle">Present Week</md-button>
                         <md-button ng-class="{active: vm.paramsGU == 'GUmonthly' }" ng-click="vm.filtersValue('monthly')" class="groupX right">Monthly</md-button>
-                    </section>
+                    </section>-->
                     <!--<bar-chart layout-fill ng-if="vm.renderAgain" data="vm.barData" title="barChart"></bar-chart>-->
                      <barline-chart layout-fill data="vm.milesGallonsData" title="barChart"></barline-chart>
             </div>

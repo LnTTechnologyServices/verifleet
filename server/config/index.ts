@@ -25,5 +25,4 @@ let config = {
     }
   }
 }
-
 export {config}
