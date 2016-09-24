@@ -1,5 +1,41 @@
 
 fuel {
+
+    
+.panel-primary {
+        border-color: #001441 !important;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-top: 5px solid;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+
+.panel-primary>.panel-heading {
+    color: #001441;
+    background-color: #E6EAED;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-body {
+    padding: 15px;
+}
+
   .filter-text {
       width: 100px;
       background-color: #1b202d;
@@ -468,7 +504,9 @@ md-input-container.md-icon-left {
     padding-right: 0 ;
 }
 
+// Panel corlor 
 
+
+// Panel corlor end
 
 }
-

@@ -1,51 +1,48 @@
 <md-card>
-    <md-card-content>
-        <div layout-align="end start" layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" flex="70">
-        </div>
-
-                <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
-            <div flex-xs="100" flex="100">
-                <div flex="100" id="category">
-                    <section flex-xs="100" flex="100" layout="row" layout-align="center center">
-                    <md-button style="background-color: salmon;" class="groupX left">Engine Alerts</md-button>
-                    <md-button class="groupX right">Schedule Maintenance </md-button>
-                    </section>
-                </div>
+   <md-card-content>
+      <div layout-align="end start" layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" flex="70">
+      </div>
+      <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
+         <div flex-xs="100" flex="100">
+            <div flex="100" id="category">
+               <section flex-xs="100" flex="100" layout="row" layout-align="center center">
+                  <md-button style="background-color: salmon;" class="groupX left">Engine Alerts</md-button>
+                  <md-button class="groupX right">Schedule Maintenance </md-button>
+               </section>
             </div>
-                </div>            
-
-
-
-        <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
-            <div flex-xs="100" flex="100">
-                <div flex="100" style="margin-top: 5px;border: 1px solid gainsboro;">
-                    <md-toolbar class="_md _md-toolbar-transitions" style="position: inherit;background-color: rgb(27,32,45);min-height: 50px;">
-                        <div class="md-toolbar-tools">
-                            <h2>Logs</h2>
-                        </div>
-                    </md-toolbar>
-                    <br>
-                    <md-list>
-                        <div ng-repeat="item in vm.logs">
-                            <activity-list-item activity="item"></activity-list-item>
-                            <md-divider>
-                        </div>
-                        <div ng-if="!vm.logs.length">
-                            <p>No items to display.</p>
-                        </div>
-                    </md-list>
-                 <md-list>
-                    <div ng-repeat="item in vm.filteredActivityAlarmItems | orderBy: '-timestamp'">
+         </div>
+      </div>
+      <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
+      <div flex-xs="100" flex="100">
+         <div flex="100" style="margin-top: 5px;">
+            <div class="panel panel-primary"  flex-xs="100" flex="100">
+               <div class="panel-heading">
+                  <h3 class="panel-title">Logs</h3>
+               </div>
+               <div class="panel-body">
+                  <md-list>
+                     <div ng-repeat="item in vm.logs">
+                        <activity-list-item activity="item"></activity-list-item>
+                        <md-divider>
+                     </div>
+                     <div ng-if="!vm.logs.length">
+                        <p>No items to display.</p>
+                     </div>
+                  </md-list>
+                  <md-list>
+                     <div ng-repeat="item in vm.filteredActivityAlarmItems | orderBy: '-timestamp'">
                         <alarm-list-item ng-if="item.type === 'alarm'" alarm="item"></alarm-list-item>
                         <activity-list-item  ng-if="item.type === 'activity'" activity="item" item-type="long"></activity-list-item>
                         <md-divider ng-if="item.type === 'alarm' || item.type === 'activity'">
-                    </div>
-                    <div ng-if="!vm.filteredActivityAlarmItems.length && vm.search !== ''">
+                     </div>
+                     <div ng-if="!vm.filteredActivityAlarmItems.length && vm.search !== ''">
                         <p>No items match your search.</p>
-                    </div>
-                </md-list>
-                </div>
+                     </div>
+                  </md-list>
+               </div>
             </div>
-    </md-card-content>
+         </div>
+      </div>
+   </md-card-content>
 </md-card>
 <div>
