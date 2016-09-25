@@ -1,7 +1,123 @@
+<div class="button-bar" layout="row">
+   <div layout="row" class="filter-text">Filters</div>
+   <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row"">
+      &nbsp;&nbsp;&nbsp;
+      <div flex-xs="50" flex="48">
+         <md-select style="background-color: gainsboro;" placeholder="Choose Vehicle Filter" ng-model="vm.vehicleFilter" ng-change="vm.onvehicleChange()">
+            <md-option ng-repeat="vehicle in vm.vehicleFilterList" value="{{vehicle}}">
+               {{vehicle}}
+            </md-option>
+         </md-select>
+      </div>
+   </div>
+   <br>
+</div>
 <md-card>
    <md-card-content>
       <div layout-align="end start" layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row" flex="70">
       </div>
+      <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
+
+          <div flex-xs="100" flex="50">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">Engine Alerts</h3>
+            </div>
+            <center>
+            <ul class="stats_box"  flex-xs="98" flex="98" style="padding-left:10%;margin-bottom: 0px;">
+               <li>
+                  <div class="sparkline line_day">
+                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  </div>
+                  <div class="stat_text">
+                     <strong>Red Stop Lamp Status</strong>
+                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.redStop }} </span> 
+                  </div>
+               </li>
+               <li>
+                  <div class="sparkline line_day">
+                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  </div>
+                  <div class="stat_text">
+                     <strong>Malfunction Indicator Lmp Status</strong>
+                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.malfunctionIndicator }}</span> 
+                  </div>
+               </li>
+               <li>
+                  <div class="sparkline line_day">
+                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  </div>
+                  <div class="stat_text">
+                     <strong>Protect Lamp Status</strong>
+                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.protectLamp }}</span> 
+                  </div>
+               </li>
+               <li>
+                  <div class="sparkline line_day">
+                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  </div>
+                  <div class="stat_text">
+                     <strong>Amber Lamp Status</strong>
+                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.amberLamp }}</span> 
+                  </div>
+               </li>
+               <li>
+                  <div class="sparkline line_day">
+                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  </div>
+                  <div class="stat_text">
+                     <strong>DGE/Hrs</strong>
+                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.dgeHrs }}</span> 
+                  </div>
+               </li>
+               <li>
+                  <div class="sparkline line_day">
+                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  </div>
+                  <div class="stat_text">
+                     <strong>Next Maintenance</strong>
+                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.nextMaintenance }}</span> 
+                  </div>
+               </li>
+
+               
+            </ul>
+            <center>
+         </div>
+          </div>
+
+          <div flex-xs="100" flex="50">
+              <div class="panel panel-primary"  flex-xs="100" style="margin-left: 5px;">
+            <div class="panel-heading">
+               <h3 class="panel-title">Schedule Maintenance</h3>
+            </div>
+            <center>
+
+                <bR><bR><bR>
+          <table class="table table-bordered table-striped">
+                  <thead>
+                     <tr>
+                        <td>Last Three Maintenance</td>
+                        <td>Engine Hours After Maintenance</td>
+                     </tr>
+                  </thead>
+                    <tr ng-repeat="main in vm.scheMaintenance">
+                        <td> {{ main.lastThree }}</td>
+                        <td>  {{ main.engineHoursAfterMain }}</td>
+                     </tr>
+        </tbody>
+        </table>
+            <center>
+         </div>
+          </div>
+          
+
+
+
+
+      </div>
+
+
       <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
       <div flex-xs="100" flex="100">
          <div flex="100" style="margin-top: 5px;">

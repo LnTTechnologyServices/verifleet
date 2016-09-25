@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 class FuelController {
-    constructor($timeout, $ngRedux, deviceService, $state, auth, store, ) {
+    constructor($timeout, $ngRedux, deviceService, $state, auth, store,) {
         "ngInject";
         this.deviceService = deviceService;
         this.headerUrl = require("./maps.jpg");
@@ -10,27 +10,21 @@ class FuelController {
         this.store = store;
         this.unsubscribe = $ngRedux.connect(this.mapStateToThis, this.deviceService)((selectedState, actions) => {
             this.componentWillReceiveStateAndActions(selectedState, actions);
-
             Object.assign(this, selectedState, actions);
         });
-        this.runBarchart();
-        this.runFuelGuage();
-        this.runSlider();
+
         this.$timeout = $timeout;
 
-        this.paramsGU = "GUcurWeek";
+        this.dateFilterList = [{"id": 5, "value": "Last 5 Days" },
+            {"id": 10, "value": "Last 10 Days" },     
+            {"id": 15, "value": "Last 15 Days" },   
+            {"id": 20, "value": "Last 20 Days" }];
+        this.dateFilter = 5
+        
         this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 5 } }]';
+
         // create the list of sushi rolls 
-        this.sushi = [
-            // { name: 'BH-1', fish: '30mbh', tastiness: "Los Angeles, CA" },
-            // { name: 'BH-56', fish: '18mbh', tastiness: "Oxnard, CA" },
-            // { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
-            // { name: 'BH-98', fish: '15mbh', tastiness: "Los Angeles, CA" },
-            // { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
-            // { name: 'BH-98', fish: '15mbh', tastiness: "Los Angeles, CA" },
-            // { name: 'BH-56', fish: '18mbh', tastiness: "Oxnard, CA" },        
-            // { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
-        ];
+        this.sushi = [];
 
         function loadAfterAuthed(vm) {
             if (vm.auth.isAuthenticated && vm.store.get("token")) {
@@ -40,17 +34,17 @@ class FuelController {
                 self.Timer = vm.$timeout(() => loadAfterAuthed(vm), 50);
             }
         }
+
         loadAfterAuthed(this);
 
-        this.ontimeframeChange();
-        this.refreshTrendData();
 
+        this.runGasFilled();
+        this.runGasUsed();
+        this.ontimeframeChange();
 
         this.sortType = 'name'; // set the default sort type
         this.sortReverse = false; // set the default sort order
         this.searchFish = ''; // set the default search/filter term
-
-
 
     }
 
@@ -86,7 +80,6 @@ class FuelController {
                         // _.each(this.device, function(dev) {
                             this.sushi.push({ name: device.name, type: device.type, location: device.data.gps[0].value });
                         // }, this);
-                        // alert(JSON.stringify(this.sushi));
                         // this.plotData = [];
                         // _.each(PLOT_DATAPORTS, (dataport) => {
                         //     // console.log("device data" + this.device.data[dataport]);
@@ -114,21 +107,15 @@ class FuelController {
             this.updated = false;
             this.updateResults();
         }
+
+       
     }
 
-
-
-    runSlider() {
-        this.color = 76;
-        this.minvalue = 0;
-        this.maxvalue = 100;
-    }
-
-    refreshTrendData() {
-        // console.log(this.device1Selected)
-        // console.log(this.device2Selected)
-        this.updateResults();
-    }
+    // refreshTrendData() {
+    //     // console.log(this.device1Selected)
+    //     // console.log(this.device2Selected)
+    //     this.updateResults();
+    // }
 
     ontimeframeChange() {
         this.initialized = false;
@@ -136,95 +123,24 @@ class FuelController {
         //    this.getDevicesTrend('raw_data', (Date.now() - this.timeframeSelected));
     }
 
-    runBarchart() {
+    runGasFilled() {
         this.barchart = true
         this.renderAgain = true;
 
-        this.milesGallonsData = {
+        this.milesGallonsFilledData = {
             "categories": ['12 Sep', '13 Sep', '14 Sep', '15 Sep', '16 Sep', '17 Sep', '18 Sep'],
-            "yaxisText": "Gallons",
-            "plotLines": [{
-                value: 150,
-                color: 'green',
-            }, {
-                value: 350,
-                color: 'red',
-            }],
             "values": [450, 234, 321, 321, 321, 321, 321]
         }
-
-
-        //  this.barData = {
-        //         "series": [{
-        //             name: 'WM-212330',
-        //             data: [167, 143],
-        //             categories: ['1 sep', '22 sep'] }]
-        //         // }, {
-        //         //     name: 'WM-212439',
-        //         //     data: [12, 123, 34, 12, 23,45, 53, 12, 12, 12,34, 34, 12, 34],
-        //         //     categories: [1, 2, 3, 4, 5,7.8,9,10,12,13,14,15],
-        //         // }]
-        //     }
     }
 
-    filtersValue(params) {
-        if (params == "lasWeek") {
-            this.paramsGU = "GUlasWeek";
-            this.milesGallonsData = {
-                "categories": ['12 Sep', '13 Sep', '14 Sep', '15 Sep', '16 Sep', '17 Sep', '18 Sep'],
-                "yaxisText": "Gallons Filled ",
-                "plotLines": [{
-                    value: 150,
-                    color: 'green',
-                }, {
-                    value: 350,
-                    color: 'red',
-                }],
-                "values": [450, 234, 321, 321, 321, 321, 321]
-            }
-        } else if (params == "preWeek") {
-            this.paramsGU = "GUcurWeek";
-            this.milesGallonsData = {
-                "categories": ['19 Sep', '20 Sep', '21 Sep', '22 Sep', '23 Sep', '24 Sep', '25 Sep'],
-                "yaxisText": "Gallons Used",
-                "plotLines": [{
-                    value: 150,
-                    color: 'green',
-                }, {
-                    value: 350,
-                    color: 'red',
-                }],
-                "values": [123, 211, 456, 321, 121, 432, 123]
-            }
-        } else if (params == "monthly") {
-            this.paramsGU = "GUmonthly";
-            this.milesGallonsData = {
-                "categories": ['26 Sep', '27 Sep', '28 Sep', '29 Sep', '30 Sep', '1 oct', '2 oct'],
-                "yaxisText": "Gallons",
-                "plotLines": [{
-                    value: 150,
-                    color: 'green',
-                }, {
-                    value: 350,
-                    color: 'red',
-                }],
-                "values": [450, 234, 321, 321, 321, 321, 321]
-            }
+     runGasUsed() {
+        this.barchart = true
+        this.renderAgain = true;
+        this.milesGallonsUsedData = {
+            "categories": ['12 Sep', '13 Sep', '14 Sep', '15 Sep', '16 Sep', '17 Sep', '18 Sep'],
+            "values": [443, 322, 323, 542,322, 112, 232]
         }
     }
-
-    runFuelGuage() {
-        this.moons = true
-        this.max = 200
-        this.min = this.min
-        this.gaugeData = {
-            "max": this.max,
-            "min": this.min,
-            "value": 120
-        }
-    }
-
-
 
     updateResults() {
         if (this.devicesTrendData) {

@@ -19,37 +19,22 @@ class barlineChartController {
                  title: {
                  text: null
             }
-            // plotLines:[{
-            //     value: this.data.plotLines[0].value,
-            //     color: this.data.plotLines[0].color,
-            //     width:1,
-            //     zIndex:4,
-            //     dashStyle: 'longDash'
-            // },{
-            //    value: this.data.plotLines[1].value,
-            //     color: this.data.plotLines[1].color,
-            //     width:1,
-            //     zIndex:4,
-            //     dashStyle: 'longDash'
-            // }
-            // ]
             },
             legend: {
             enabled: false
         },
-            plotOptions: {
-                    series: {
-                        dataLabels: {
-                            enabled: true,
-                            style: {
-                                color: '#fff'
-                            }
-                        }
-                    }
+        tooltip: { enabled: false },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: false
+                }
+            }
         },
     },
     series: [{
-                name: this.data.yaxisText,
+                name: "Distance to empty",
+                showInLegend: false,
                 data: this.data.values
             }],
             func: function(chart) {
@@ -61,7 +46,10 @@ class barlineChartController {
 }
 
     $onChanges(changes) {
-    console.log(changes.data.currentValue.values);
+
+    console.log("Changes data");
+    console.log(changes);
+    
     if(changes.data.currentValue.values) {
         this.config.series[0].data =  changes.data.currentValue.values;
     }

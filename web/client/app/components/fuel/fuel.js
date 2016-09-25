@@ -3,6 +3,7 @@ import uiRouter from 'angular-ui-router';
 import fuelComponent from './fuel.component';
 import './fuel.scss';
 
+
 let fuelModule = angular.module('fuel', [
   uiRouter
 ])

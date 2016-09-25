@@ -1,21 +1,17 @@
 class VfSharedService {
 
     constructor() {
-        this.mem = [];
+        this.vechicleData = [];
          console.log("VfSharedService");
-        
     }
 
-    setBarValue(data) {
-        this.mem = data;
+    setVechicleData(data) {
+        this.vechicleData = data;
     }
 
-    getBarValue() {
-        return this.mem;
+    getVechicleData() {
+        return this.vechicleData;
     }
-
-     
-   
 };
 
 export default VfSharedService;

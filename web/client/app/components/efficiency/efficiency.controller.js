@@ -1,14 +1,14 @@
 import * as _ from 'lodash';
 
 class EfficiencyController {
-    constructor($timeout, $ngRedux, deviceService, $state, auth, store, $stateParams) {
+    constructor($timeout, $ngRedux, deviceService, $state, auth, store, $stateParams, $rootScope,$scope,) {
         "ngInject";
 
         this.deviceService = deviceService;
         this.vechicle_id = $stateParams.vechicle_id;
-        console.log("VEHICLE:" + this.vechicle_id);
-
-        this.auth = auth
+        this.$rootScope = $rootScope;
+        this.auth = auth;
+        this.$scope = $scope;
         this.$timeout = $timeout
         this.$state = $state;
         this.store = store;
@@ -17,8 +17,6 @@ class EfficiencyController {
             Object.assign(this, selectedState, actions);
         });
 
-        this.runBarMilesGallon();
-        this.runFuelGuage();
 
         //this.runCommonFunction();
         this.paramsMG = "MGcurWeek"
@@ -26,13 +24,6 @@ class EfficiencyController {
 
         this.deviceId = this.vechicle_id;
         //'WM-212438'; // Update on navigation
-        this.barChartFilters = [
-            { "id": 1, "value": "Last 10 Days" },
-            { "id": 2, "value": "Last 20 Days" },
-            { "id": 3, "value": "Last 25 Days" },
-            { "id": 4, "value": "Last 30 Days" }
-        ];
-        this.barChartFiltersValue = "Last 10 Days";
 
         this.lineChartData = [{
             name: 'VM-121',
@@ -42,10 +33,16 @@ class EfficiencyController {
             data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9]
         }];
 
-        this.summaryList = ["Last 5 days", "Last 10 days", "Last 15 days", "Last 30 days"];
-        this.vehicleList = ["VM-121", "VM-754", "VM-456", "VM-232"];
-        this.dgeList = ["Last 5 days", "Last 10 days", "Last 15 days", "Last 30 days"];
-        this.timeList = ["Last 5 days", "Last 10 days", "Last 15 days", "Last 30 days"];
+        this.dateFilterList = [{"id": 5, "value": "Last 5 Days" },
+            {"id": 10, "value": "Last 10 Days" },     
+            {"id": 15, "value": "Last 15 Days" },   
+            {"id": 20, "value": "Last 20 Days" }];
+
+        this.vehicleFilterList = ["WM-212438", "WM-212439", "WM-212440", "WM-212441", "WM-212442"];
+
+        this.dateFilter = 5
+        this.vehicleFilter = this.vechicle_id;
+
 
         function loadAfterAuthed(vm) {
             if (vm.auth.isAuthenticated && vm.store.get("token")) {
@@ -56,8 +53,11 @@ class EfficiencyController {
             }
         }
         loadAfterAuthed(this);
-    }
 
+        this.runBarMilesGallon();
+        this.runFuelGuage();
+        this.runDistancetoEmpty();
+    }
 
     // Which part of the Redux global state does our component want to receive?
     mapStateToThis(state) {
@@ -72,6 +72,13 @@ class EfficiencyController {
             isLoading
         };
     }
+
+   onvehicleChange(){
+        this.vechicle_id = this.vehicleFilter;
+        this.initialized = false;
+        this.getDevices(this.aliases);
+};
+
     runFuelGuage() {
         this.moons = true
         this.max = 60
@@ -83,6 +90,13 @@ class EfficiencyController {
         }
     }
 
+     runDistancetoEmpty() {
+        this.distanceData = {
+            "max": this.max,
+            "min": this.min,
+            "value": 45
+        }
+    }
 
     //Miiles/Gallon
     runBarMilesGallon() {
@@ -100,56 +114,6 @@ class EfficiencyController {
         }
     }
 
-
-
-
-    filtersValue(params) {
-        if (params == "MGlasWeek") {
-            this.paramsMG = "MGlasWeek";
-            this.milesGallonsData = {
-                "categories": ['1 Sep', '2 Sep', '3 Sep', '4 Sep', '5 Sep', '6 Sep', '7 Sep'],
-                "yaxisText": "Gallons",
-                "plotLines": [{
-                    value: 150,
-                    color: 'green',
-                }, {
-                    value: 350,
-                    color: 'red',
-                }],
-                "values": [112, 123, 343, 543, 123, 321, 532]
-            }
-        } else if (params == "MGcurWeek") {
-            this.paramsMG = "MGcurWeek";
-            this.milesGallonsData = {
-                "categories": ['8 Sep', '9 Sep', '10 Sep', '11 Sep', '12 Sep', '13 Sep', '14 Sep'],
-                "yaxisText": "Gallons",
-                "plotLines": [{
-                    value: 150,
-                    color: 'green',
-                }, {
-                    value: 350,
-                    color: 'red',
-                }],
-                "values": [213, 324, 432, 213, 456, 123, 321]
-            }
-        } else if (params == "MGmonthly") {
-            this.paramsMG = "MGmonthly";
-            this.milesGallonsData = {
-                "categories": ['15 Sep', '16 Sep', '17 Sep', '18 Sep', '19 Sep', '20 Sep', '21 Sep'],
-                "yaxisText": "Gallons",
-                "plotLines": [{
-                    value: 150,
-                    color: 'green',
-                }, {
-                    value: 350,
-                    color: 'red',
-                }],
-                "values": [450, 234, 321, 321, 321, 321, 321]
-            }
-        }
-
-
-    }
     componentWillReceiveStateAndActions(nextState, nextActions) {
         console.log("LOADED")
             // alert(JSON.stringify(nextState.devices));
@@ -168,7 +132,7 @@ class EfficiencyController {
                         if (this.milesGallonsData) {
                             if (device.name == this.vechicle_id) {
                                 var i = 0;
-                                console.log("Done");
+                                console.log("Done", this.vechicle_id);
                                 for (i = 0; i < device.data.dge.length; i++) {
                                     this.milesGallonsData.categories.push(this.convertDate(device.data.dge[i].timestamp));
                                     this.milesGallonsData.values.push(device.data.dge[i].value);
@@ -186,24 +150,66 @@ class EfficiencyController {
         this.updateResults();
         // }
     }
+
+    
     updateResults() {
         if (this.deviceListItems)
             var deviceNew = this.deviceListItems.find(function(x) {
                 return x.name == this.vechicle_id;
             }, this);
-        console.log("result" + JSON.stringify(deviceNew));
         if (deviceNew && this.milesGallonsData) {
             this.milesGallonsData.values = [];
             this.milesGallonsData.categories = [];
             // if (device.name == this.vechiscle_id) {
             var i = 0;
-            console.log("Done");
-            for (i = 0; i < deviceNew.data.dge.length; i++) {
-                this.milesGallonsData.categories.push(this.convertDate(deviceNew.data.dge[i].timestamp));
-                this.milesGallonsData.values.push(deviceNew.data.dge[i].value);
-            }
-            // }
+            if(deviceNew.data.dge){    
+                for (i = 0; i < deviceNew.data.dge.length; i++) {
+                    this.milesGallonsData.categories.push(this.convertDate(deviceNew.data.dge[i].timestamp));
+                    this.milesGallonsData.values.push( Number((deviceNew.data.dge[i].value).toFixed(2)));
+                    if((deviceNew.data.dge.length - 1) === i){ 
+                        this.displayData = true;
+                    } 
+                }
+             }
+
+                this.config = {
+                        options: {
+                                chart: {
+                                    renderTo: 'container',
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: null
+                                },
+                                xAxis: {
+                                    categories: this.milesGallonsData.categories
+                                },
+                                yAxis: {
+                                    title: {
+                                    text: null
+                                }
+                                },
+                                legend: {
+                                enabled: false
+                            },
+                                plotOptions: {
+                                        series: {
+                                            dataLabels: {
+                                                enabled: true,
+                                                style: {
+                                                    color: '#fff'
+                                                }
+                                            }
+                                        }
+                            },
+                        },
+                        series: [{
+                                    name: null,
+                                    data: this.milesGallonsData.values, color: 'rgb(149, 206, 255)'
+                                }]
+                };
         }
+                   
     }
     convertDate(unix_timestamp) {
         var a = new Date(unix_timestamp);

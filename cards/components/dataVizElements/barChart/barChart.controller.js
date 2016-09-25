@@ -31,6 +31,7 @@ class BarChartController {
             legend: {
                 enabled: false
             },
+            
             yAxis: {
                 title: {
                     text: null

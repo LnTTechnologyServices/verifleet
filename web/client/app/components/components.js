@@ -14,7 +14,6 @@ import Efficiency from './efficiency/efficiency';
 import Alerts from './alerts/alerts';
 
 
-
 let componentModule = angular.module('app.components', [
   Login.name,
   Home.name,

@@ -6,82 +6,93 @@ class FuelChartController {
     this.$timeout = $timeout
     this.config = {
       options: {
-         chart: {
-            type: 'solidgauge',
-            marginTop: 50
-        },
-        title: {
-            text: 'Activity',
-            style: {
-                fontSize: '24px'
-            }
-        },
-        tooltip: {
-            borderWidth: 0,
-            backgroundColor: 'none',
-            shadow: false,
-            style: {
-                fontSize: '16px'
+            chart: {
+                        type: 'gauge',
+                        plotBackgroundColor: null,
+                        plotBackgroundImage: null,
+                        plotBorderWidth: 0,
+                        plotShadow: false,
+                        height:300
+                    },
+            title: {
+                text: null
             },
-            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
-            positioner: function (labelWidth) {
-                return {
-                    x: 270 - labelWidth / 2,
-                    y: 180
-                };
-            }
-        },
-        pane: {
-            startAngle: 0,
-            endAngle: 360,
-            background: [{ // Track for Move
-                outerRadius: '112%',
-                innerRadius: '88%',
-                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
-                borderWidth: 0
-            }, { // Track for Exercise
-                outerRadius: '87%',
-                innerRadius: '63%',
-                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1]).setOpacity(0.3).get(),
-                borderWidth: 0
-            }]
-        },
-        yAxis: {
-            min: 0,
-            max: 60,
-            lineWidth: 0,
-            tickPositions: []
-        },
-        plotOptions: {
-            solidgauge: {
-                borderWidth: '34px',
-                dataLabels: {
-                    enabled: false
+            pane: {
+                center:[110,112],
+                startAngle: -150,
+                endAngle: 150,
+                background: [{
+                    backgroundColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                        stops: [
+                            [0, '#FFF'],
+                            [1, '#333']
+                        ]
+                    },
+                    borderWidth: 0,
+                    outerRadius: '109%'
+                }, {
+                    backgroundColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                        stops: [
+                            [0, '#333'],
+                            [1, '#FFF']
+                        ]
+                    },
+                    borderWidth: 1,
+                    outerRadius: '107%'
+                }, {
+                    // default background
+                }, {
+                    backgroundColor: '#DDD',
+                    borderWidth: 0,
+                    outerRadius: '105%',
+                    innerRadius: '103%'
+                }]
+            },
+
+            // the value axis
+            yAxis: {
+                min: this.data.min,
+                max: this.data.max,
+                minorTickInterval: 'auto',
+                minorTickWidth: 1,
+                minorTickLength: 10,
+                minorTickPosition: 'inside',
+                minorTickColor: '#666',
+
+                tickPixelInterval: 30,
+                tickWidth: 2,
+                tickPosition: 'inside',
+                tickLength: 10,
+                tickColor: '#666',
+                labels: {
+                    step: 2,
+                    rotation: 'auto'
                 },
-                linecap: 'round',
-                stickyTracking: false
-            }
-        },
+                title: {
+                    text: null
+                },
+                plotBands: [{
+                    from: 0,
+                    to: 30,
+                    color: '#DF5353' // red
+                   
+                }, {
+                    from: 30,
+                    to: 40,
+                    color: '#DDDF0D' // yellow
+                }, {
+                    from: 40,
+                    to: 60,
+                     color: '#55BF3B' // green
+                }]
+            },
       },
     series: [{
-            name: 'Total',
-            borderColor: Highcharts.getOptions().colors[0],
-            data: [{
-                color: Highcharts.getOptions().colors[0],
-                radius: '100%',
-                innerRadius: '100%',
-                y: 60
-            }]
-        }, {
-            name: 'Availiable',
-            borderColor: Highcharts.getOptions().colors[1],
-            data: [{
-                color: Highcharts.getOptions().colors[1],
-                radius: '75%',
-                innerRadius: '75%',
-                y: 53
-            }]
-        }],
+                name: 'Fuel Level',
+                data: [this.data.value],
+            }],
     func: function(chart) {
             $timeout(function() {
                 chart.reflow();
@@ -95,15 +106,6 @@ class FuelChartController {
     if(changes.data.currentValue.value) {
         this.config.series.data =  changes.data.currentValue.value;
     }
-
-    // if(changes.data.currentValue.max) {
-    //     this.config.yAxis.max =  changes.data.currentValue.max;
-    // }    
-
-    // if(changes.data.currentValue.min) {
-    //     this.config.yAxis.min  =  changes.data.currentValue.min;
-    // }
-
   } 
 
 

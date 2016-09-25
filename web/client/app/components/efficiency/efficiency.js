@@ -15,7 +15,10 @@ let efficiencyModule = angular.module('efficiency', [
     .state('efficiency', {
       url: '/efficiency/:vechicle_id',
       template: '<efficiencyfile></efficiencyfile>',
-      data: { requiresLogin: true }
+      data: { requiresLogin: true },
+      params: {
+        vechicle_id: 'WM-212438'
+      }
     });
 })
 .component('efficiencyfile',efficiencyComponent);

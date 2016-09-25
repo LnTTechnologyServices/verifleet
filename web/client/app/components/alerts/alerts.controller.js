@@ -40,6 +40,9 @@ class LogsController {
     this.vehicleList = ["VM-121", "VM-754", "VM-456", "VM-232"];
     this.dgeList = ["Last 5 days", "Last 10 days", "Last 15 days", "Last 30 days"];
     this.timeList = ["Last 5 days", "Last 10 days", "Last 15 days", "Last 30 days"];
+
+   this.vehicleFilterList = ["WM-212438", "WM-212439", "WM-212440", "WM-212441", "WM-212442"];
+   this.vehicleFilter = "WM-212438";
    
    
     this.logs = [{
@@ -68,6 +71,29 @@ class LogsController {
         "timestamp": new Date()
       }
     ];
+
+
+ this.engineAlerts = {
+    "redStop": "12",
+    "malfunctionIndicator" : "1",
+    "protectLamp" : "1",
+    "amberLamp" : "1",
+    "dgeHrs" : "12",
+    "nextMaintenance" : "14 Dec 2016"   
+ };
+
+ 
+ this.scheMaintenance = [{
+      "lastThree": "11 Sep, 2016 – 10:00 AM",
+      "engineHoursAfterMain": "2321" }, 
+      {
+        "lastThree": "23 Feb, 2016 – 11:00 AM",
+        "engineHoursAfterMain": "13343"
+      }, {
+        "lastThree": "12 Dec, 2015 – 12:00 AM",
+        "engineHoursAfterMain": "12353"
+      }];
+
 
     function loadAfterAuthed(vm) {
       if(vm.auth.isAuthenticated && vm.store.get("token")) {

@@ -42,7 +42,7 @@ fuel {
       color: white;
       font-weight: bold;
       padding-left: 25px;
-      padding-top: 10px;
+      padding-top: 17px;
   }
     .fuel-gradient {
         background: rgba(76,76,76,1);
@@ -177,7 +177,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', end
     }
     // Slider end
 
-    .stats_box {
+.stats_box {
     display: inline-block;
     list-style: none outside none;
     margin-left: 0;
@@ -190,8 +190,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', end
     box-shadow: 0 0 0 1px #F8F8F8 inset, 0 0 0 1px #CCCCCC;
     display: inline-block;
     line-height: 18px;
-       margin: 0 16px 10px;
-    padding: 0 10px;
+    margin: 0 6px 10px;
+    padding: 8px 10px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
     float: left;
     background-color: whitesmoke;
@@ -502,6 +502,10 @@ thead {
 md-input-container.md-icon-left {
     padding-left: 0px !important;
     padding-right: 0 ;
+}
+
+md-select {
+    margin: 10px 0 11px 0 !important;
 }
 
 // Panel corlor 
