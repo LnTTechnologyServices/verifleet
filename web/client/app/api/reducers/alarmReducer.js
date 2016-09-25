@@ -135,10 +135,10 @@ function reduceAlarmFromData(device, data) {
   //console.log(ecu_data);
   return {
     status: data.status,
-    title: titleFromECUData(ecu_data),
+    title: device.name,
     //description: descriptionFromECUData(ecu_data),
     group: descriptionFromECUData(ecu_data),
-    subtitle: subtitleFromECUData(ecu_data),
+    subtitle: titleFromECUData(ecu_data),
     timestamp: data.timestamp,
     icon: iconFromText(data.text),
     pid: device.pid,
