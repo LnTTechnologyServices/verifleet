@@ -34,6 +34,7 @@ function requestDevices() {
 }
 
 function receiveDevices(devices) {
+    console.log("receiveDevices",devices);
     return {
         type: types.RECEIVE_DEVICES,
         devices: devices
@@ -92,7 +93,7 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
                     data: aliases
                 })
                 .then(response => {
-                    // console.log("Hiiii");
+                    console.log("Hiiii");
                     console.log(response.data);
                     return response.data;
                 })

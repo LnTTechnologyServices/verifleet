@@ -13,11 +13,15 @@ class LogsController {
     this.activityAlarmItems = []
     this.filteredActivityAlarmItems = []
     this.initialized = false;
+  
+    this.aliases = '[{"alias":"ecu","options": {"sort":"desc", "limit":5}}]';
 
     this.unsubscribe = $ngRedux.connect(this.mapStateToThis, this.deviceService)((selectedState, actions) => {
       this.componentWillReceiveStateAndActions(selectedState, actions);
       Object.assign(this, selectedState, actions);
     });
+
+     this.getDevices(this.aliases);
 
      this.stackedChartdata = [{
       name: 'Critical',
@@ -43,47 +47,15 @@ class LogsController {
 
    this.vehicleFilterList = ["WM-212438", "WM-212439", "WM-212440", "WM-212441", "WM-212442"];
    this.vehicleFilter = "WM-212438";
-   
-   
-    this.logs = [{
-      "title": "11Sep2016 – 10:00 AM",
-      "subtitle": "Engine over heat",
-      "description": "Critical",
-      "icon": "icon-enter-service-mode",
-      "timestamp": new Date()
-    }, {
-        "title": "11Sep2016 – 11:00 AM",
-        "subtitle": "Tyre pressure is low",
-        "description": "Low",
-        "icon": "icon-enter-service-mode",
-        "timestamp": new Date()
-      }, {
-        "title": "11Sep2016 – 12:00 AM",
-        "subtitle": "tyre pressure is low",
-        "description": "Low",
-        "icon": "icon-enter-service-mode",
-        "timestamp": new Date()
-      }, {
-        "title": "11Sep2016 – 12:00 AM",
-        "subtitle": "tyre pressure is low",
-        "description": "Low",
-        "icon": "icon-enter-service-mode",
-        "timestamp": new Date()
-      }
-    ];
 
+   this.red_stop_lamp_status = 0;
+   this.amber_lamp_status = 0;
+   this.malfunction_indicator_lamp_status = 0;
+   this.protect_lamp_status = 0;
 
- this.engineAlerts = {
-    "redStop": "12",
-    "malfunctionIndicator" : "1",
-    "protectLamp" : "1",
-    "amberLamp" : "1",
-    "dgeHrs" : "12",
-    "nextMaintenance" : "14 Dec 2016"   
- };
-
+   this.nextMaintenance = new Date();
  
- this.scheMaintenance = [{
+   this.scheMaintenance = [{
       "lastThree": "11 Sep, 2016 – 10:00 AM",
       "engineHoursAfterMain": "2321" }, 
       {
@@ -120,6 +92,19 @@ class LogsController {
     })
   }
 
+ getCount(group) {
+    var count = 0;
+    if(this.activityAlarmItems)
+    {
+      for (var i = 0; i < this.activityAlarmItems.length; i++) {
+          if (this.activityAlarmItems[i].group == group) {
+              count++;
+          }
+      }
+    }
+    return count;
+ }
+
   updateResults() {
      console.log("updatere" + JSON.stringify(this.activityAlarmItems));
     if(this.search !== "") {
@@ -129,6 +114,12 @@ class LogsController {
     } else {
       this.filteredActivityAlarmItems = this.activityAlarmItems;
     }
+
+   this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');
+   this.amber_lamp_status =  this.getCount('amber_lamp_status');
+   this.malfunction_indicator_lamp_status = this.getCount('malfunction_indicator_lamp_status');
+   this.protect_lamp_status =  this.getCount('protect_lamp_status');
+
   }
 
   $onDestroy() {
@@ -138,11 +129,9 @@ class LogsController {
   // Which part of the Redux global state does our component want to receive?
   mapStateToThis(state) {
     const alarms = state.alarms;
-    const activities = state.activities;
     const devices = state.devices;
     const isLoading = state.isLoading;
     return {
-      activities,
       alarms,
       devices,
       isLoading,
@@ -166,15 +155,15 @@ class LogsController {
     }
 
     if(nextState.alarms) {
-      // console.log("in alarms"+JSON.stringify(nextState.alarms));
+       console.log("in alarms"+JSON.stringify(nextState.alarms));
       let newAlarms = _.difference(nextState.alarms, this.activityAlarmItems)
       if(newAlarms.length) {
         this.updated = true;
-        newAlarms = newAlarms.map(alarm => {
-          alarm.onClick = () => this.$state.go('device', {product_id: alarm.pid, device_id: alarm.did})
-          return alarm;
+        newAlarms = newAlarms.map( alarm => {
+            alarm.onClick = () => this.$state.go('device', {product_id: alarm.pid, device_id: alarm.did})
+            return alarm;
         })
-      //  this.activityAlarmItems = this.activityAlarmItems.concat(newAlarms);
+        this.activityAlarmItems = this.activityAlarmItems.concat(newAlarms);
       }
     }
 

@@ -4,7 +4,7 @@ import initialState from './initialState';
 
 function reduceDevice(device) {
 
-// console.log("reducedevice", device);
+console.log("reducedevice", device);
 //////////////////////////Extract Temperature
 var temperatureArray= [];
 if(device.data.raw_data)

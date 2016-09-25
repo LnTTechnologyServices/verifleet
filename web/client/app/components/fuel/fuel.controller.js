@@ -22,9 +22,9 @@ class FuelController {
         this.dateFilter = 5
         
         this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 5 } }]';
-
+        
         // create the list of sushi rolls 
-        this.sushi = [];
+        this.deviceslist = [];
 
         function loadAfterAuthed(vm) {
             if (vm.auth.isAuthenticated && vm.store.get("token")) {
@@ -76,9 +76,9 @@ class FuelController {
                         if (_.keys(device.data).length) {
                             nextActions.subscribeToDevices([device.sn], _.keys(device.data))
                         }
-                        if (this.sushi)
+                        if (this.deviceslist)
                         // _.each(this.device, function(dev) {
-                            this.sushi.push({ name: device.name, type: device.type, location: device.data.gps[0].value });
+                            this.deviceslist.push({ name: device.name, type: device.type, location: device.data.gps[0].value });
                         // }, this);
                         // this.plotData = [];
                         // _.each(PLOT_DATAPORTS, (dataport) => {
