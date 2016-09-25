@@ -9,53 +9,114 @@ class FuelController {
         this.$state = $state;
         this.store = store;
         this.unsubscribe = $ngRedux.connect(this.mapStateToThis, this.deviceService)((selectedState, actions) => {
+            this.componentWillReceiveStateAndActions(selectedState, actions);
+
             Object.assign(this, selectedState, actions);
         });
         this.runBarchart();
         this.runFuelGuage();
         this.runSlider();
         this.$timeout = $timeout;
-        
+
         this.paramsGU = "GUcurWeek";
+        this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 5 } }]';
+        // create the list of sushi rolls 
+        this.sushi = [
+            // { name: 'BH-1', fish: '30mbh', tastiness: "Los Angeles, CA" },
+            // { name: 'BH-56', fish: '18mbh', tastiness: "Oxnard, CA" },
+            // { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
+            // { name: 'BH-98', fish: '15mbh', tastiness: "Los Angeles, CA" },
+            // { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
+            // { name: 'BH-98', fish: '15mbh', tastiness: "Los Angeles, CA" },
+            // { name: 'BH-56', fish: '18mbh', tastiness: "Oxnard, CA" },        
+            // { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
+        ];
 
         function loadAfterAuthed(vm) {
             if (vm.auth.isAuthenticated && vm.store.get("token")) {
-                vm.getDevices({
-                    limit: 10
-                });
-             //   vm.getDevicesTrend('raw_data', (Date.now() - vm.timeframeSelected));
+                vm.getDevices(vm.aliases);
             } else {
                 if (self.Timer) $timeout.cancel(self.Timer);
                 self.Timer = vm.$timeout(() => loadAfterAuthed(vm), 50);
             }
         }
         loadAfterAuthed(this);
+
         this.ontimeframeChange();
         this.refreshTrendData();
 
 
-    this.sortType     = 'name'; // set the default sort type
-    this.sortReverse  = false;  // set the default sort order
-    this.searchFish   = '';     // set the default search/filter term
-  
-    // create the list of sushi rolls 
-    this.sushi = [
-        { name: 'BH-1', fish: '30mbh', tastiness: "Los Angeles, CA" },
-        { name: 'BH-56', fish: '18mbh', tastiness: "Oxnard, CA" },
-        { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
-        { name: 'BH-98', fish: '15mbh', tastiness: "Los Angeles, CA" },
-        { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
-        { name: 'BH-98', fish: '15mbh', tastiness: "Los Angeles, CA" },
-        { name: 'BH-56', fish: '18mbh', tastiness: "Oxnard, CA" },        
-        { name: 'BH-45', fish: '28mbh', tastiness: "ButtonWillow,CA" },
-    ];
-
- }
+        this.sortType = 'name'; // set the default sort type
+        this.sortReverse = false; // set the default sort order
+        this.searchFish = ''; // set the default search/filter term
 
 
 
+    }
 
- 
+    // Which part of the Redux global state does our component want to receive?
+    mapStateToThis(state) {
+        const devices = state.devices;
+        const alarms = state.alarms;
+        const activities = state.activities;
+        const isLoading = state.isLoading;
+        return {
+            alarms,
+            activities,
+            devices,
+            isLoading
+        };
+    }
+    componentWillReceiveStateAndActions(nextState, nextActions) {
+        // alert(JSON.stringify(nextState.devices));
+        if (nextState.devices)
+            if (nextState.devices.length) {
+                //  console.log("trendscontroller",this.initialized);
+                if (!this.initialized) {
+                    this.initialized = true;
+                    this.deviceListItems = nextState.devices;
+                    // console.log("devices trend",this.deviceListItems );
+                    nextState.devices.map((device) => {
+                        this.device = device;
+                        // console.log(device.data.gps[0].value);
+                        if (_.keys(device.data).length) {
+                            nextActions.subscribeToDevices([device.sn], _.keys(device.data))
+                        }
+                        if (this.sushi)
+                        // _.each(this.device, function(dev) {
+                            this.sushi.push({ name: device.name, type: device.type, location: device.data.gps[0].value });
+                        // }, this);
+                        // alert(JSON.stringify(this.sushi));
+                        // this.plotData = [];
+                        // _.each(PLOT_DATAPORTS, (dataport) => {
+                        //     // console.log("device data" + this.device.data[dataport]);
+                        //     // console.log("devicecontroller" +dataport + JSON.stringify(this.device.data));
+                        //     if (this.device.data[dataport]) {
+                        //         this.plotData.push({
+                        //             name: dataport,
+                        //             data: this.plotFromData(this.device.data[dataport])
+                        //         })
+                        //     }
+                        // })
+
+                        // this.devicesTrendData.push({
+                        //     name: this.device.name,
+                        //     sn: this.device.sn,
+                        //     plotdata: this.plotData
+                        // })
+                    })
+                    this.updated = true;
+                    // console.log("trend data", this.devicesTrendData)
+                }
+            }
+
+        if (this.updated) {
+            this.updated = false;
+            this.updateResults();
+        }
+    }
+
+
 
     runSlider() {
         this.color = 76;
@@ -72,25 +133,25 @@ class FuelController {
     ontimeframeChange() {
         this.initialized = false;
         this.devicesTrendData = [];
-    //    this.getDevicesTrend('raw_data', (Date.now() - this.timeframeSelected));
+        //    this.getDevicesTrend('raw_data', (Date.now() - this.timeframeSelected));
     }
 
     runBarchart() {
         this.barchart = true
         this.renderAgain = true;
 
-          this.milesGallonsData = {
-       "categories" : ['12 Sep', '13 Sep', '14 Sep','15 Sep', '16 Sep', '17 Sep','18 Sep'],
-       "yaxisText" : "Gallons",
-       "plotLines" :[{
-                    value:150,
-                    color: 'green',
-                    },{
-                    value:350,
-                    color: 'red',
-                    }
-                ],
-     "values" : [450, 234, 321,321,321,321,321]}
+        this.milesGallonsData = {
+            "categories": ['12 Sep', '13 Sep', '14 Sep', '15 Sep', '16 Sep', '17 Sep', '18 Sep'],
+            "yaxisText": "Gallons",
+            "plotLines": [{
+                value: 150,
+                color: 'green',
+            }, {
+                value: 350,
+                color: 'red',
+            }],
+            "values": [450, 234, 321, 321, 321, 321, 321]
+        }
 
 
         //  this.barData = {
@@ -109,46 +170,46 @@ class FuelController {
     filtersValue(params) {
         if (params == "lasWeek") {
             this.paramsGU = "GUlasWeek";
-               this.milesGallonsData = {
-       "categories" : ['12 Sep', '13 Sep', '14 Sep','15 Sep', '16 Sep', '17 Sep','18 Sep'],
-       "yaxisText" : "Gallons Filled ",
-       "plotLines" :[{
-                    value:150,
+            this.milesGallonsData = {
+                "categories": ['12 Sep', '13 Sep', '14 Sep', '15 Sep', '16 Sep', '17 Sep', '18 Sep'],
+                "yaxisText": "Gallons Filled ",
+                "plotLines": [{
+                    value: 150,
                     color: 'green',
-                    },{
-                    value:350,
+                }, {
+                    value: 350,
                     color: 'red',
-                    }
-                ],
-     "values" : [450, 234, 321,321,321,321,321]}
+                }],
+                "values": [450, 234, 321, 321, 321, 321, 321]
+            }
         } else if (params == "preWeek") {
-             this.paramsGU = "GUcurWeek";
-              this.milesGallonsData = {
-       "categories" : ['19 Sep', '20 Sep', '21 Sep','22 Sep', '23 Sep', '24 Sep','25 Sep'],
-       "yaxisText" : "Gallons Used",
-       "plotLines" :[{
-                    value:150,
+            this.paramsGU = "GUcurWeek";
+            this.milesGallonsData = {
+                "categories": ['19 Sep', '20 Sep', '21 Sep', '22 Sep', '23 Sep', '24 Sep', '25 Sep'],
+                "yaxisText": "Gallons Used",
+                "plotLines": [{
+                    value: 150,
                     color: 'green',
-                    },{
-                    value:350,
+                }, {
+                    value: 350,
                     color: 'red',
-                    }
-                ],
-     "values" : [123, 211, 456,321,121,432,123]}
+                }],
+                "values": [123, 211, 456, 321, 121, 432, 123]
+            }
         } else if (params == "monthly") {
-                this.paramsGU = "GUmonthly";
-              this.milesGallonsData = {
-       "categories" : ['26 Sep', '27 Sep', '28 Sep','29 Sep', '30 Sep', '1 oct','2 oct'],
-       "yaxisText" : "Gallons",
-       "plotLines" :[{
-                    value:150,
+            this.paramsGU = "GUmonthly";
+            this.milesGallonsData = {
+                "categories": ['26 Sep', '27 Sep', '28 Sep', '29 Sep', '30 Sep', '1 oct', '2 oct'],
+                "yaxisText": "Gallons",
+                "plotLines": [{
+                    value: 150,
                     color: 'green',
-                    },{
-                    value:350,
+                }, {
+                    value: 350,
                     color: 'red',
-                    }
-                ],
-     "values" : [450, 234, 321,321,321,321,321]}
+                }],
+                "values": [450, 234, 321, 321, 321, 321, 321]
+            }
         }
     }
 
@@ -163,47 +224,7 @@ class FuelController {
         }
     }
 
-    componentWillReceiveStateAndActions(nextState, nextActions) {
-        if (nextState.devices.length) {
-            //  console.log("trendscontroller",this.initialized);
-            if (!this.initialized) {
-                this.initialized = true;
-                this.deviceListItems = nextState.devices;
-                // console.log("devices trend",this.deviceListItems );
-                nextState.devices.map((device) => {
-                    this.device = device;
-                    console.log(JSON.stringify(this.device));
-                    if (_.keys(device.data).length) {
-                        nextActions.subscribeToDevices([device.sn], _.keys(device.data))
-                    }
-                    this.plotData = [];
-                    _.each(PLOT_DATAPORTS, (dataport) => {
-                        // console.log("device data" + this.device.data[dataport]);
-                        // console.log("devicecontroller" +dataport + JSON.stringify(this.device.data));
-                        if (this.device.data[dataport]) {
-                            this.plotData.push({
-                                name: dataport,
-                                data: this.plotFromData(this.device.data[dataport])
-                            })
-                        }
-                    })
 
-                    this.devicesTrendData.push({
-                        name: this.device.name,
-                        sn: this.device.sn,
-                        plotdata: this.plotData
-                    })
-                })
-                this.updated = true;
-                // console.log("trend data", this.devicesTrendData)
-            }
-        }
-
-        if (this.updated) {
-            this.updated = false;
-            this.updateResults();
-        }
-    }
 
     updateResults() {
         if (this.devicesTrendData) {

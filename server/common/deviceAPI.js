@@ -6,12 +6,11 @@ var _ = require('lodash');
 
 function getDevice(rid) {
     if (!rid) {
-        return db_1.getDB().Device.findAll().then(function (devices) {
+        return db_1.getDB().Device.findAll().then(function(devices) {
             return devices;
         });
-    }
-    else {
-        return db_1.getDB().Device.findOne({ where: { rid: rid } }).then(function (device) {
+    } else {
+        return db_1.getDB().Device.findOne({ where: { rid: rid } }).then(function(device) {
             return device;
         });
     }
@@ -22,13 +21,13 @@ function readDeviceRequest(req, res, next) {
     if (!rid) {
         res.status(400).json({ status: "error", err: "No device RID specified" });
     }
-    console.log("Request body: ", req.body);
+    // console.log("Request body: ", req.body);
     var aliases = req.body;
-    getDevice(rid).then(function (device) {
+    getDevice(rid).then(function(device) {
         var deferred = new simplep_1.exoDefer({ "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff", "client_id": device.rid });
-        _.each(aliases, function (ao) {
+        _.each(aliases, function(ao) {
 
-    console.log("Request ao: ", ao);
+            console.log("Request ao: ", ao);
             var alias = ao.alias;
             var options = ao.options;
             if (!options) {
@@ -37,7 +36,7 @@ function readDeviceRequest(req, res, next) {
             //console.log("Alias: ", alias, " read options: ", options)
             deferred = deferred.read(alias, options);
         });
-        deferred.then(function (result) {
+        deferred.then(function(result) {
             //console.log("Deferred result: ", result);
             res.send(result);
         });

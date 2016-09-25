@@ -81,16 +81,21 @@ function receiveDeviceNotesNotifications(notifications) {
 export default function deviceService($http, $ngRedux, projectConfig, websocket) {
     "ngInject";
 
-    function getDevices() {
+    function getDevices(aliases) {
+        // alert("2");
         return dispatch => {
-            dispatch(requestDevices())
+            dispatch(requestDevices());
             return $http({
                     url: `${projectConfig.api_base_url}/devices`,
-                    method: "GET",
-                    headers: { 'Authorization': `${projectConfig.auth_token}` }
+                    method: "POST",
+                    headers: { 'Authorization': `${projectConfig.auth_token}` },
+                    data: aliases
                 })
-                .then(response =>
-                    response.data)
+                .then(response => {
+                    // console.log("Hiiii");
+                    console.log(response.data);
+                    return response.data;
+                })
                 .then(devices => dispatch(receiveDevices(devices)))
         }
     }
