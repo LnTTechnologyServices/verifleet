@@ -70,17 +70,6 @@
                      <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.dgeHrs }}</span> 
                   </div>
                </li>
-               <li>
-                  <div class="sparkline line_day">
-                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
-                  </div>
-                  <div class="stat_text">
-                     <strong>Next Maintenance</strong>
-                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.nextMaintenance }}</span> 
-                  </div>
-               </li>
-
-               
             </ul>
             <center>
          </div>
@@ -94,7 +83,7 @@
             <center>
 
                 <bR><bR><bR>
-          <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped">
                   <thead>
                      <tr>
                         <td>Last Three Maintenance</td>
@@ -105,8 +94,21 @@
                         <td> {{ main.lastThree }}</td>
                         <td>  {{ main.engineHoursAfterMain }}</td>
                      </tr>
-        </tbody>
-        </table>
+                    </tbody>
+                    </table>
+
+           <ul class="stats_box"  flex-xs="98" flex="98" style="margin-bottom: 0px;width: 85%;">
+               <li>
+                  <div class="sparkline line_day">
+                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  </div>
+                  <div class="stat_text">
+                     <strong>Next Maintenance</strong>
+                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.nextMaintenance }}</span> 
+                  </div>
+               </li>
+            </ul>
+            <center>
             <center>
          </div>
           </div>
