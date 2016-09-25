@@ -14,9 +14,11 @@ class LogsController {
     this.filteredActivityAlarmItems = []
     this.initialized = false;
   
-    var starttime = 1474570470;
+    var today = new Date();
+    var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7); //Last Week
+    var milliseconds = startdatetime.getTime() / 1000;
     //var starttime = Math.floor((new Date).getTime()/1000);
-    this.aliases = '[{"alias":"ecu","options": {"sort":"desc", "limit":100, "starttime":' + starttime + '}}]';
+    this.aliases = '[{"alias":"ecu","options": {"sort":"desc", "limit":100, "starttime":' + milliseconds + '}}]';
 
     this.unsubscribe = $ngRedux.connect(this.mapStateToThis, this.deviceService)((selectedState, actions) => {
       this.componentWillReceiveStateAndActions(selectedState, actions);
