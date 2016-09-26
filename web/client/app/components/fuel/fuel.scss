@@ -37,12 +37,13 @@ fuel {
 }
 
   .filter-text {
-      width: 100px;
-      background-color: #1b202d;
-      color: white;
-      font-weight: bold;
-      padding-left: 25px;
-      padding-top: 17px;
+        width: 20%;
+        text-transform: uppercase;
+        background-color: #1b202d;
+        color: white;
+        padding-left: 25px;
+        padding-top: 18px;
+        font-size: 14px;
   }
     .fuel-gradient {
         background: rgba(76,76,76,1);
@@ -507,6 +508,8 @@ md-input-container.md-icon-left {
 md-select {
     margin: 10px 0 11px 0 !important;
 }
+
+
 
 // Panel corlor 
 

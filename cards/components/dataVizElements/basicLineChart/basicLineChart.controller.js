@@ -8,53 +8,60 @@ class BasicLineChartController {
     this.configs = {
       options: {
         chart: {
-          zoomType: 'x'
-        },
-        title: {
-            text: '',
-        },
-        subtitle: {
-            text: '',
-        },
-        xAxis: {
+                zoomType: 'x'
+            },
+            title: {
+                text: null
+            },
+                xAxis: {
             type: 'datetime',
+            showEmpty: false,
+            title: {
+            text: null
+            },
             labels: {
             //You can format the label according to your need
             format: '{value:%m/%d - %H:%m}'
         },
+        legend: {
+            enabled: false
+        },
 
         },
-        plotOptions: {
-            area: {
-               fillColor: {
-                   linearGradient: {
-                        x1: 0,
-                        y1: 0,
-                        x2: 0,
-                        y2: 1
+            yAxis: {
+                title: {
+                    text: null
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
                     },
-                    stops: [
-                        [0, '#87CEFA'],
-                        [1, '#F0F8FF']
-                    ]
-                 },
-                 marker: {
-                    radius: 2
-                },
-                lineWidth: 1,
-                states: {
-                    hover: {
-                        lineWidth: 1
-                    }
-                },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
                     threshold: null
                 }
             },
-
-        tooltip: {
-            valueSuffix: ''
-        },
-
       },
       series: this.data,
         func: function(chart) {

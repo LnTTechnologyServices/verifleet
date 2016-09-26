@@ -78,8 +78,6 @@ class LogsController {
         vm.$timeout(() => loadAfterAuthed(vm), 50);
       }
     }
-
-    
     loadAfterAuthed(this);
   }
 

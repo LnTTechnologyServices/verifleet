@@ -117,7 +117,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish">
+      <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish">
         <td><a ui-sref="efficiency({vechicle_id:roll.name})">{{ roll.name }}</a></td>
         <td>{{ roll.type }}</td>
         <td>
