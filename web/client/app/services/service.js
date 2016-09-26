@@ -94,7 +94,36 @@ class websocketserver {
         return 0;
     }
     getDGEFilledperDay() {
+        let i = 0,
+            j = 0;
+        let temp = 0;
+        let result = [];
+        for (i = 0; i < this.devicedata.length; i++) {
+            // alert(this.devicedata[i].name);
+            temp = this.getGasFilled(this.devicedata[i].name, 5);
+           // alert(JSON.stringify(temp));
+            if (Array.isArray(temp))
+                for (j = 0; i < temp.length; j++) {
+                    let data = { timestamp: temp[j].timestamp, value: temp[j].value };
+                    if (result.length > 0) {
+                        alert(data.timestamp);
+                        let res = result.find(function(item) {
 
+                            return new Date(data.timestamp).getDate() == item.timestamp.getDate();
+                        });
+
+                        if (res) {
+                            res.value += data.value;
+                        } else
+                            result.push(data);
+
+                    } else
+                        result.push(data);
+                }
+        }
+        //alert("result");
+        //alert(JSON.stringify(result));
+        return result;
     }
     getDistanceToEmpty(deviceName) {
         if (this.devicedata) {
@@ -220,18 +249,20 @@ class websocketserver {
             });
 
             if (item) {
-                let initial = item.data.dge.last().value;
-                let last = item.data.dge[0].value;
-                let i = 0;
-                for (i = 0; i < item.data.dge.length - 1; i++) {
-                    // console.log("i :" + item.data.dge[i].value + "-  i+1 :" + item.data.dge[i + 1].value + "--%  :" + ((item.data.dge[i].value * 20) / 100))
-                    if ((item.data.dge[i + 1].value - item.data.dge[i].value) > ((item.data.dge[i].value * 20) / 100)) {
-                        filled = filled + (item.data.dge[i + 1].value - item.data.dge[i].value);
-                    }
+                if (item.data) {
+                    let initial = item.data.dge.last().value;
+                    let last = item.data.dge[0].value;
+                    let i = 0;
+                    for (i = 0; i < item.data.dge.length - 1; i++) {
+                        // console.log("i :" + item.data.dge[i].value + "-  i+1 :" + item.data.dge[i + 1].value + "--%  :" + ((item.data.dge[i].value * 20) / 100))
+                        if ((item.data.dge[i + 1].value - item.data.dge[i].value) > ((item.data.dge[i].value * 20) / 100)) {
+                            filled = filled + (item.data.dge[i + 1].value - item.data.dge[i].value);
+                        }
 
-                    // console.log(i + " : PER  Day" + initial + ":" + last + ":" + filled)
+                        // console.log(i + " : PER  Day" + initial + ":" + last + ":" + filled)
+                    }
+                    return (initial + filled - last).toFixed(2);
                 }
-                return (initial + filled - last).toFixed(2);
             }
         }
         return "0";
@@ -250,26 +281,28 @@ class websocketserver {
             });
 
             if (item) {
-                let initial = item.data.dge.last().value;
-                let last = item.data.dge[0].value;
-                let temp = -1;
-                let i = 0;
-                for (i = 0; i < item.data.dge.length - 1; i++) {
-                    // console.log("i :" + item.data.dge[i].value + "-  i+1 :" + item.data.dge[i + 1].value + "--%  :" + ((item.data.dge[i].value * 20) / 100))
-                    if ((item.data.dge[i + 1].value - item.data.dge[i].value) > ((item.data.dge[i].value * 20) / 100)) {
-                        filled = filled + (item.data.dge[i + 1].value - item.data.dge[i].value);
-                    }
+                if (item.data) {
+                    let initial = item.data.dge.last().value;
+                    let last = item.data.dge[0].value;
+                    let temp = -1;
+                    let i = 0;
+                    for (i = 0; i < item.data.dge.length - 1; i++) {
+                        // console.log("i :" + item.data.dge[i].value + "-  i+1 :" + item.data.dge[i + 1].value + "--%  :" + ((item.data.dge[i].value * 20) / 100))
+                        if ((item.data.dge[i + 1].value - item.data.dge[i].value) > ((item.data.dge[i].value * 20) / 100)) {
+                            filled = filled + (item.data.dge[i + 1].value - item.data.dge[i].value);
+                        }
 
-                    if (new Date(item.data.dge[i].timestamp).getDate() != temp && temp != -1) {
-                        result.push({ timestamp: this.convertDate(item.data.dge[i].timestamp), value: (initial + filled - last).toFixed(2) });
-                        day += 1;
-                        if (day >= days)
-                            return result;
+                        if (new Date(item.data.dge[i].timestamp).getDate() != temp && temp != -1) {
+                            result.push({ timestamp: this.convertDate(item.data.dge[i].timestamp), value: (initial + filled - last).toFixed(2) });
+                            // day += 1;
+                            // if (day >= days)
+                            //     return result;
+                        }
+                        console.log(i + " : PER  Day" + (new Date(item.data.dge[i].timestamp).getDate()) + ":" + temp);
+                        temp = new Date(item.data.dge[i].timestamp).getDate();
                     }
-                    console.log(i + " : PER  Day" + (new Date(item.data.dge[i].timestamp).getDate()) + ":" + temp);
-                    temp = new Date(item.data.dge[i].timestamp).getDate();
+                    return result;
                 }
-                return result;
             }
         }
         return "0";

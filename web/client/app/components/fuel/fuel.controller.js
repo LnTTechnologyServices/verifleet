@@ -155,6 +155,8 @@ class FuelController {
     }
 
     updateResults() {
+        if (this.websocketserver)
+            this.websocketserver.getDGEFilledperDay();
         if (this.devicesTrendData) {
             this.trendData = [];
             this.devicesTrendData.map((device) => {
