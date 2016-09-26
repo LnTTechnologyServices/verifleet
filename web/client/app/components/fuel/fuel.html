@@ -17,62 +17,15 @@
       <div  layout-align="end start " layout-xs="colomn " layout-sm="row " layout-md="row " layout-gt-md="row " flex="70 ">
       </div>
 
-      <div layout="row" style="margin-bottom:12px !important" >
-        <tab-list icon="icon-warning-general" number="6 " header="Total " content="Truck Alerts " bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
-        <tab-list icon="icon-network-check" number="35 " header="AVG " content="DGE/Hr " bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
-        <tab-list icon="icon-battery-100" number="WM-212439" header="" content="Good Performance " bgcolor="#7B68EE
+      <div layout="row" style="margin-bottom:12px !important" layout-xs="column">
+        <tab-list flex="20" flex-xs="100" icon="icon-warning-general" number="6 " header="Total " content="Truck Alerts " bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
+        <tab-list flex="20" flex-xs="100" icon="icon-warning-general" number="35 " header="AVG " content="DGE/Hr " bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
+        <tab-list flex="20" flex-xs="100" icon="icon-battery-100" number="WM-212439" header="" content="Good Performance " bgcolor="#7B68EE
         " style="margin-right:10px "></tab-list>
-        <tab-list icon="icon-battery-0 " number="WM-212438" header="" content="Low Performance " bgcolor="#73B9A2
+        <tab-list flex="20" flex-xs="100" icon="icon-battery-0 " number="WM-212438" header="" content="Low Performance " bgcolor="#73B9A2
         " style="margin-right:10px "></tab-list>
-        <tab-list icon="icon-running " number="WM-212441" header="" content="Leakage " bgcolor="#AEACA0 " style="margin-right:10px "></tab-list>
+        <tab-list flex="20" flex-xs="100"icon="icon-running " number="WM-212441" header="" content="Leakage " bgcolor="#AEACA0 " style="margin-right:10px "></tab-list>
       </div>
-
-      <!--<div class="text-center " flex-xs="98 " flex="98 " layout-xs="colomn " layout-sm="row ">
-         <ul class="stats_box "  flex-xs="98 " flex="98 " style="margin-bottom: 0px; ">
-            <li>
-               <div class="sparkline bar_week ">
-                  <md-icon style="font-size: 45px; " md-font-icon="icon-trends "></md-icon>
-               </div>
-               <div class="stat_text ">
-                  Total<strong>Truck Alerts</strong>
-                  <span class="percent down "> <i class="fa fa-caret-down "></i>6</span> 
-               </div>
-            </li>
-            <li>
-               <div class="sparkline line_day ">
-                  <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
-               </div>
-               <div class="stat_text ">
-                  AVG<strong>DGE/Hr</strong>
-                  <span class="percent up "> <i class="fa fa-caret-up "></i>35</span> 
-               </div>
-            </li>
-            <li>
-               <div class="sparkline pie_week ">
-                  <md-icon style="font-size: 45px; " md-font-icon="icon-user-filled "></md-icon>
-               </div>
-               <div class="stat_text ">
-                  Good Performance<strong style="color: green; "><i class="fa fa-caret-down "></i>WM-212439</strong>
-               </div>
-            </li>
-            <li>
-               <div class="sparkline pie_week ">
-                  <md-icon style="font-size: 45px; " md-font-icon="icon-user-filled "></md-icon>
-               </div>
-               <div class="stat_text ">
-                  Low Performance<strong style="color: #c52f61; ">WM-212438</strong>
-               </div>
-            </li>
-            <li>
-               <div class="sparkline pie_week ">
-                  <md-icon style="font-size: 45px; " md-font-icon="icon-running "></md-icon>
-               </div>
-               <div class="stat_text ">
-                  Leakage<strong>WM-212441</strong>
-               </div>
-            </li>
-         </ul>
-      </div>-->
 
       <div layout-xs="coloumn " layout-sm="row " layout-md="row " layout-gt-md="row "  flex-xs="100 " flex="100 " >
          <div class="panel panel-primary "  flex-xs="100 " flex="50 ">
@@ -131,13 +84,8 @@
                      </tr>
                   </thead>
                   <tbody>
-<<<<<<< a6af9222431a5a9f39e483b010606356297a5d0f
       <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish">
         <td><a ui-sref="efficiency({vechicle_id:roll.name})">{{ roll.name }}</a></td>
-=======
-                     <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish ">
-        <td><a ui-sref="efficiency({vechicle_id:roll.name}) ">{{ roll.name }}</a></td>
->>>>>>> Tab List UI
         <td>{{ roll.type }}</td>
         <td>
             {{ roll.location }}

@@ -14,14 +14,6 @@
     color: white;
 }
 
-// .contentHeader{
-//     font-size: 15px;
-//     margin:0px;
-//     text-align: end;
-//     margin-right: 15px;
-//     color:white;
-// }
-
 .content {
     margin: 0px;
     text-align: end;
@@ -37,6 +29,11 @@
 }
 
 @media screen and (max-width: 1040px) and (min-width: 700px) {
+  .container{
+        height:4em;
+    }
+
+
   .contentNumber {
         margin-top: -2em;
         font-size: 12pt;
@@ -52,16 +49,35 @@
 }
 
 @media screen and (max-width: 700px) and (min-width: 500px) {
+  .container{
+        height:3em;
+    }
+
   .contentNumber {
         margin-top: -2em;
-        font-size: 12pt;
+        font-size: 10pt;
     }
 
     .content {
-        font-size: 8pt;
+        font-size: 6pt;
     }
 
     .tabListIcon {
-        font-size: 25pt;
+        font-size: 20pt;
     }
 }
+
+// @media screen and (max-width: 500px) and (min-width: 300px) {
+//   .contentNumber {
+//         margin-top: -2em;
+//         font-size: 5pt;
+//     }
+
+//     .content {
+//         font-size: 3pt;
+//     }
+
+//     .tabListIcon {
+//         font-size: 10pt;
+//     }
+// }
