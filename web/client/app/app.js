@@ -9,9 +9,9 @@ import moment from 'moment';
 // highcharts imports
 import highcharts from './vendor/highstock';
 highcharts.setOptions({
-  global: {
-    useUTC: false
-  }
+    global: {
+        useUTC: false
+    }
 });
 window.Highcharts = highcharts;
 
@@ -37,6 +37,8 @@ import deviceService from './api/deviceService';
 import userService from './api/userService';
 import websocket from './api/websocketFactory';
 
+import websocketserver from './services/service';
+
 
 // app specific imports
 import Common from './common/common';
@@ -49,162 +51,161 @@ import './javascriptExtensions';
 // a0 configuration
 // TODO AUTH: remove this when using Murano login system
 let auth0Auth = {
-  AUTH0_CLIENT_ID: 'WEehSzsjp3hosMfkfOZfpWMceVFdnFBa',
-  AUTH0_DOMAIN: 'exosite-pcc-seed.auth0.com',
-  AUTH0_CALLBACK_URL: 'http://localhost:3000'
+    AUTH0_CLIENT_ID: 'WEehSzsjp3hosMfkfOZfpWMceVFdnFBa',
+    AUTH0_DOMAIN: 'exosite-pcc-seed.auth0.com',
+    AUTH0_CALLBACK_URL: 'http://localhost:3000'
 }
 
 // project configuration
 import { projectConfig } from './config';
 
 if (!projectConfig.api_base_url) {
-  console.error("No 'api_base_url' specified in file './config'!")
+    console.error("No 'api_base_url' specified in file './config'!")
 }
 if (!projectConfig.ws_url) {
-  console.error("No 'ws_url' specified in file './config'!")
+    console.error("No 'ws_url' specified in file './config'!")
 }
 if (!projectConfig.name) {
-  console.error("No project name specified in './config'!")
+    console.error("No project name specified in './config'!")
 }
 
 // load external modules into our application,
 // as well as our internal modules / services / factories
 angular.module('app', [
-  'ui.router',
-  'ngAnimate',
-  'ngMaterial',
-  'ngMdIcons',
-  'ngRedux',
-  'auth0',
-  'angular-storage',
-  'angular-jwt',
-  'angularMoment',
-  'highcharts-ng',
-  'angular-svg-round-progressbar',
-  Common.name,
-  Components.name,
-  exosite.name,
-  websocket.name,
-  
-])
-  .service("deviceService", deviceService)
-  .service("userService", userService)
-  .constant("projectConfig", projectConfig)
+        'ui.router',
+        'ngAnimate',
+        'ngMaterial',
+        'ngMdIcons',
+        'ngRedux',
+        'auth0',
+        'angular-storage',
+        'angular-jwt',
+        'angularMoment',
+        'highcharts-ng',
+        'angular-svg-round-progressbar',
+        Common.name,
+        Components.name,
+        exosite.name,
+        websocket.name,
+    ])
+    .service("deviceService", deviceService)
+    .service("userService", userService)
+    .service("websocketserver", websocketserver)
+    .constant("projectConfig", projectConfig)
 
-  .config(($mdThemingProvider) => {
-    "ngInject";
+.config(($mdThemingProvider) => {
+        "ngInject";
 
-    $mdThemingProvider.extendPalette('blue-grey', {
-      '500': '001342',
-    });
-    $mdThemingProvider.extendPalette('yellow', {
-      '500': 'ffb91d',
-    });
+        $mdThemingProvider.extendPalette('blue-grey', {
+            '500': '001342',
+        });
+        $mdThemingProvider.extendPalette('yellow', {
+            '500': 'ffb91d',
+        });
 
-    $mdThemingProvider.theme('default')
-      .primaryPalette('blue-grey', {
-        'default': '500'
-      })
-      .accentPalette('yellow', {
-        'default': '500'
-      })
-  })
-  .config($ngReduxProvider => {
-    "ngInject";
-    // redux store configuration
-    // this sets the basic data that's available in the redux store
-    // the deviceService / userService / websocketFactory will
-    // modify this redux store, and the application's controllers
-    // can request data through these services.
-    // The controllers should have a hook for the redux store to be triggered
-    // when the data has been modified
-    $ngReduxProvider.createStoreWith({
-      devices: deviceReducer,
-      isLoading: loadingReducer,
-      lastUpdated: updatedReducer,
-      current_user: currentUserReducer,
-      users: userReducer,
-      notifications: userNotificationReducer,
-      activities: activityReducer,
-      alarms: alarmReducer,
-      subscriptions: subscriptionReducer,
-      websocket: websocketReducer
-    }, [thunk, createLogger({
-      duration: true,
-      collapsed: true
+        $mdThemingProvider.theme('default')
+            .primaryPalette('blue-grey', {
+                'default': '500'
+            })
+            .accentPalette('yellow', {
+                'default': '500'
+            })
     })
-    ]);
-  })
-  .factory('exositeAuthFactory', () => {
-    // TODO AUTH: modify this to use the Murano login system
-    return {
-      request: (config) => {
-        config.headers['Authorization'] = 'Bearer testAuthToken'
-        return config
-      }
-    }
-  })
-  .config(($httpProvider) => {
-    "ngInject";
-    $httpProvider.interceptors.push('exositeAuthFactory');
-  })
-  .config(($httpProvider, authProvider, jwtInterceptorProvider) => {
-    "ngInject";
-
-    // TODO AUTH: modify this to use the Murano login system
-    authProvider.init({
-      clientID: auth0Auth.AUTH0_CLIENT_ID,
-      domain: auth0Auth.AUTH0_DOMAIN,
-      callbackUrl: auth0Auth.AUTH0_CALLBACK_URL,
-      loginState: 'login'
-    });
-
-    authProvider.on('loginSuccess', ($location, profilePromise, idToken, store, $ngRedux, userService, websocket, projectConfig) => {
-      "ngInject";
-      console.log("Login Success");
-      profilePromise.then(function(profile) {
-        store.set('profile', profile);
-        store.set('token', idToken);
-        $ngRedux.dispatch(userService.userLoggedIn(store.get('profile')));
-        $ngRedux.dispatch(websocket.shouldConnect(true));
-        websocket.start(projectConfig.ws_url);
-      });
-      $location.path('/');
-    });
-
-    authProvider.on('authenticated', function($location, store, $ngRedux, userService, websocket) {
-      "ngInject";
-      console.log("Authenticated successfully");
-      $ngRedux.dispatch(userService.userLoggedIn(store.get('profile')));
-      $ngRedux.dispatch(websocket.shouldConnect(true));
-      // when we're authenticated, tell the websocketFactory to start and connect
-      // to the websocket URL
-      websocket.start(projectConfig.ws_url);
-    });
-
-    jwtInterceptorProvider.tokenGetter = function(store) {
-      "ngInject";
-      return store.get('token');
-    };
-
-    $httpProvider.interceptors.push('jwtInterceptor');
-
-  }).run(($rootScope, auth, store, jwtHelper, $location) => {
-  'ngInject';
-
-  $rootScope.$on('$locationChangeStart', function() {
-    var token = store.get('token');
-    if (token) {
-      if (!jwtHelper.isTokenExpired(token)) {
-        if (!auth.isAuthenticated) {
-          auth.authenticate(store.get('profile'), token);
+    .config($ngReduxProvider => {
+        "ngInject";
+        // redux store configuration
+        // this sets the basic data that's available in the redux store
+        // the deviceService / userService / websocketFactory will
+        // modify this redux store, and the application's controllers
+        // can request data through these services.
+        // The controllers should have a hook for the redux store to be triggered
+        // when the data has been modified
+        $ngReduxProvider.createStoreWith({
+            devices: deviceReducer,
+            isLoading: loadingReducer,
+            lastUpdated: updatedReducer,
+            current_user: currentUserReducer,
+            users: userReducer,
+            notifications: userNotificationReducer,
+            activities: activityReducer,
+            alarms: alarmReducer,
+            subscriptions: subscriptionReducer,
+            websocket: websocketReducer
+        }, [thunk, createLogger({
+            duration: true,
+            collapsed: true
+        })]);
+    })
+    .factory('exositeAuthFactory', () => {
+        // TODO AUTH: modify this to use the Murano login system
+        return {
+            request: (config) => {
+                config.headers['Authorization'] = 'Bearer testAuthToken'
+                return config
+            }
         }
-      } else {
-        // Either show the login page or use the refresh token to get a new idToken
-        $location.path('/');
-      }
-    }
-  });
-})
+    })
+    .config(($httpProvider) => {
+        "ngInject";
+        $httpProvider.interceptors.push('exositeAuthFactory');
+    })
+    .config(($httpProvider, authProvider, jwtInterceptorProvider) => {
+        "ngInject";
 
-  .component('app', AppComponent);
+        // TODO AUTH: modify this to use the Murano login system
+        authProvider.init({
+            clientID: auth0Auth.AUTH0_CLIENT_ID,
+            domain: auth0Auth.AUTH0_DOMAIN,
+            callbackUrl: auth0Auth.AUTH0_CALLBACK_URL,
+            loginState: 'login'
+        });
+
+        authProvider.on('loginSuccess', ($location, profilePromise, idToken, store, $ngRedux, userService, websocket, projectConfig) => {
+            "ngInject";
+            console.log("Login Success");
+            profilePromise.then(function(profile) {
+                store.set('profile', profile);
+                store.set('token', idToken);
+                $ngRedux.dispatch(userService.userLoggedIn(store.get('profile')));
+                $ngRedux.dispatch(websocket.shouldConnect(true));
+                websocket.start(projectConfig.ws_url);
+            });
+            $location.path('/');
+        });
+
+        authProvider.on('authenticated', function($location, store, $ngRedux, userService, websocket) {
+            "ngInject";
+            console.log("Authenticated successfully");
+            $ngRedux.dispatch(userService.userLoggedIn(store.get('profile')));
+            $ngRedux.dispatch(websocket.shouldConnect(true));
+            // when we're authenticated, tell the websocketFactory to start and connect
+            // to the websocket URL
+            websocket.start(projectConfig.ws_url);
+        });
+
+        jwtInterceptorProvider.tokenGetter = function(store) {
+            "ngInject";
+            return store.get('token');
+        };
+
+        $httpProvider.interceptors.push('jwtInterceptor');
+
+    }).run(($rootScope, auth, store, jwtHelper, $location) => {
+        'ngInject';
+
+        $rootScope.$on('$locationChangeStart', function() {
+            var token = store.get('token');
+            if (token) {
+                if (!jwtHelper.isTokenExpired(token)) {
+                    if (!auth.isAuthenticated) {
+                        auth.authenticate(store.get('profile'), token);
+                    }
+                } else {
+                    // Either show the login page or use the refresh token to get a new idToken
+                    $location.path('/');
+                }
+            }
+        });
+    })
+
+.component('app', AppComponent);

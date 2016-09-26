@@ -1,10 +1,10 @@
 <div class="button-bar" layout="row">
-   <div layout="row" class="filter-text">Filters</div>
-   <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row"">
+    <div layout="row" class="filter-text">Filters</div>
+    <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" ">
       &nbsp;&nbsp;&nbsp;
-      <div flex-xs="50" flex="48">
-         <md-select style="background-color: gainsboro;" placeholder="Choose Vehicle Filter" ng-model="vm.vehicleFilter" ng-change="vm.onvehicleChange()">
-            <md-option ng-repeat="vehicle in vm.vehicleFilterList" value="{{vehicle}}">
+      <div flex-xs="50 " flex="48 ">
+         <md-select style="background-color: gainsboro; " placeholder="Choose Vehicle Filter " ng-model="vm.vehicleFilter " ng-change="vm.onvehicleChange() ">
+            <md-option ng-repeat="vehicle in vm.vehicleFilterList " value="{{vehicle}} ">
                {{vehicle}}
             </md-option>
          </md-select>
@@ -14,28 +14,28 @@
 </div>
 <md-card>
    <md-card-content>
-      <div layout-xs="coloumn"  flex="100" flex-xs="100"  layout-sm="row" layout-md="row" layout-gt-md="row" >
-         <div class="panel panel-primary"  flex-xs="100" flex="50">
-            <div class="panel-heading">
-               <h3 class="panel-title">Live</h3>
+      <div layout-xs="coloumn "  flex="100 " flex-xs="100 "  layout-sm="row " layout-md="row " layout-gt-md="row " >
+         <div class="panel panel-primary "  flex-xs="100 " flex="50 ">
+            <div class="panel-heading ">
+               <h3 class="panel-title ">Live</h3>
             </div>
-            <div class="panel-body">
-               <div layout-sm="row" layout-md="row" layout-gt-md="row">
-                  <div flex="50">
-                     <fuel-chart layout-fill flex-xs="100" flex="100"   data="vm.gaugeData"></fuel-chart>
+            <div class="panel-body ">
+               <div layout-sm="row " layout-md="row " layout-gt-md="row ">
+                  <div flex="50 ">
+                     <fuel-chart layout-fill flex-xs="100 " flex="100 "   data="vm.gaugeData "></fuel-chart>
                   </div>
-                  <div  flex="50">
-                     <h3 class="panel-title" style="padding-left: 10px;">Distance to Empty - {{ vm.distanceData.value }} </h3>
-                     <bar-chart layout-fill data="vm.distanceData"></bar-chart>
+                  <div  flex="50 ">
+                     <h3 class="panel-title " style="padding-left: 10px; ">Distance to Empty - {{ vm.distanceData.value }} </h3>
+                     <bar-chart layout-fill data="vm.distanceData "></bar-chart>
                      <br><br>
-                     <ul class="stats_box" style="width: 128%;">
+                     <ul class="stats_box " style="width: 128%; ">
                         <li>
-                           <div class="sparkline line_day">
-                              <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                           <div class="sparkline line_day ">
+                              <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
                            </div>
-                           <div class="stat_text">
+                           <div class="stat_text ">
                               <strong>DGE/Hrs</strong>
-                              <span class="percent up"> <i class="fa fa-caret-up"></i>18</span> 
+                              <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.DGEHrs}}</span> 
                            </div>
                         </li>
                      </ul>
@@ -43,83 +43,83 @@
                </div>
             </div>
          </div>
-         <div class="panel panel-primary"  flex-xs="100" flex="50" style="margin-left: 5px;">
-            <div class="panel-heading">
-               <h3 class="panel-title">Last Trip</h3>
+         <div class="panel panel-primary "  flex-xs="100 " flex="50 " style="margin-left: 5px; ">
+            <div class="panel-heading ">
+               <h3 class="panel-title ">Last Trip</h3>
             </div>
             <center>
-            <ul class="stats_box"  flex-xs="98" flex="98" style="padding-left:20%;margin-bottom: 0px;">
+            <ul class="stats_box "  flex-xs="98 " flex="98 " style="padding-left:20%;margin-bottom: 0px; ">
                <li>
-                  <div class="sparkline line_day">
-                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  <div class="sparkline line_day ">
+                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
                   </div>
-                  <div class="stat_text">
+                  <div class="stat_text ">
                      <strong>Engine Hours</strong>
-                     <span class="percent up"> <i class="fa fa-caret-up"></i>18</span> 
+                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.engineHours}}</span> 
                   </div>
                </li>
                <li>
-                  <div class="sparkline line_day">
-                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  <div class="sparkline line_day ">
+                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
                   </div>
-                  <div class="stat_text">
+                  <div class="stat_text ">
                      <strong>Miles Driven</strong>
-                     <span class="percent up"> <i class="fa fa-caret-up"></i>250</span> 
+                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.milesDriven}}</span> 
                   </div>
                </li>
                <li>
-                  <div class="sparkline line_day">
-                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  <div class="sparkline line_day ">
+                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
                   </div>
-                  <div class="stat_text">
+                  <div class="stat_text ">
                      <strong>Total Gas used</strong>
-                     <span class="percent up"> <i class="fa fa-caret-up"></i>2 G</span> 
+                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.totalGasUsed}}</span> 
                   </div>
                </li>
                <li>
-                  <div class="sparkline line_day">
-                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  <div class="sparkline line_day ">
+                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
                   </div>
-                  <div class="stat_text">
+                  <div class="stat_text ">
                      <strong>Fault Code</strong>
-                     <span class="percent up"> <i class="fa fa-caret-up"></i>1</span> 
+                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.faultCode}}</span> 
                   </div>
                </li>
                <li>
-                  <div class="sparkline line_day">
-                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+                  <div class="sparkline line_day ">
+                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
                   </div>
-                  <div class="stat_text">
+                  <div class="stat_text ">
                      <strong>DGE/Hrs</strong>
-                     <span class="percent up"> <i class="fa fa-caret-up"></i>2</span> 
+                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.DGEHrs}}</span> 
                   </div>
                </li>
             </ul>
             <center>
          </div>
       </div>
-      <div class="panel panel-primary"  flex-xs="100" flex="100">
-         <div class="panel-heading">
-            <h3 class="panel-title">Gas Filled/Day</h3>
+      <div class="panel panel-primary "  flex-xs="100 " flex="100 ">
+         <div class="panel-heading ">
+            <h3 class="panel-title ">Gas Filled/Day</h3>
          </div>
-         <div class="panel-body">
-            <div flex="30" style="float: right;"> 
-            <md-select placeholder="Choose Date Filter" ng-model="vm.dateFilter" ng-change="vm.onDataChange()">
-            <md-option ng-repeat="date in vm.dateFilterList" value="{{date.id}}">
+         <div class="panel-body ">
+            <div flex="30 " style="float: right; "> 
+            <md-select placeholder="Choose Date Filter " ng-model="vm.dateFilter " ng-change="vm.onDataChange(date.id) ">
+            <md-option ng-repeat="date in vm.dateFilterList " value="{{date.id}} ">
                {{date.value}}
             </md-option>
             </md-select>
             </div>
             <br>
-            <highchart layout-fill  id="container" style="100%"  config="vm.config" ></highchart>
+            <highchart layout-fill  id="container " style="100% "  config="vm.config " ></highchart>
          </div>
       </div>
-      <div class="panel panel-primary"  flex-xs="100" flex="100">
-         <div class="panel-heading">
-            <h3 class="panel-title">Site View</h3>
+      <div class="panel panel-primary "  flex-xs="100 " flex="100 ">
+         <div class="panel-heading ">
+            <h3 class="panel-title ">Site View</h3>
          </div>
-         <div class="panel-body">
-            <basic-line-chart data="vm.lineChartData"></basic-line-chart>
+         <div class="panel-body ">
+            <basic-line-chart data="vm.lineChartData "></basic-line-chart>
          </div>
       </div>
    </md-card-content>

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 class FuelController {
-    constructor($timeout, $ngRedux, deviceService, $state, auth, store,) {
+    constructor($timeout, $ngRedux, deviceService, $state, auth, store, websocketserver) {
         "ngInject";
         this.deviceService = deviceService;
         this.headerUrl = require("./maps.jpg");
@@ -14,15 +14,25 @@ class FuelController {
         });
 
         this.$timeout = $timeout;
+        this.websocketserver = websocketserver;
+        this.dateFilterList = [{ "id": 5, "value": "Last 5 Days" },
+            { "id": 10, "value": "Last 10 Days" },
+            { "id": 15, "value": "Last 15 Days" },
+            { "id": 20, "value": "Last 20 Days" }
+        ];
+        this.dateFilter = 5;
+        this.currentDate = Math.floor(new Date() / 1000);
+        //alert(this.currentDate);
+        let yestDate = new Date();
+        yestDate.setDate(yestDate.getDate() - 1);
+        this.yestDate = Math.floor(yestDate / 1000);
+        let last15Days = new Date();
+        this.last15Days = new Date().setDate(new Date().getDate() - 15);
+        this.last15Days = Math.floor(last15Days / 1000);
 
-        this.dateFilterList = [{"id": 5, "value": "Last 5 Days" },
-            {"id": 10, "value": "Last 10 Days" },     
-            {"id": 15, "value": "Last 15 Days" },   
-            {"id": 20, "value": "Last 20 Days" }];
-        this.dateFilter = 5
-        
-        this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 5 } }]';
-        
+        // this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 5 } }, { "alias": "ecu", "options": { "sort": "desc","starttime":"' + this.yestDate + '", "endtime": "' + this.currentDate + '","limit":100}}]';
+        this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc","limit": 100  } }, { "alias": "ecu", "options": { "sort": "desc", "limit":10 } }]';
+        //"starttime":last15Days, 
         // create the list of sushi rolls 
         this.deviceslist = [];
 
@@ -70,6 +80,8 @@ class FuelController {
                     this.initialized = true;
                     this.deviceListItems = nextState.devices;
                     // console.log("devices trend",this.deviceListItems );
+                    if (this.websocketserver)
+                        this.websocketserver.initData(nextState.devices);
                     nextState.devices.map((device) => {
                         this.device = device;
                         // console.log(device.data.gps[0].value);
@@ -108,7 +120,7 @@ class FuelController {
             this.updateResults();
         }
 
-       
+
     }
 
     // refreshTrendData() {
@@ -133,12 +145,12 @@ class FuelController {
         }
     }
 
-     runGasUsed() {
+    runGasUsed() {
         this.barchart = true
         this.renderAgain = true;
         this.milesGallonsUsedData = {
             "categories": ['12 Sep', '13 Sep', '14 Sep', '15 Sep', '16 Sep', '17 Sep', '18 Sep'],
-            "values": [443, 322, 323, 542,322, 112, 232]
+            "values": [443, 322, 323, 542, 322, 112, 232]
         }
     }
 

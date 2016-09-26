@@ -11,29 +11,34 @@ var simplep_1 = require('../simplep');
 var deviceAPI_1 = require('../common/deviceAPI');
 var WebsocketServer = require('ws').Server;
 var exoLive = new simplep_1.exoWs(config_1.config.CIK);
+
 function getID() {
     // from http://stackoverflow.com/a/2117523/6461929
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
 }
-var websocketClient = function (ws) {
+var websocketClient = function(ws) {
     var t = this;
     t.ws = ws;
     t.authorized = false;
     t.subscriptions = [];
+    console.log("Hiiiiiiiiiiiiiiiiiii");
 };
-websocketClient.prototype.on = function (event, cb) {
+websocketClient.prototype.on = function(event, cb) {
     this.ws.on(event, cb);
+    console.log("Hiiiiiiiiiiiiiiiiiii-Connected");
 };
-websocketClient.prototype.close = function () {
+websocketClient.prototype.close = function() {
     this.ws.close();
 };
-websocketClient.prototype.authenticate = function (token) {
+websocketClient.prototype.authenticate = function(token) {
     var t = this;
     var deferred = Q.defer();
-    jwt.verify(token, new Buffer(config_1.config.auth0.client_secret, 'base64'), { audience: config_1.config.auth0.client_id }, function (err, decoded) {
+    console.log("Hiiiiiiiiiiiiiiiiiii-auth");
+    jwt.verify(token, new Buffer(config_1.config.auth0.client_secret, 'base64'), { audience: config_1.config.auth0.client_id }, function(err, decoded) {
         if (err) {
             console.log("err decoding token! ", err);
             return;
@@ -46,27 +51,24 @@ websocketClient.prototype.authenticate = function (token) {
     });
     return deferred.promise;
 };
-websocketClient.prototype.send = function (payload) {
+websocketClient.prototype.send = function(payload) {
     try {
         this.ws.send(JSON.stringify(payload));
-    }
-    catch (e) {
+    } catch (e) {
         console.log("error sending to ws: ", e);
     }
 };
-websocketClient.prototype.handleMessage = function (message) {
+websocketClient.prototype.handleMessage = function(message) {
     var t = this;
     if (!this.authorized) {
         if (message.type !== "auth") {
             console.log("sending messages without authorizing first - closing connection");
             this.close();
             return;
-        }
-        else {
+        } else {
             this.authenticate(message.auth);
         }
-    }
-    else {
+    } else {
         switch (message.type) {
             case "subscribe":
                 var rid = message.rid;
@@ -80,14 +82,12 @@ websocketClient.prototype.handleMessage = function (message) {
                 // turn rids and aliases into lists for iteration if not present
                 if (!rids) {
                     rids = [rid];
-                }
-                ;
+                };
                 if (!aliases) {
                     aliases = [alias];
-                }
-                ;
+                };
                 // for each RID, add the aliases for the dataports to the existing rid alias array
-                _.each(rids, function (rid) {
+                _.each(rids, function(rid) {
                     if (!wss.clientToRidAlias[t.id][rid]) {
                         wss.clientToRidAlias[t.id][rid] = [];
                     }
@@ -101,22 +101,20 @@ websocketClient.prototype.handleMessage = function (message) {
                 // if no rid is present, remove all client listening subscriptions
                 if (!rids) {
                     delete wss.clientToRidAlias[t.id];
-                }
-                else {
+                } else {
                     if (rids && (!aliases || aliases.length === 0)) {
                         // remove single listening device if only rid is given
-                        _.each(rids, function (rid) {
+                        _.each(rids, function(rid) {
                             delete wss.clientToRidAlias[t.id][rid];
                         });
-                    }
-                    else {
-                        _.each(rids, function (rid) {
+                    } else {
+                        _.each(rids, function(rid) {
                             // otherwise handle removing specific aliases from the rid array
                             console.log(wss.clientToRidAlias[t.id], rid, aliases);
-                            var indicesToDelete = _.filter(_.map(aliases, function (alias) {
+                            var indicesToDelete = _.filter(_.map(aliases, function(alias) {
                                 return wss.clientToRidAlias[t.id][rid].indexOf(alias);
-                            }), function (idx) { return idx > -1; });
-                            _.each(indicesToDelete, function (index) {
+                            }), function(idx) { return idx > -1; });
+                            _.each(indicesToDelete, function(index) {
                                 wss.clientToRidAlias[t.id][rid].splice(index, 1);
                             });
                         });
@@ -129,17 +127,18 @@ websocketClient.prototype.handleMessage = function (message) {
 };
 var wss;
 var clients = {};
-var initWs = function (server) {
+var initWs = function(server) {
+    // console.log(server);
     wss = new WebsocketServer({ server: server, path: '/ws' });
     wss.listeningTo = {};
     wss.clientToRidAlias = {};
-    exoLive.on(function (payload) {
+    exoLive.on(function(payload) {
         var rid = payload.rid;
         var alias = payload.alias;
-        _.each(wss.clientToRidAlias, function (mapping, clientId) {
+        _.each(wss.clientToRidAlias, function(mapping, clientId) {
             if (mapping[rid]) {
                 if (mapping[rid].indexOf(alias) > -1) {
-                    _.each(clients, function (client, id) {
+                    _.each(clients, function(client, id) {
                         if (id === clientId) {
                             console.log("sending data to client ", payload);
                             client['send']({ "type": "live_data", "payload": payload });
@@ -149,16 +148,16 @@ var initWs = function (server) {
             }
         });
     });
-    wss.listenToAllDataports = function () {
-        deviceAPI_1.getDevice().then(function (devices) {
-            return _.map(devices, function (device) {
-                device['getDataports']().then(function (dataports) {
+    wss.listenToAllDataports = function() {
+        deviceAPI_1.getDevice().then(function(devices) {
+            return _.map(devices, function(device) {
+                device['getDataports']().then(function(dataports) {
                     var rid = device['rid'];
                     if (!wss.listeningTo[rid]) {
                         wss.listeningTo[rid] = [];
                     }
                     dataports = _.difference(dataports, wss.listeningTo[rid]);
-                    _.map(dataports, function (dataport) {
+                    _.map(dataports, function(dataport) {
                         //console.log("subscribing to: ", rid, ", ", dataport);
                         exoLive.subscribe({ "alias": dataport, "rid": rid });
                         wss.listeningTo[rid].push(dataport);
@@ -168,9 +167,9 @@ var initWs = function (server) {
             });
         });
     };
-    wss.unlistenToAllDataports = function () {
-        _.each(wss.listeningTo, function (dataports, rid) {
-            _.each(dataports, function (dataport) {
+    wss.unlistenToAllDataports = function() {
+        _.each(wss.listeningTo, function(dataports, rid) {
+            _.each(dataports, function(dataport) {
                 //console.log("unsubscribing from: ", dataport, rid);
                 exoLive.unsubscribe({ "alias": dataport, "rid": rid });
             });
@@ -189,8 +188,7 @@ var initWs = function (server) {
         wsc.on('message', function incoming(message) {
             try {
                 message = JSON.parse(message);
-            }
-            catch (e) {
+            } catch (e) {
                 return;
             }
             if (message.type !== "auth") {
@@ -198,7 +196,7 @@ var initWs = function (server) {
             }
             wsc.handleMessage(message);
         });
-        wsc.on('close', function () {
+        wsc.on('close', function() {
             delete wss.clientToRidAlias[id];
             delete clients[id];
         });
@@ -206,12 +204,12 @@ var initWs = function (server) {
     // every 5 minutes, unlisten to all dataports
     // and then listen again - sometimes network events happen
     // and the subscription is lost
-    setInterval(function () {
+    setInterval(function() {
         wss.unlistenToAllDataports();
         wss.listenToAllDataports();
     }, 305000);
     // every 30 seconds check if any new dataports are available
-    setInterval(function () {
+    setInterval(function() {
         wss.listenToAllDataports();
     }, 30000);
     // and kick off the listeners right away
