@@ -4,6 +4,7 @@ import deviceListItem from './deviceListItem';
 import listItemStatus from './listItemStatus';
 import listItem from './listItem';
 import userListItem from './userListItem';
+import tabList from './tabList';
 import moreOptions from './moreOptions';
 import './list.scss'
 
@@ -16,5 +17,6 @@ module.exports = angular
     deviceListItem.name,
     listItemStatus.name,
     userListItem.name,
-    moreOptions.name
+    moreOptions.name,
+    tabList.name
   ])

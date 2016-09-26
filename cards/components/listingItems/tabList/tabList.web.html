@@ -1,0 +1,13 @@
+<div layout="row" ng-style="{'background-color':vm.bgcolor}" class="container">
+  <div layout="column" style="margin-left:1%" flex="20" layout-align="center start">
+    <span class="tabListIcon" ng-class="vm.icon"></span>
+  </div>
+  <div layout="column" style="margin-left:1%;" flex="80" layout-align="end end" >
+    <div>
+      <p class="contentNumber">{{vm.number}}</p>
+    </div>
+    <div>
+      <p class="content">{{vm.header}} {{vm.content}}</p>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,10 @@
 <div class="button-bar" layout="row">
     <div layout="row" class="filter-text">Filters</div>
-    <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row"">
-        <div flex-xs="50" flex="48">
-            <md-select style="background-color: gainsboro;" placeholder="Choose Date Filter" ng-model="vm.dateFilter" ng-change="vm.onDataChange()">
-                <md-option ng-repeat="date in vm.dateFilterList" value="{{date.id}}">
+    <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" ">
+        <div flex-xs="50 " flex="48 ">
+            <md-select style="background-color: gainsboro; " placeholder="Choose Date Filter " ng-model="vm.dateFilter
+        " ng-change="vm.onDataChange() ">
+                <md-option ng-repeat="date in vm.dateFilterList " value="{{date.id}} ">
                     {{date.value}}
                 </md-option>
             </md-select>
@@ -11,124 +12,142 @@
     </div>        
     <br>
  </div>
-<md-card id="fuelContainer">
+<md-card id="fuelContainer ">
    <md-card-content>
-      <div  layout-align="end start" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" flex="70">
+      <div  layout-align="end start " layout-xs="colomn " layout-sm="row " layout-md="row " layout-gt-md="row " flex="70 ">
       </div>
-      <div class="text-center" flex-xs="98" flex="98" layout-xs="colomn" layout-sm="row">
-         <ul class="stats_box"  flex-xs="98" flex="98" style="margin-bottom: 0px;">
+
+      <div layout="row" style="margin-bottom:12px !important" >
+        <tab-list icon="icon-warning-general" number="6 " header="Total " content="Truck Alerts " bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
+        <tab-list icon="icon-network-check" number="35 " header="AVG " content="DGE/Hr " bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
+        <tab-list icon="icon-battery-100" number="WM-212439" header="" content="Good Performance " bgcolor="#7B68EE
+        " style="margin-right:10px "></tab-list>
+        <tab-list icon="icon-battery-0 " number="WM-212438" header="" content="Low Performance " bgcolor="#73B9A2
+        " style="margin-right:10px "></tab-list>
+        <tab-list icon="icon-running " number="WM-212441" header="" content="Leakage " bgcolor="#AEACA0 " style="margin-right:10px "></tab-list>
+      </div>
+
+      <!--<div class="text-center " flex-xs="98 " flex="98 " layout-xs="colomn " layout-sm="row ">
+         <ul class="stats_box "  flex-xs="98 " flex="98 " style="margin-bottom: 0px; ">
             <li>
-               <div class="sparkline bar_week">
-                  <md-icon style="font-size: 45px;" md-font-icon="icon-trends"></md-icon>
+               <div class="sparkline bar_week ">
+                  <md-icon style="font-size: 45px; " md-font-icon="icon-trends "></md-icon>
                </div>
-               <div class="stat_text">
+               <div class="stat_text ">
                   Total<strong>Truck Alerts</strong>
-                  <span class="percent down"> <i class="fa fa-caret-down"></i>6</span> 
+                  <span class="percent down "> <i class="fa fa-caret-down "></i>6</span> 
                </div>
             </li>
             <li>
-               <div class="sparkline line_day">
-                  <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
+               <div class="sparkline line_day ">
+                  <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
                </div>
-               <div class="stat_text">
+               <div class="stat_text ">
                   AVG<strong>DGE/Hr</strong>
-                  <span class="percent up"> <i class="fa fa-caret-up"></i>35</span> 
+                  <span class="percent up "> <i class="fa fa-caret-up "></i>35</span> 
                </div>
             </li>
             <li>
-               <div class="sparkline pie_week">
-                  <md-icon style="font-size: 45px;" md-font-icon="icon-user-filled"></md-icon>
+               <div class="sparkline pie_week ">
+                  <md-icon style="font-size: 45px; " md-font-icon="icon-user-filled "></md-icon>
                </div>
-               <div class="stat_text">
-                  Good Performance<strong style="color: green;"><i class="fa fa-caret-down"></i>WM-212439</strong>
-               </div>
-            </li>
-            <li>
-               <div class="sparkline pie_week">
-                  <md-icon style="font-size: 45px;" md-font-icon="icon-user-filled"></md-icon>
-               </div>
-               <div class="stat_text">
-                  Low Performance<strong style="color: #c52f61;">WM-212438</strong>
+               <div class="stat_text ">
+                  Good Performance<strong style="color: green; "><i class="fa fa-caret-down "></i>WM-212439</strong>
                </div>
             </li>
             <li>
-               <div class="sparkline pie_week">
-                  <md-icon style="font-size: 45px;" md-font-icon="icon-running"></md-icon>
+               <div class="sparkline pie_week ">
+                  <md-icon style="font-size: 45px; " md-font-icon="icon-user-filled "></md-icon>
                </div>
-               <div class="stat_text">
+               <div class="stat_text ">
+                  Low Performance<strong style="color: #c52f61; ">WM-212438</strong>
+               </div>
+            </li>
+            <li>
+               <div class="sparkline pie_week ">
+                  <md-icon style="font-size: 45px; " md-font-icon="icon-running "></md-icon>
+               </div>
+               <div class="stat_text ">
                   Leakage<strong>WM-212441</strong>
                </div>
             </li>
          </ul>
-      </div>
-      <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row"  flex-xs="100" flex="100" >
-         <div class="panel panel-primary"  flex-xs="100" flex="50">
-            <div class="panel-heading">
-               <h3 class="panel-title">DGE Filled/Day</h3>
+      </div>-->
+
+      <div layout-xs="coloumn " layout-sm="row " layout-md="row " layout-gt-md="row "  flex-xs="100 " flex="100 " >
+         <div class="panel panel-primary "  flex-xs="100 " flex="50 ">
+            <div class="panel-heading ">
+               <h3 class="panel-title ">DGE Filled/Day</h3>
             </div>
-            <div class="panel-body">
-               <barline-chart layout-fill data="vm.milesGallonsFilledData" title="barChart"></barline-chart>
-            </div>
-         </div>
-         <div class="panel panel-primary" flex-xs="100" flex="50" style="margin-left: 5px;">
-            <div class="panel-heading">
-               <h3 class="panel-title">DGE Used/Day</h3>
-            </div>
-            <div class="panel-body">
-               <barline-chart layout-fill data="vm.milesGallonsUsedData" title="barChart"></barline-chart>
+            <div class="panel-body ">
+               <barline-chart layout-fill data="vm.milesGallonsFilledData " title="barChart "></barline-chart>
             </div>
          </div>
-      </div>
-      <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row"  flex-xs="100" flex="100" >
-         <div class="panel panel-primary"  flex-xs="100" flex="100">
-            <div class="panel-heading">
-               <h3 class="panel-title">Vehicle Detail</h3>
+         <div class="panel panel-primary " flex-xs="100 " flex="50 " style="margin-left: 5px; ">
+            <div class="panel-heading ">
+               <h3 class="panel-title ">DGE Used/Day</h3>
             </div>
-            <div class="panel-body">
-               <md-input-container class="md-icon-float" style="height: 34px;width:100%;">
+            <div class="panel-body ">
+               <barline-chart layout-fill data="vm.milesGallonsUsedData " title="barChart "></barline-chart>
+            </div>
+         </div>
+      </div>
+      <div layout-xs="coloumn " layout-sm="row " layout-md="row " layout-gt-md="row "  flex-xs="100 " flex="100 " >
+         <div class="panel panel-primary "  flex-xs="100 " flex="100 ">
+            <div class="panel-heading ">
+               <h3 class="panel-title ">Vehicle Detail</h3>
+            </div>
+            <div class="panel-body ">
+               <md-input-container class="md-icon-float " style="height: 34px;width:100%; ">
                   <label>Global Search</label>
-                  <md-icon style="font-size: 28px;margin: -2px;" md-font-icon="icon-search"></md-icon>
-                  <input style="padding-left: 33px;" ng-model="searchFish" id="sInput" ng-change="filterCartoList(searchInput)" my-enter="filterCartoList(searchInput)" />
+                  <md-icon style="font-size: 28px;margin: -2px; " md-font-icon="icon-search "></md-icon>
+                  <input style="padding-left: 33px; " ng-model="searchFish " id="sInput " ng-change="filterCartoList(searchInput)
+        " my-enter="filterCartoList(searchInput) " />
                </md-input-container>
-               <table class="table table-bordered table-striped">
+               <table class="table table-bordered table-striped ">
                   <thead>
                      <tr>
                         <td>
-                           <a  ng-click="vm.sortType='name' ; vm.sortReverse=! vm.sortReverse">
+                           <a  ng-click="vm.sortType='name' ; vm.sortReverse=! vm.sortReverse ">
                            VID 
-                           <span ng-show="vm.sortType=='name' && !vm.sortReverse" class="fa fa-caret-down"></span>
-                           <span ng-show="vm.sortType=='name' && vm.sortReverse" class="fa fa-caret-up"></span>
+                           <span ng-show="vm.sortType=='name' && !vm.sortReverse " class="fa fa-caret-down "></span>
+                           <span ng-show="vm.sortType=='name' && vm.sortReverse " class="fa fa-caret-up "></span>
                            </a>
                         </td>
                         <td>
-                           <a  ng-click="vm.sortType='fish' ; sortReverse=! vm.sortReverse">
+                           <a  ng-click="vm.sortType='fish' ; sortReverse=! vm.sortReverse ">
                            Status
-                           <span ng-show="vm.sortType=='fish' && !vm.sortReverse" class="fa fa-caret-down"></span>
-                           <span ng-show="vm.sortType=='fish' && vm.sortReverse" class="fa fa-caret-up"></span>
+                           <span ng-show="vm.sortType=='fish' && !vm.sortReverse " class="fa fa-caret-down "></span>
+                           <span ng-show="vm.sortType=='fish' && vm.sortReverse " class="fa fa-caret-up "></span>
                            </a>
                         </td>
                         <td>
-                           <a ng-click="vm.sortType='tastiness' ; vm.sortReverse=! vm.sortReverse">
+                           <a ng-click="vm.sortType='tastiness' ; vm.sortReverse=! vm.sortReverse ">
                            Location
-                           <span ng-show="sortType=='tastiness' && !sortReverse" class="fa fa-caret-down"></span>
-                           <span ng-show="sortType=='tastiness' && sortReverse" class="fa fa-caret-up"></span>
+                           <span ng-show="sortType=='tastiness' && !sortReverse " class="fa fa-caret-down "></span>
+                           <span ng-show="sortType=='tastiness' && sortReverse " class="fa fa-caret-up "></span>
                            </a>
                         </td>
                      </tr>
                   </thead>
                   <tbody>
+<<<<<<< a6af9222431a5a9f39e483b010606356297a5d0f
       <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish">
         <td><a ui-sref="efficiency({vechicle_id:roll.name})">{{ roll.name }}</a></td>
+=======
+                     <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish ">
+        <td><a ui-sref="efficiency({vechicle_id:roll.name}) ">{{ roll.name }}</a></td>
+>>>>>>> Tab List UI
         <td>{{ roll.type }}</td>
         <td>
             {{ roll.location }}
-            <md-icon style="font-size: 35px;" title="Click to check" md-font-icon="icon-location"></md-icon>
+            <md-icon style="font-size: 35px; " title="Click to check " md-font-icon="icon-location "></md-icon>
         </td>
         </tr>
         </tbody>
         </table>
         <center>
-            <div ng-if="(vm.deviceslist | filter:searchFish).length==0">No Vehicle to Display</div>
+            <div ng-if="(vm.deviceslist | filter:searchFish).length==0 ">No Vehicle to Display</div>
         </center>
     </div>
 </div>
