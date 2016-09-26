@@ -2,8 +2,9 @@
     <div layout="row" class="filter-text">Filters</div>
     <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" ">
       &nbsp;&nbsp;&nbsp;
-      <div flex-xs="50 " flex="48 ">
-         <md-select style="background-color: gainsboro; " placeholder="Choose Vehicle Filter " ng-model="vm.vehicleFilter " ng-change="vm.onvehicleChange() ">
+    <div flex-xs="50 " flex="48 " style="border-right:2px solid black; min-width: 220px" layout="row">
+       <md-icon style="font-size: 40px;color:black;" md-font-icon="icon-calendar-flled"></md-icon>
+         <md-select style="background-color: #5F5B5B; " placeholder="Choose Vehicle Filter " ng-model="vm.vehicleFilter " ng-change="vm.onvehicleChange() ">
             <md-option ng-repeat="vehicle in vm.vehicleFilterList " value="{{vehicle.name}} ">
                {{vehicle.name}}
             </md-option>

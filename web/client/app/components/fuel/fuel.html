@@ -1,10 +1,11 @@
 <div class="button-bar" layout="row">
     <div layout="row" class="filter-text">Filters</div>
-    <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" ">
-        <div flex-xs="50 " flex="48 ">
-            <md-select style="background-color: gainsboro; " placeholder="Choose Date Filter " ng-model="vm.dateFilter
-        " ng-change="vm.onDataChange() ">
-                <md-option ng-repeat="date in vm.dateFilterList " value="{{date.id}} ">
+  <div class="text-center" flex-xs="100" flex="100" layout-xs="colomn" layout-sm="row" layout-md="row" layout-gt-md="row" >
+      &nbsp;&nbsp;&nbsp;
+        <div flex-xs="50" flex="48" style="border-right:2px solid black; min-width: 220px" layout="row">
+           <md-icon md-font-icon="icon-calendar-flled"></md-icon>
+            <md-select style="background-color: #5F5B5B;" placeholder="Choose Date Filter" ng-model="vm.dateFilter" ng-change="vm.onDataChange()">
+                <md-option ng-repeat="date in vm.dateFilterList" value="{{date.id}}">
                     {{date.value}}
                 </md-option>
             </md-select>

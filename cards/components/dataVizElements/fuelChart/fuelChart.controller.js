@@ -12,7 +12,9 @@ class FuelChartController {
                         plotBackgroundImage: null,
                         plotBorderWidth: 0,
                         plotShadow: false,
-                        height:300
+                        backgroundColor: 'white',
+                        height:300,
+                        width:280
                     },
             title: {
                 text: null
@@ -25,8 +27,8 @@ class FuelChartController {
                     backgroundColor: {
                         linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
                         stops: [
-                            [0, '#FFF'],
-                            [1, '#333']
+                            [0, '#ffb91d'],
+                            [1, '#ffb91d']
                         ]
                     },
                     borderWidth: 0,
@@ -35,8 +37,8 @@ class FuelChartController {
                     backgroundColor: {
                         linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
                         stops: [
-                            [0, '#333'],
-                            [1, '#FFF']
+                            [0, '#ffb91d'],
+                            [1, '#ffb91d']
                         ]
                     },
                     borderWidth: 1,
@@ -44,7 +46,7 @@ class FuelChartController {
                 }, {
                     // default background
                 }, {
-                    backgroundColor: '#DDD',
+                    backgroundColor: '#ffb91d',
                     borderWidth: 0,
                     outerRadius: '105%',
                     innerRadius: '103%'
@@ -55,43 +57,47 @@ class FuelChartController {
             yAxis: {
                 min: this.data.min,
                 max: this.data.max,
-                minorTickInterval: 'auto',
+                minorTickInterval: 5,
                 minorTickWidth: 1,
-                minorTickLength: 10,
+                minorTickLength: 20,
                 minorTickPosition: 'inside',
-                minorTickColor: '#666',
+                minorTickColor: 'white',
 
                 tickPixelInterval: 30,
                 tickWidth: 2,
-                tickPosition: 'inside',
+                tickPosition: 'outside',
                 tickLength: 10,
-                tickColor: '#666',
+                tickColor: 'white',
                 labels: {
                     step: 2,
                     rotation: 'auto'
                 },
                 title: {
-                    text: null
+                    text: "Fuel",
+                    style:{
+                        color: '#ffb91d',
+                        font: '16px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+                    }
                 },
                 plotBands: [{
                     from: 0,
-                    to: 30,
-                    color: '#DF5353' // red
+                    to: 15,
+                    color: '#D02323' // Red
                    
                 }, {
-                    from: 30,
-                    to: 40,
-                    color: '#DDDF0D' // yellow
+                    from: 15,
+                    to: 30,
+                    color: '#ffb91d' // yellow
                 }, {
-                    from: 40,
+                    from: 30,
                     to: 60,
-                     color: '#55BF3B' // green
+                     color: '#09A80E' // green
                 }]
             },
       },
     series: [{
                 name: 'Fuel Level',
-                data: [this.data.value],
+                data: [this.data.value]
             }],
     func: function(chart) {
             $timeout(function() {

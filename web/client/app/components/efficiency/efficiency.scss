@@ -98,9 +98,8 @@ efficiencyFile {
     P { text-align: left; } 
 
     
-
 .filter-text {
-      width: 100px;
+      width: 150px;
       background-color: #1b202d;
       color: white;
       font-weight: bold;
@@ -118,7 +117,7 @@ efficiencyFile {
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313', GradientType=0 );
     }
    .button-bar {
-       background-color: #424242;
+       background-color: #5F5B5B;
        width: 100%;
        
        .md-datepicker-input-container {
@@ -168,6 +167,30 @@ efficiencyFile {
        md-icon {
            color:#A9A9A9;
        }
+
+        md-select {
+          min-width: 150px;
+      }
+
+        md-select .md-select-value {
+           border-bottom: none;
+           color: white;
+      }
+
+       md-select:not([disabled]):focus .md-select-value {
+           border-bottom: none;
+           color: white;
+       }
+       .md-select-value .md-select-icon:after {
+           font-size: 20px;
+      }
+      md-icon {
+        margin: 10px;
+        margin-top: 15px;
+        font-size: 40px;
+        color:black;
+      
+      }
    }
 
    md-select {
@@ -175,15 +198,13 @@ efficiencyFile {
 }
 
 .filter-text {
-    width: 100px;
+    width: 150px;
     background-color: #1b202d;
     color: white;
     font-weight: bold;
     padding-left: 25px;
     padding-top: 17px;
 }
-
-
 
 .stats_box {
     display: inline-block;
