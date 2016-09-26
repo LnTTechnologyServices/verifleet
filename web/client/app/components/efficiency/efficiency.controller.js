@@ -79,6 +79,9 @@ class EfficiencyController {
         this.DGEHrs = this.websocketserver.getDGEperHours(this.vechicle_id);
         this.faultCode = this.websocketserver.getFaultCode(this.vechicle_id);
         this.totalGasUsed = this.websocketserver.getTotalGasUsed(this.vechicle_id);
+
+        //Websocket
+        this.websocketserver.get();
     }
 
     // Which part of the Redux global state does our component want to receive?

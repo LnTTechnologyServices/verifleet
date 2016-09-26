@@ -1,119 +1,71 @@
-// Factory
-// app.factory('Server', function($websocket, DataModel) {
-
-//     DataModel.cik = "07b03708551eb9e995fbff5fcbb762cfa079f9ff";
-//     var dataStream = $websocket('wss://m2.exosite.com/ws'); // wss://echo.websocket.org');
-//     dataStream.onOpen = function() {
-//         alert("Socket has been opened!");
-//     };
-
-//     dataStream.onMessage(function(message) {
-//         console.log(message);
-//         var d = angular.fromJson(message.data);
-//     });
-
-//     var methods = {
-//         get: function() {
-//             console.log("get Method");
-//             dataStream.send(JSON.stringify({
-//                 "calls": [{
-//                     "id": 131,
-//                     "procedure": "subscribe",
-//                     "arguments": [
-//                         "314e017e1857b14c8826264226ff7b98c3ed5f16", // 1 DGE
-//                         {
-//                             "since": 1464894020,
-//                             "subs_id": 20
-//                         }
-
-//                     ]
-//                 }]
-//             }));
-//         },
-//         validate: function() {
-//             console.log("Validate");
-//             dataStream.send(JSON.stringify({
-//                 "auth": {
-//                     "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff"
-//                 }
-//             }));
-//         }
-//     };
-//     return methods;
-// });
-// // DataModel
-// app.service('DataModel', function() {
-//     var gaugeData = {
-//         "max": this.max,
-//         "min": this.min,
-//         "value": 45
-//     }
-//     return Device;
-// });
-
 // import Server as WebSocket from 'ws';
 
 let WebSocket = require('ws');
 class websocketserver {
 
     constructor() {
-            "ngInject";
-            this.gaugeData = {
-                "max": this.max,
-                "min": this.min,
-                "value": 45
-            }
-            this.devicedata = [{}];
-            this.ws = new WebSocket("ws://localhost/ws");
-            // this.ws = new WebSocket("wss://m2.exosite.com/ws");
-
-            this.ws.on("open", function() {
-                alert("Socket has been opened!");
-                this.ws.send(JSON.stringify({
-                    "auth": {
-                        "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff"
-                    }
-                }));
-            }, this);
-
-            // this.ws.on("message", function(json_data, flags) {
-            //     let orig_data = JSON.parse(json_data);
-            //     let data = orig_data[0];
-
-            //     if (data) {
-            //         if (data.status === "ok") {
-            //             if (data.result) {
-            //                 alert(data);
-            //             }
-            //         }
-            //     }
-            // });
+        "ngInject";
+        this.gaugeData = {
+            "max": this.max,
+            "min": this.min,
+            "value": 45
         }
-        // get() {
-        //         console.log("get Method");
-        //         this.dataStream.send(JSON.stringify({
-        //             "calls": [{
-        //                 "id": 131,
-        //                 "procedure": "subscribe",
-        //                 "arguments": [
-        //                     "314e017e1857b14c8826264226ff7b98c3ed5f16", // 1 DGE
-        //                     {
-        //                         "since": 1464894020,
-        //                         "subs_id": 20
-        //                     }
+        this.devicedata = [{}];
+        // this.ws = new WebSocket("ws://localhost/ws");
+        this.ws = new WebSocket("wss://m2.exosite.com/ws");
 
-    //                 ]
-    //             }]
-    //         }));
-    //     }
-    // validate() {
-    //     console.log("Validate");
-    //     this.dataStream.send(JSON.stringify({
-    //         "auth": {
-    //             "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff"
-    //         }
-    //     }));
-    // }
+        this.ws.on("open", function() {
+            alert("Socket has been opened!");
+            this.ws.send(JSON.stringify({
+                "auth": {
+                    "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff"
+                }
+            }));
+        }, this);
+
+        this.ws.on("message", function(json_data, flags) {
+            let orig_data = JSON.parse(json_data);
+            let data = orig_data[0];
+
+            if (data) {
+                if (data.status === "ok") {
+                    if (data.result) {
+                        alert(data);
+                        //DGE data 
+                    }
+                }
+            }
+        });
+    }
+    get() {
+            console.log("get Method");
+            try {
+                this.ws.send(JSON.stringify({
+                    "calls": [{
+                        "id": 131,
+                        "procedure": "subscribe",
+                        "arguments": [
+                            "314e017e1857b14c8826264226ff7b98c3ed5f16", // 1 DGE
+                            {
+                                "since": 1464894020,
+                                "subs_id": 20
+                            }
+
+                        ]
+                    }]
+                }));
+            } catch (e) {
+                console.log("error sending to ws: ", e);
+            }
+        }
+        // validate() {
+        //     console.log("Validate");
+        //     this.dataStream.send(JSON.stringify({
+        //         "auth": {
+        //             "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff"
+        //         }
+        //     }));
+        // }
 
     initData(devices) {
         // alert(JSON.stringify(devices));
@@ -140,6 +92,9 @@ class websocketserver {
             alert(JSON.stringify(this.devicedata.length));
 
         return 0;
+    }
+    getDGEFilledperDay() {
+
     }
     getDistanceToEmpty(deviceName) {
         if (this.devicedata) {
@@ -243,7 +198,7 @@ class websocketserver {
                     if ((dge[i + 1] - dge[i]) > ((dge[i] * 20) / 100)) {
                         filled = filled + (dge[i + 1] - dge[i]);
                     }
-                    if (i == 12) {
+                    if (i == 12) { //TODO
                         break;
                     }
                     // console.log(i + ": PER  Hour" + initial + ":" + last + ":" + filled)
@@ -273,6 +228,7 @@ class websocketserver {
                     if ((item.data.dge[i + 1].value - item.data.dge[i].value) > ((item.data.dge[i].value * 20) / 100)) {
                         filled = filled + (item.data.dge[i + 1].value - item.data.dge[i].value);
                     }
+
                     // console.log(i + " : PER  Day" + initial + ":" + last + ":" + filled)
                 }
                 return (initial + filled - last).toFixed(2);
@@ -307,8 +263,8 @@ class websocketserver {
                     if (new Date(item.data.dge[i].timestamp).getDate() != temp && temp != -1) {
                         result.push({ timestamp: this.convertDate(item.data.dge[i].timestamp), value: (initial + filled - last).toFixed(2) });
                         day += 1;
-                        if(day >= days)
-                        return result;
+                        if (day >= days)
+                            return result;
                     }
                     console.log(i + " : PER  Day" + (new Date(item.data.dge[i].timestamp).getDate()) + ":" + temp);
                     temp = new Date(item.data.dge[i].timestamp).getDate();
