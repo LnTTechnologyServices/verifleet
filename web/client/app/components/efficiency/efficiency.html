@@ -5,7 +5,7 @@
     <div flex-xs="50 " flex="48 " style="border-right:2px solid black; min-width: 220px" layout="row">
        <md-icon style="font-size: 40px;color:black;" md-font-icon="icon-calendar-flled"></md-icon>
          <md-select style="background-color: #5F5B5B; " placeholder="Choose Vehicle Filter " ng-model="vm.vehicleFilter " ng-change="vm.onvehicleChange() ">
-            <md-option ng-repeat="vehicle in vm.vehicleFilterList " value="{{vehicle.name}} ">
+            <md-option ng-repeat="vehicle in vm.vehicleFilterList " value="{{vehicle.rid}} ">
                {{vehicle.name}}
             </md-option>
          </md-select>

@@ -41,6 +41,35 @@ function receiveDevices(devices) {
     }
 }
 
+ function requestDeviceLastTrip(did) {
+     return {
+         type: types.REQUEST_DEVICE_LASTTRIP,
+         did: did
+     }
+ }
+ 
+ function requestDevicesLastTrip() {
+     return {
+         type: types.REQUEST_DEVICES_LASTTRIP
+     }
+ }
+ 
+ function receiveDeviceLastTrip(device) {
+     console.log("receiveDevicesLastTrip",device);
+     return {
+         type: types.RECEIVE_DEVICE_LASTTRIP,
+         device: device
+     }
+ }
+ 
+ function receiveDevicesLastTrip(devices) {
+     console.log("receiveDevicesLastTrip",devices);
+     return {
+         type: types.RECEIVE_DEVICES_LASTTRIP,
+         devices: devices
+     }
+ }
+ 
 function subscribeDevices(rids, aliases) {
     return {
         type: types.SUBSCRIBE_DEVICES,
@@ -100,6 +129,26 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
                 .then(devices => dispatch(receiveDevices(devices)))
         }
     }
+
+    function getDeviceslasttrip(did, aliases) {
+       // alert("2");
+       return dispatch => {
+           dispatch(requestDeviceLastTrip(did));
+           return $http({
+                   url: `${projectConfig.api_base_url}/devices`,
+                   method: "POST",
+                   params: { "did": did},
+                   headers: { 'Authorization': `${projectConfig.auth_token}` },
+                   data: aliases
+               })
+               .then(response => {
+                   console.log('getDeviceslasttrip',did);
+                   console.log('getDeviceslasttrip',response.data);
+                   return response.data;
+               })
+               .then(devices => dispatch(receiveDeviceLastTrip(devices)))
+       }
+   }
 
     function shouldGetDevices(state, timeout) {
         const { devices, isLoading, lastUpdated } = state;
@@ -245,6 +294,7 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
     return {
         getDevices,
         getDevicesTrend,
+        getDeviceslasttrip,
         getDevicesIfNeeded,
         getDevice,
         putDeviceNotes,

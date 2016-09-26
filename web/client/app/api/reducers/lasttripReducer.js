@@ -2,7 +2,7 @@ import * as types from '../constants';
 
 import initialState from './initialState';
 
-const ALARM_ALIAS = 'ecu';
+const LASTTRIP_ALIAS = 'ecu';
 
 function iconFromText(text) {
   if(angular.isUndefined(text))
@@ -125,57 +125,74 @@ function updatealertsummary(device,ecudata) {
   }
 }
 
-function reduceAlarmFromData(device, data) {
-  console.log("reduceAlarmFromData",device,data);
+function reducelasttripdata(device, data) {
+  console.log("reducelasttrupdata",device,data);
   var ecu_data = data.value.replace(/\'/g, '\"');
   ecu_data = JSON.parse(ecu_data);
-
-  updatealertsummary(device,ecu_data); 
-
-  //console.log(ecu_data);
-  return {
-    status: data.status,
-    title: device.name,
-    //description: descriptionFromECUData(ecu_data),
-    group: descriptionFromECUData(ecu_data),
-    subtitle: titleFromECUData(ecu_data),
-    timestamp: data.timestamp,
-    icon: iconFromText(data.text),
-    pid: device.pid,
-    did: device.sn,
-    type: 'alarm'
-  }
+  return {data: ecu_data, timestamp: data.timestamp};
 }
 
-function reduceAlarmFromDevice(device) {
-  console.log("reduceAlarmFromData 1",JSON.stringify(device));
-  if(device.data[ALARM_ALIAS]) {
-      return device.data[ALARM_ALIAS].filter(function(data){
+
+function getEngineHours(ecudataCollection)
+{
+   var firstecudata = ecudataCollection[0];
+   var lastecudata = ecudataCollection[ecudataCollection.length - 1];
+
+   return lastecudata.data.engine_hours - firstecudata.data.engine_hours;
+}
+
+function getMilesDriven(ecudataCollection)
+{
+
+}
+
+function getTotalGasUsed(ecudataCollection)
+{
+
+}
+
+function getDGEHours(ecudataCollection)
+{
+
+}
+
+function reduceLastTripFromDevice(device) {
+  console.log("reducelasttripdata 1");
+  if(device.data[LASTTRIP_ALIAS]) {
+
+    var ecudataCollection = device.data[LASTTRIP_ALIAS].map(data => reducelasttripdata(device, data))
+  
+    return{
+      enginehours: getEngineHours(ecudataCollection),
+      milesdriven: 0,
+      faultcode: 0,
+      dge_hr: 0,
+      totalgasused: 0
+    }
+      /*return device.data[LASTTRIP_ALIAS].filter(function(data){
           var ecu_data = data.value.replace(/\'/g, '\"');
           ecu_data = JSON.parse(ecu_data);
-          console.log("reduceAlarmFromData 2",ecu_data);
+          console.log("reducelasttripdata 2",ecu_data);
           if(ecu_data.red_stop_lamp_status == 1 || ecu_data.amber_lamp_status == 1 || ecu_data.protect_lamp_status == 1 ||ecu_data.malfunction_indicator_lamp_status == 1)
           {  
             return ecu_data
           }
-        }).map(data => reduceAlarmFromData(device, data))
+        }).map(data => reducelasttripdata(device, data))*/
   } else {
-    console.warn("Device ", device.name, " has no alias for alarms -", ALARM_ALIAS);
+    console.warn("Device ", device.name, " has no alias for last trip -", LASTTRIP_ALIAS);
     return [];
   }
 }
 
-function alarmReducer(state=initialState.alarms, action) {
+function lasttripReducer(state=initialState.lasttrip, action) {
   switch (action.type) {
-    case types.RECEIVE_DEVICES:
     case types.RECEIVE_DEVICES_LASTTRIP:
-      return [].concat(...action.devices.map(device => reduceAlarmFromDevice(device)))
-    case types.RECEIVE_DEVICE:
+      return [].concat(...action.devices.map(device => reduceLastTripFromDevice(device)))
     case types.RECEIVE_DEVICE_LASTTRIP:
-      return reduceAlarmFromDevice(action.device);
+      return reduceLastTripFromDevice(action.device);
     case types.WEBSOCKET_LIVE_DATA:
-      if(action.alias === ALARM_ALIAS) {
-        let newAlarm = reduceAlarmFromData(action.device, action.data)
+      if(action.alias === LASTTRIP_ALIAS) {
+        let newAlarm = reducelasttripdata(action.device, action.data)
         return state.concat(newAlarm);
       } else {
         return state
@@ -185,4 +202,4 @@ function alarmReducer(state=initialState.alarms, action) {
   }
 }
 
-export { alarmReducer }
+export { lasttripReducer }

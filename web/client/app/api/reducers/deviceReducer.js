@@ -46,11 +46,13 @@ if(device.data.raw_data)
 }
 // console.log("reducedevice after", device);
 //////////////////////////////////////////////////
-  device.lastReported = _.max(_.map(device.data, (data, alias) => {
-    if(data.length) {
-      return data[data.length-1].ts
-    }
-  })) || 0;
+device.lastReported = device.updated
+
+  // device.lastReported = _.max(_.map(device.data, (data, alias) => {
+  //   if(data.length) {
+  //     return data[data.length-1].ts
+  //   }
+  // })) || 0;
   device.icon = "icon-device"
 
   return device

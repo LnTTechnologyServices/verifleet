@@ -28,6 +28,7 @@ import createLogger from 'redux-logger';
 import { userReducer, userNotificationReducer, currentUserReducer } from './api/reducers/userReducer';
 import { deviceReducer } from './api/reducers/deviceReducer';
 import { alarmReducer } from './api/reducers/alarmReducer';
+import { lasttripReducer } from './api/reducers/lasttripReducer';
 import { activityReducer } from './api/reducers/activityReducer';
 import { subscriptionReducer, websocketReducer } from './api/reducers/websocketReducer';
 import { loadingReducer, updatedReducer } from './api/reducers';
@@ -128,6 +129,7 @@ angular.module('app', [
             isLoading: loadingReducer,
             lastUpdated: updatedReducer,
             current_user: currentUserReducer,
+            lasttrip: lasttripReducer,
             users: userReducer,
             notifications: userNotificationReducer,
             activities: activityReducer,

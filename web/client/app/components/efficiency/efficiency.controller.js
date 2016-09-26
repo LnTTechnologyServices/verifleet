@@ -20,10 +20,13 @@ class EfficiencyController {
         });
 
 
-         if(this.VfSharedService.getVechicleData().length > 0){
-           this.vehicleFilterList = this.VfSharedService .getVechicleData();
-        }else {    
-            this.vehicleFilterList = ["WM-212438", "WM-212439", "WM-212440", "WM-212441", "WM-212442"];
+        if(this.VfSharedService.getVechicleData().length > 0)
+        {
+           this.vehicleFilterList = this.VfSharedService.getVechicleData();
+        }
+        else
+        {
+            this.vehicleFilterList = [];
         }
 
         // this.websocketserver.validate();
@@ -38,13 +41,9 @@ class EfficiencyController {
         this.last15Days = new Date().setDate(new Date().getDate() - 15);
         this.last15Days = Math.floor(last15Days / 1000);
 
-        //this.runCommonFunction();
         this.paramsMG = "MGcurWeek"
-            // this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 5 } }, { "alias": "ecu", "options": { "sort": "desc","starttime":"' + this.yestDate + '", "endtime": "' + this.currentDate + '","limit":100}}]';
-        this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 300  } }, { "alias": "ecu", "options": { "sort": "desc", "limit":10 } }]';
-        //"starttime":last15Days,
+        this.devicelistaliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}]';
         this.deviceId = this.vechicle_id;
-        //'WM-212438'; // Update on navigation
 
         this.lineChartData = [{
             name: 'VM-121',
@@ -66,40 +65,67 @@ class EfficiencyController {
 
         function loadAfterAuthed(vm) {
             if (vm.auth.isAuthenticated && vm.store.get("token")) {
-                vm.getDevices(vm.aliases);
+                 if(vm.vehicleFilterList.length == 0)
+                 {
+                     vm.getDevices(vm.devicelistaliases);
+                 }
             } else {
                 if (self.Timer) $timeout.cancel(self.Timer);
                 self.Timer = vm.$timeout(() => loadAfterAuthed(vm), 50);
             }
         }
         loadAfterAuthed(this);
+  
+         var today = new Date();
+         
+         this.getlasttripdata();
+ 
 
         this.runBarMilesGallon();
         this.runFuelGuage();
         //this.gaugeData = this.websocketserver.gaugeData; for Websocket live update
         // this.gaugeData.value.pop();
         // this.gaugeData.value.push(this.websocketserver.getDGE(this.vechicle_id));
-        this.runDistancetoEmpty();
+        /*this.runDistancetoEmpty();
         this.engineHours = this.websocketserver.getEngineHours(this.vechicle_id);
         this.milesDriven = this.websocketserver.getMilesDriven(this.vechicle_id);
         this.DGEHrs = this.websocketserver.getDGEperHours(this.vechicle_id);
         this.faultCode = this.websocketserver.getFaultCode(this.vechicle_id);
-        this.totalGasUsed = this.websocketserver.getTotalGasUsed(this.vechicle_id);
+        this.totalGasUsed = this.websocketserver.getTotalGasUsed(this.vechicle_id);*/
 
         //Websocket
         this.websocketserver.get();
     }
 
+     getlasttripdata()
+     {
+         if(this.vechicle_id && this.vehicleFilterList)
+         {
+                     var today = new Date();
+                     var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1); 
+                     var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                     var starttimemilliseconds = startdatetime.getTime() / 1000;
+                     var endtimemilliseconds = (enddatetime.getTime() / 1000);
+                     endtimemilliseconds = endtimemilliseconds - 1;
+                     console.log('starttimemilliseconds',starttimemilliseconds);
+                     console.log('endtimemilliseconds',endtimemilliseconds);
+                     var lasttripaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":1000, "starttime":' + starttimemilliseconds +  ', "endtime":' + endtimemilliseconds + '}},{"alias":"ecu","options": {"sort":"asc", "limit":1000, "starttime":' + starttimemilliseconds +  ', "endtime":' +      endtimemilliseconds + '}}]';
+                     this.getDeviceslasttrip(this.vechicle_id, lasttripaliases);
+        }
+      }
+
     // Which part of the Redux global state does our component want to receive?
     mapStateToThis(state) {
         const devices = state.devices;
         const alarms = state.alarms;
+        const lasttrip = state.lasttrip;
         const activities = state.activities;
         const isLoading = state.isLoading;
         return {
             alarms,
             activities,
             devices,
+            lasttrip,
             isLoading
         };
     }
@@ -158,8 +184,8 @@ class EfficiencyController {
     }
 
     componentWillReceiveStateAndActions(nextState, nextActions) {
-        console.log("LOADED")
-            // alert(JSON.stringify(nextState.devices));
+       console.log("EfficiencyController", nextState)
+       console.log("EfficiencyController", nextActions)
         if (nextState.devices)
             if (nextState.devices.length) {
                 //  console.log("trendscontroller",this.initialized);
@@ -168,27 +194,36 @@ class EfficiencyController {
                 if (!this.initialized) {
                     this.initialized = true;
                     this.deviceListItems = nextState.devices;
-                    // console.log("devices trend",this.deviceListItems );
-                    nextState.devices.map((device) => {
-                        this.device = device;
-                        if (_.keys(device.data).length) {
-                            nextActions.subscribeToDevices([device.sn], _.keys(device.data))
-                        }
-                        // if (this.milesGallonsData) {
-                        //     if (device.name == this.vechicle_id) {
-                        //         var i = 0;
-                        //         console.log("Done", this.vechicle_id);
-                        //         // for (i = 0; i < device.data.dge.length; i++) {
-                        //         //     this.milesGallonsData.categories.push(this.convertDate(device.data.dge[i].timestamp));
-                        //         //     this.milesGallonsData.values.push(device.data.dge[i].value);
-                        //         // }
-                        //     }
-                        // }
-                    })
-                    this.updated = true;
-                    // console.log("trend data", this.devicesTrendData)
+                   console.log("devices:",this.deviceListItems );
+ 
+                    if(this.vehicleFilterList && this.vehicleFilterList.length == 0)
+                    {
+                            nextState.devices.map((device) => {
+                                this.device = device;
+                                if (_.keys(device.data).length) {
+                                    nextActions.subscribeToDevices([device.sn], _.keys(device.data))
+                                }
+ 
+                                this.vehicleFilterList.push({ name: device.name, type: device.type, location: device.data.gps[0].value, rid : device.rid });
+                        })
+                        this.updated = true;
+                    }
+ 
+                    this.getlasttripdata();
                 }
             }
+
+            if(nextState.lasttrip)
+         {
+             this.engineHours = nextState.lasttrip.enginehours;
+             this.milesDriven = nextState.lasttrip.milesdriven;
+             this.DGEHrs = nextState.lasttrip.dge_hr;
+             this.totalGasUsed = nextState.lasttrip.totalgasused;
+         }
+ 
+         if(nextState.alarms)
+         {
+         }
 
             // if (this.updated) {
         this.updated = false;

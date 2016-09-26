@@ -1,5 +1,12 @@
 let initialState = {
   alarms: [],
+  lasttrip: {
+     enginehours: 0,
+     milesdriven: 0,
+     faultcode: 0,
+     dge_hr: 0,
+     totalgasused: 0
+   },
   activities: [],
   current_user: {},
   devices: [],
