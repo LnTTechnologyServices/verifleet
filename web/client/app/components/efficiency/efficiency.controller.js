@@ -19,6 +19,8 @@ class EfficiencyController {
             Object.assign(this, selectedState, actions);
         });
 
+        this.activityAlarmItems = [];
+        this.requestVehicleReportSent = false;
 
         if(this.VfSharedService.getVechicleData().length > 0)
         {
@@ -109,8 +111,23 @@ class EfficiencyController {
                      endtimemilliseconds = endtimemilliseconds - 1;
                      console.log('starttimemilliseconds',starttimemilliseconds);
                      console.log('endtimemilliseconds',endtimemilliseconds);
-                     var lasttripaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":1000, "starttime":' + starttimemilliseconds +  ', "endtime":' + endtimemilliseconds + '}},{"alias":"ecu","options": {"sort":"asc", "limit":1000, "starttime":' + starttimemilliseconds +  ', "endtime":' +      endtimemilliseconds + '}}]';
+                     var lasttripaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds +  ', "endtime":' + endtimemilliseconds + '}},{"alias":"ecu","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds +  ', "endtime":' +      endtimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds +  ', "endtime":' +      endtimemilliseconds + '}}]';
+
                      this.getDeviceslasttrip(this.vechicle_id, lasttripaliases);
+        }
+      }
+
+     getVehicleReport()
+     {
+         if(this.vechicle_id && this.vehicleFilterList)
+         {
+                     var today = new Date();
+                     var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 10); 
+                     var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                     var starttimemilliseconds = startdatetime.getTime() / 1000;
+                     var lasttripaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds +  '}},{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds +  '}}]';
+                     this.requestVehicleReportSent = true;
+                     this.readDevice(this.vechicle_id, lasttripaliases);
         }
       }
 
@@ -133,7 +150,7 @@ class EfficiencyController {
     onvehicleChange() {
         this.vechicle_id = this.vehicleFilter;
         this.initialized = false;
-        this.getDevices(this.aliases);
+        this.getVehicleReport();
     };
     onDataChanged(data) {
         alert(data);
@@ -208,12 +225,29 @@ class EfficiencyController {
                         })
                         this.updated = true;
                     }
- 
+                    this.getVehicleReport();
                     this.getlasttripdata();
+                }
+
+                if(this.requestVehicleReportSent)
+                {
+                    for (var i = 0; i < nextState.devices.length; i++) {
+                        if (nextState.devices[i].rid == this.vechicle_id) {
+                            
+                            console.log("Got it",nextState.devices[i].data['dge'])
+                            console.log("Got it",nextState.devices[i].data['gas_filled']) 
+                            if(nextState.devices[i].data['dge'] && nextState.devices[i].data['gas_filled'])
+                            {
+                                this.requestVehicleReportSent = false;
+                                this.updateVehicleReport(nextState.devices[i].data['dge'], nextState.devices[i].data['gas_filled']);
+                            }
+                            break;
+                        }
+                    }
                 }
             }
 
-            if(nextState.lasttrip)
+         if(nextState.lasttrip)
          {
              this.engineHours = nextState.lasttrip.enginehours;
              this.milesDriven = nextState.lasttrip.milesdriven;
@@ -223,6 +257,18 @@ class EfficiencyController {
  
          if(nextState.alarms)
          {
+             console.log("alarms", nextState.alarms)
+              let newAlarms = _.difference(nextState.alarms, this.activityAlarmItems)
+                if(newAlarms.length) {
+                    this.updated = true;
+                    newAlarms = newAlarms.map( alarm => {
+                        alarm.onClick = () => this.$state.go('device', {product_id: alarm.pid, device_id: alarm.did})
+                        return alarm;
+                    })
+                    this.activityAlarmItems = this.activityAlarmItems.concat(newAlarms);
+                }
+                console.log("alarms",this.activityAlarmItems )
+                this.updatefaultcodes();
          }
 
             // if (this.updated) {
@@ -231,8 +277,52 @@ class EfficiencyController {
         // }
     }
 
+    getCount(group) {
+        var count = 0;
+        if(this.activityAlarmItems)
+        {
+            for (var i = 0; i < this.activityAlarmItems.length; i++) {
+                if (this.activityAlarmItems[i].group == group) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    updatefaultcodes()
+    {
+        this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');
+        if(this.activityAlarmItems)
+        {
+                this.faultCode = this.activityAlarmItems.length;
+        }
+    }
+
+    updateVehicleReport(dgeCollection, dgeFilled )
+    {
+        console.log('updateVehicleReport',dgeCollection);
+        console.log('updateVehicleReport',dgeFilled);
+          this.milesGallonsData.values = [];
+          this.milesGallonsData.categories = [];
+          var i = 0;
+          for (i = 0; i < dgeFilled.length; i++) {
+                     this.milesGallonsData.categories.push(dgeFilled[i].timestamp);
+                     this.milesGallonsData.values.push(Number((dgeFilled[i].value).toFixed(2)));
+                 }
+
+          this.lineChartData = [{
+            //name: 'VM-121',
+            type: 'area',
+            pointStart: Date.UTC(2016, 0, 1),
+            pointInterval: 24 * 36e5,
+            data: dgeCollection
+        }];
+             
+    }
 
     updateResults() {
+
         if (this.deviceListItems)
             var deviceNew = this.deviceListItems.find(function(x) {
                 return x.name == this.vechicle_id;
@@ -252,44 +342,8 @@ class EfficiencyController {
             //     }
             // }
 
-            // this.config = {
-            //     options: {
-            //         chart: {
-            //             renderTo: 'container',
-            //             type: 'column'
-            //         },
-            //         title: {
-            //             text: null
-            //         },
-            //         xAxis: {
-            //             categories: this.milesGallonsData.categories
-            //         },
-            //         yAxis: {
-            //             title: {
-            //                 text: null
-            //             }
-            //         },
-            //         legend: {
-            //             enabled: false
-            //         },
-            //         plotOptions: {
-            //             series: {
-            //                 dataLabels: {
-            //                     enabled: true,
-            //                     style: {
-            //                         color: '#fff'
-            //                     }
-            //                 }
-            //             }
-            //         },
-            //     },
-            //     series: [{
-            //         name: null,
-            //         data: this.milesGallonsData.values,
-            //         color: 'rgb(149, 206, 255)'
-            //     }]
-            // };
         }
+
         if (this.gaugeData) {
             this.runFuelGuage();
             // alert(this.websocketserver.getDGE(this.vechicle_id));
@@ -297,7 +351,7 @@ class EfficiencyController {
         }
 
         this.runDistancetoEmpty();
-        this.engineHours = this.websocketserver.getEngineHours(this.vechicle_id);
+        /*this.engineHours = this.websocketserver.getEngineHours(this.vechicle_id);
         this.milesDriven = this.websocketserver.getMilesDriven(this.vechicle_id);
         this.DGEHrs = this.websocketserver.getDGEperHours(this.vechicle_id);
         this.faultCode = this.websocketserver.getFaultCode(this.vechicle_id);
@@ -307,8 +361,9 @@ class EfficiencyController {
             for (i = 0; i < this.last15DaysGasFilled.length; i++) {
                 this.milesGallonsData.categories.push(this.last15DaysGasFilled[i].timestamp);
                 this.milesGallonsData.values.push(Math.round(this.last15DaysGasFilled[i].value));
-            }
+            }*/
     }
+
     convertDate(unix_timestamp) {
         var a = new Date(unix_timestamp);
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

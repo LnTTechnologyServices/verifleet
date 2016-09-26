@@ -185,4 +185,4 @@ function alarmReducer(state=initialState.alarms, action) {
   }
 }
 
-export { alarmReducer }
+export { alarmReducer, reduceAlarmFromDevice }

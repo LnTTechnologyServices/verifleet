@@ -146,9 +146,28 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
                    console.log('getDeviceslasttrip',response.data);
                    return response.data;
                })
-               .then(devices => dispatch(receiveDeviceLastTrip(devices)))
+               .then(device => dispatch(receiveDeviceLastTrip(device)))
        }
    }
+
+   function readDevice(did, aliases) {
+        return dispatch => {
+            dispatch(requestReadDevice(did))
+              return $http({
+                   url: `${projectConfig.api_base_url}/devices`,
+                   method: "POST",
+                   params: { "did": did},
+                   headers: { 'Authorization': `${projectConfig.auth_token}` },
+                   data: aliases
+               })
+               .then(response => {
+                   console.log('readDevice',did);
+                   console.log('readDevice',response.data);
+                   return response.data;
+               })
+               .then(device => dispatch(receiveReadDevice(device)))
+        }
+    }
 
     function shouldGetDevices(state, timeout) {
         const { devices, isLoading, lastUpdated } = state;
@@ -233,7 +252,7 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
         });
     }
 
-    function readDevice(id, aliases, options = { limit: 10 }) {
+    function readDevice1(id, aliases, options = { limit: 10 }) {
         var readBody;
 
         if (aliases) {
