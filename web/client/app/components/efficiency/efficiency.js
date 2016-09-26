@@ -17,7 +17,7 @@ let efficiencyModule = angular.module('efficiency', [
       template: '<efficiencyfile></efficiencyfile>',
       data: { requiresLogin: true },
       params: {
-        vechicle_id: 'WM-212438'
+        vechicle_id: '5f4e7cdaa119439e5897a10eea3c86809942dbfb'
       }
     });
 })

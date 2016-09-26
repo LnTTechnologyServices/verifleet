@@ -1,6 +1,7 @@
 class AlarmListItemController {
   constructor() {
     this.name = 'alarmListItem';
+
   }
 }
 

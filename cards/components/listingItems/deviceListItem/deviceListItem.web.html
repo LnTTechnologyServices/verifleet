@@ -1,14 +1,13 @@
 <md-list-item class="md-2-line device-list-item" ng-click="vm.device.onClick()" layout="row">
   <list-item-status status="vm.device.status"></list-item-status>
-  <icon style="color: #424242" ng-if="vm.device.icon" class="device-list-icon list-icon" ng-class="vm.device.icon"></icon>
-  <div class="md-list-item-text device-list-item-text"
+   <md-icon style="font-size: 45px;" md-font-icon="icon-device"></md-icon>&nbsp;&nbsp;
+  <div class="md-list-item-text alarm-list-item-text"
        layout-gt-md="row"
        layout-align-gt-md="start center"
        layout="column"
        flex="70">
-    <h3 class="md-headline" flex-gt-md="50"><b>{{ vm.device.title }}</b></h3>
-    <h4 class="md-subhead" flex-gt-md="30">{{ vm.device.subtitle }}</h4>
-    <p class="md-caption">{{ vm.device.description }}</p>
+    <h3 class="md-headline" flex-gt-md="20"><b>{{ vm.device.name }}</b></h3>
+    <h4 class="md-subhead" flex-gt-md="60">{{ vm.device.location }}</h4>
   </div>
   <div class="md-list-item-text addition-info"
        flex
@@ -16,12 +15,10 @@
        layout-align-gt-md="end center"
        layout="column"
        layout-align="center end">
-    <p ng-if="vm.device.lastReported && !vm.device.sideText" class="md-subhead">last reported</p>
-    <p ng-if="vm.device.lastReported && !vm.device.sideText" class="md-caption">&nbsp{{ vm.device.lastReported }}</p>
-    <p ng-if="vm.device.sideText" class="md-caption">{{ vm.device.sideText }}</p>
+    <p ng-if="vm.device.lastReported" class="md-subhead" am-time-ago="vm.device.lastReported"></p>
     <ng-md-icon hide show-gt-sm ng-if="vm.device.onClick && !vm.device.moreOptions"
                 icon="chevron_right"
                 class="md-secondary action-icon"></ng-md-icon>
-    <more-options ng-if="vm.device.moreOptions" class="md-secondary" options="vm.device.moreOptions"></more-options>
-  </div>
+     <more-options ng-if="vm.device.moreOptions" class="md-secondary"></more-options>
+   </div>
 </md-list-item>

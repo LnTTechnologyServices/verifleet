@@ -173,7 +173,7 @@ class LogsController {
       console.log("ikn activities"+JSON.stringify(nextState.activities));
       let newActivities = _.difference(nextState.activities, this.activityAlarmItems)
       
-      // console.log("newActivities activities"+JSON.stringify(newActivities));
+       console.log("newActivities activities"+JSON.stringify(newActivities));
       if(newActivities.length) {
         this.updated = true;
          newActivities = newActivities.map(activity => {
