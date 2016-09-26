@@ -12,7 +12,7 @@ var config = {
         callback: process.env["AUTH0_CALLBACK"]
     },
     database: {
-        url: process.env["DATABASE_URL"] || 'postgres://postgres:welcome@localhost:5432/exosite',
+        url: process.env["DATABASE_URL"] || 'postgres://postgres:admin@localhost:5432/exosite',
         options: {
             dialect: 'postgres',
             pool: {
