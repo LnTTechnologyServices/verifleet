@@ -37,7 +37,9 @@ import deviceService from './api/deviceService';
 import userService from './api/userService';
 import websocket from './api/websocketFactory';
 
+
 import websocketserver from './services/service';
+import VfSharedService from './components/service';
 
 
 // app specific imports
@@ -91,6 +93,7 @@ angular.module('app', [
     .service("deviceService", deviceService)
     .service("userService", userService)
     .service("websocketserver", websocketserver)
+    .service("VfSharedService", VfSharedService)
     .constant("projectConfig", projectConfig)
 
 .config(($mdThemingProvider) => {

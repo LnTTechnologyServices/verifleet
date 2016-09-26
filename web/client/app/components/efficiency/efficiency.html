@@ -5,7 +5,7 @@
       <div flex-xs="50 " flex="48 ">
          <md-select style="background-color: gainsboro; " placeholder="Choose Vehicle Filter " ng-model="vm.vehicleFilter " ng-change="vm.onvehicleChange() ">
             <md-option ng-repeat="vehicle in vm.vehicleFilterList " value="{{vehicle}} ">
-               {{vehicle}}
+               {{vehicle.name}}
             </md-option>
          </md-select>
       </div>
@@ -111,7 +111,8 @@
             </md-select>
             </div>
             <br>
-            <highchart layout-fill  id="container " style="100% "  config="vm.config " ></highchart>
+            <!--<highchart layout-fill  id="container " style="100% "  config="vm.config " ></highchart>-->
+           <barline-chart layout-fill data="vm.milesGallonsData" title="barChart"></barline-chart>
          </div>
       </div>
       <div class="panel panel-primary "  flex-xs="100 " flex="100 ">

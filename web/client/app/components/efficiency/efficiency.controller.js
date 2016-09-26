@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 class EfficiencyController {
-    constructor($timeout, $ngRedux, deviceService, $state, auth, store, $stateParams, $rootScope, $scope, websocketserver) {
+    constructor($timeout, $ngRedux, deviceService, $state, auth, store, $stateParams, $rootScope, $scope, websocketserver,VfSharedService,) {
         "ngInject";
 
         this.deviceService = deviceService;
@@ -10,6 +10,7 @@ class EfficiencyController {
         this.auth = auth;
         this.$scope = $scope;
         this.$timeout = $timeout
+        this.VfSharedService = VfSharedService;
         this.$state = $state;
         this.store = store;
         this.websocketserver = websocketserver;
@@ -17,6 +18,13 @@ class EfficiencyController {
             this.componentWillReceiveStateAndActions(selectedState, actions);
             Object.assign(this, selectedState, actions);
         });
+
+
+         if(this.VfSharedService.getVechicleData().length > 0){
+           this.vehicleFilterList = this.VfSharedService .getVechicleData();
+        }else {    
+            this.vehicleFilterList = ["WM-212438", "WM-212439", "WM-212440", "WM-212441", "WM-212442"];
+        }
 
         // this.websocketserver.validate();
         // this.websocketserver.get();
@@ -51,8 +59,6 @@ class EfficiencyController {
             { "id": 15, "value": "Last 15 Days" },
             { "id": 20, "value": "Last 20 Days" }
         ];
-
-        this.vehicleFilterList = ["WM-212438", "WM-212439", "WM-212440", "WM-212441", "WM-212442"];
 
         this.dateFilter = 5
         this.vehicleFilter = this.vechicle_id;
@@ -211,43 +217,43 @@ class EfficiencyController {
             //     }
             // }
 
-            this.config = {
-                options: {
-                    chart: {
-                        renderTo: 'container',
-                        type: 'column'
-                    },
-                    title: {
-                        text: null
-                    },
-                    xAxis: {
-                        categories: this.milesGallonsData.categories
-                    },
-                    yAxis: {
-                        title: {
-                            text: null
-                        }
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    plotOptions: {
-                        series: {
-                            dataLabels: {
-                                enabled: true,
-                                style: {
-                                    color: '#fff'
-                                }
-                            }
-                        }
-                    },
-                },
-                series: [{
-                    name: null,
-                    data: this.milesGallonsData.values,
-                    color: 'rgb(149, 206, 255)'
-                }]
-            };
+            // this.config = {
+            //     options: {
+            //         chart: {
+            //             renderTo: 'container',
+            //             type: 'column'
+            //         },
+            //         title: {
+            //             text: null
+            //         },
+            //         xAxis: {
+            //             categories: this.milesGallonsData.categories
+            //         },
+            //         yAxis: {
+            //             title: {
+            //                 text: null
+            //             }
+            //         },
+            //         legend: {
+            //             enabled: false
+            //         },
+            //         plotOptions: {
+            //             series: {
+            //                 dataLabels: {
+            //                     enabled: true,
+            //                     style: {
+            //                         color: '#fff'
+            //                     }
+            //                 }
+            //             }
+            //         },
+            //     },
+            //     series: [{
+            //         name: null,
+            //         data: this.milesGallonsData.values,
+            //         color: 'rgb(149, 206, 255)'
+            //     }]
+            // };
         }
         if (this.gaugeData) {
             this.runFuelGuage();

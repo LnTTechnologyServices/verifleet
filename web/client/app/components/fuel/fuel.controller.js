@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 class FuelController {
-    constructor($timeout, $ngRedux, deviceService, $state, auth, store, websocketserver) {
+    constructor($timeout, $ngRedux, deviceService, $state, auth, store, websocketserver,VfSharedService,) {
         "ngInject";
         this.deviceService = deviceService;
         this.headerUrl = require("./maps.jpg");
@@ -8,6 +8,7 @@ class FuelController {
         this.$timeout = $timeout
         this.$state = $state;
         this.store = store;
+        this.VfSharedService = VfSharedService;
         this.unsubscribe = $ngRedux.connect(this.mapStateToThis, this.deviceService)((selectedState, actions) => {
             this.componentWillReceiveStateAndActions(selectedState, actions);
             Object.assign(this, selectedState, actions);
@@ -84,13 +85,17 @@ class FuelController {
                         this.websocketserver.initData(nextState.devices);
                     nextState.devices.map((device) => {
                         this.device = device;
+
+                        console.log(device);
+                        console.log("device status check");
+
                         // console.log(device.data.gps[0].value);
                         if (_.keys(device.data).length) {
                             nextActions.subscribeToDevices([device.sn], _.keys(device.data))
                         }
                         if (this.deviceslist)
                         // _.each(this.device, function(dev) {
-                            this.deviceslist.push({ name: device.name, type: device.type, location: device.data.gps[0].value });
+                            this.deviceslist.push({ name: device.name, type: device.type, location: device.data.gps[0].value, rid : device.rid });
                         // }, this);
                         // this.plotData = [];
                         // _.each(PLOT_DATAPORTS, (dataport) => {
@@ -110,6 +115,11 @@ class FuelController {
                         //     plotdata: this.plotData
                         // })
                     })
+
+                     if(this.deviceslist){ 
+                        this.VfSharedService .setVechicleData(this.deviceslist);
+                    }
+
                     this.updated = true;
                     // console.log("trend data", this.devicesTrendData)
                 }
