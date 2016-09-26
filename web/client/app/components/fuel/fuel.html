@@ -50,8 +50,9 @@
             <div class="panel-heading ">
                <h3 class="panel-title ">Vehicle Detail</h3>
             </div>
-            <div class="panel-body ">
-               <md-input-container class="md-icon-float " style="height: 34px;width:100%; ">
+            <div class="panel-body">
+                    <alarm-list-item ng-repeat="roll in vm.deviceslist" alarm="roll"></alarm-list-item>  
+               <!--<md-input-container class="md-icon-float " style="height: 34px;width:100%; ">
                   <label>Global Search</label>
                   <md-icon style="font-size: 28px;margin: -2px; " md-font-icon="icon-search "></md-icon>
                   <input style="padding-left: 33px; " ng-model="searchFish " id="sInput " ng-change="filterCartoList(searchInput)
@@ -84,8 +85,10 @@
                      </tr>
                   </thead>
                   <tbody>
-      <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish">
-        <td><a ui-sref="efficiency({vechicle_id:roll.name})">{{ roll.name }}</a></td>
+
+     <tr ng-repeat="roll in vm.deviceslist | orderBy:vm.sortType:vm.sortReverse | filter:searchFish ">
+        <td><a ui-sref="efficiency({vechicle_id:roll.name}) ">{{ roll.name }}</a></td>
+
         <td>{{ roll.type }}</td>
         <td>
             {{ roll.location }}
@@ -96,7 +99,7 @@
         </table>
         <center>
             <div ng-if="(vm.deviceslist | filter:searchFish).length==0 ">No Vehicle to Display</div>
-        </center>
+        </center>-->
     </div>
 </div>
 </div>
