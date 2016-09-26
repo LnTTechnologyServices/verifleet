@@ -9,7 +9,7 @@ var config = {
         callback: process.env["AUTH0_CALLBACK"] || "/callback"
     },
     db: {
-        url: 'postgres://postgres:admin@localhost:5432/exosite'
+        url: 'postgres://postgres:welcome@localhost:5432/exosite'
     }
 };
 exports.config = config;

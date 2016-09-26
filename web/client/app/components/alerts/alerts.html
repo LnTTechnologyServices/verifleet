@@ -25,6 +25,28 @@
             <div class="panel-heading">
                <h3 class="panel-title">Engine Alerts</h3>
             </div>
+
+
+            <br><br>
+
+
+      <div layout="column" style="margin-bottom:12px !important" flex="100" layout-xs="column">
+          <div layout="row">
+            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-warning-general" number="{{vm.red_stop_lamp_status}}" header="Red Stop" content="Lamp Status" bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
+            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-warning-general"  number="{{ vm.malfunction_indicator_lamp_status }}" header="Malf" content="Indicator Lamp Status" bgcolor="#52D5F5 " style="margin-right:10px"></tab-list>
+          </div>
+            <br>
+          <div layout="row">
+            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-battery-100"  number="{{vm.protect_lamp_status}}" header="Protect" content="Lamp Status" bgcolor="#7B68EE
+            " style="margin-right:10px "></tab-list>
+            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-battery-0 "  number="{{vm.amber_lamp_status}}" header="Amber" content="Lamp Status" bgcolor="#73B9A2
+            " style="margin-right:10px "></tab-list>       
+           </div>
+            <br>    
+      </div>
+
+<!--
+
             <center>
             <ul class="stats_box"  flex-xs="98" flex="98" style="padding-left:10%;margin-bottom: 0px;">
                <li>
@@ -64,7 +86,7 @@
                   </div>
                </li>
             </ul>
-            <center>
+            <center>-->
          </div>
           </div>
 
