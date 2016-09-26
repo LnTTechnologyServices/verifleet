@@ -4,7 +4,7 @@
       &nbsp;&nbsp;&nbsp;
       <div flex-xs="50 " flex="48 ">
          <md-select style="background-color: gainsboro; " placeholder="Choose Vehicle Filter " ng-model="vm.vehicleFilter " ng-change="vm.onvehicleChange() ">
-            <md-option ng-repeat="vehicle in vm.vehicleFilterList " value="{{vehicle}} ">
+            <md-option ng-repeat="vehicle in vm.vehicleFilterList " value="{{vehicle.name}} ">
                {{vehicle.name}}
             </md-option>
          </md-select>
