@@ -41,7 +41,7 @@ function activityFromRawData(device, data) {
 }
 
 function activityFromDevice(device) {
-    console.log("activityFromDevice" + JSON.stringify(device));
+    //console.log("activityFromDevice" + JSON.stringify(device));
     if (device.data[ACTIVITY_ALIAS]) {
         return device.data[ACTIVITY_ALIAS].map(data => activityFromRawData(device, data))
     } else {

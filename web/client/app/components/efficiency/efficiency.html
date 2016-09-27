@@ -127,7 +127,7 @@
          </div>
          <div class="panel-body ">
             <div flex="30 " style="float: right; "> 
-            <md-select placeholder="Choose Date Filter " ng-model="vm.dateFilter " ng-change="vm.onDataChange(date.id) ">
+            <md-select placeholder="Choose Date Filter " ng-model="vm.dateFilter " ng-change="vm.onDateChange() ">
             <md-option ng-repeat="date in vm.dateFilterList " value="{{date.id}} ">
                {{date.value}}
             </md-option>

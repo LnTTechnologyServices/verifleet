@@ -76,7 +76,10 @@ class EfficiencyController {
 
         var today = new Date();
 
-        this.getlasttripdata();
+        if(this.vehicleFilterList.length != 0 && this.vechicle_id != 0)
+        {
+            this.getlasttripdata();
+        }
 
 
         this.runBarMilesGallon();
@@ -97,6 +100,7 @@ class EfficiencyController {
 
     getlasttripdata() {
         if (this.vechicle_id && this.vehicleFilterList) {
+             console.log('getlasttripdata');
             var today = new Date();
             var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -113,13 +117,14 @@ class EfficiencyController {
 
     getVehicleReport() {
         if (this.vechicle_id && this.vehicleFilterList) {
+            console.log('getVehicleReport',this.dateFilter);
             var today = new Date();
-            var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 10);
+            var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - this.dateFilter);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             var starttimemilliseconds = startdatetime.getTime() / 1000;
-            var lasttripaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + '}}]';
+            var vehiclereportaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + '}}]';
             this.requestVehicleReportSent = true;
-            this.readDevice(this.vechicle_id, lasttripaliases);
+            this.readDevice(this.vechicle_id, vehiclereportaliases);
         }
     }
 
@@ -146,15 +151,11 @@ class EfficiencyController {
         this.initialized = false;
         this.getVehicleReport();
     };
-    // onDataChanged(data) {
-    //     alert(data);
-    //     this.last15DaysGasFilled = this.websocketserver.getGasFilled(this.vechicle_id, 5);
-    //     if (this.milesGallonsData)
-    //         for (i = 0; i < this.last15DaysGasFilled.length; i++) {
-    //             this.milesGallonsData.categories.push(this.last15DaysGasFilled[i].timestamp);
-    //             this.milesGallonsData.values.push(Math.round(this.last15DaysGasFilled[i].value));
-    //         }
-    // };
+
+    onDateChange() 
+    {
+        this.getVehicleReport();
+    }
 
     runFuelGuage() {
         this.moons = true
@@ -195,7 +196,7 @@ class EfficiencyController {
     }
 
     componentWillReceiveStateAndActions(nextState, nextActions) {
-        // console.log("EfficiencyController", nextState)
+         console.log("EfficiencyController", nextState)
         // console.log("EfficiencyController", nextActions)
         // console.log("STATE", JSON.stringify(nextState.websocket));
         if (nextState.devices)
@@ -219,14 +220,20 @@ class EfficiencyController {
                         })
                         this.updated = true;
                     }
-                    this.getVehicleReport();
+
                     this.getlasttripdata();
+                    
+                    this.getVehicleReport();
                 }
 
                 if (this.requestVehicleReportSent) {
+
+                    console.log("requestVehicleReportSent", nextState.devices)
+
                     for (var i = 0; i < nextState.devices.length; i++) {
                         if (nextState.devices[i].rid == this.vechicle_id) {
 
+                            console.log("Got it", this.vechicle_id)
                             console.log("Got it", nextState.devices[i].data['dge'])
                             console.log("Got it", nextState.devices[i].data['gas_filled'])
                             if (nextState.devices[i].data['dge'] && nextState.devices[i].data['gas_filled']) {
@@ -244,6 +251,7 @@ class EfficiencyController {
             this.milesDriven = nextState.lasttrip.milesdriven;
             this.DGEHrs = nextState.lasttrip.dge_hr;
             this.totalGasUsed = nextState.lasttrip.totalgasused;
+            
         }
 
         if (nextState.alarms) {
@@ -266,6 +274,8 @@ class EfficiencyController {
         this.updateResults();
         // }
         if (nextState.websocket) {
+
+            console.log("Websockeettt",nextState.websocket)
             if (nextState.websocket.alias == 10) // 10 : test(alias)
                 if (this.distanceData)
                     this.distanceData.value = nextState.websocket.data; // * average_fuel_economy

@@ -1,11 +1,10 @@
 import * as types from './constants';
 import * as _ from 'lodash';
 
-function requestDevice(pid, sn) {
+function requestDevice(rid) {
     return {
         type: types.REQUEST_DEVICE,
-        pid: pid,
-        sn: sn
+        rid: rid
     }
 }
 
@@ -86,10 +85,10 @@ function unsubscribeDevices(rids, aliases) {
     }
 }
 
-function requestReadDevice(id) {
+function requestReadDevice(rid) {
     return {
         type: types.REQUEST_READ_DEVICE,
-        id: id
+        rid: rid
     }
 }
 

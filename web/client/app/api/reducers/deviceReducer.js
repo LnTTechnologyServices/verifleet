@@ -66,7 +66,7 @@ function deviceReducer(state=initialState.devices, action) {
     return action.devices.map(device => reduceDevice(device))
   case types.RECEIVE_DEVICE:
   
-  // console.log("types.RECEIVE_DEVICE");
+     console.log("types.RECEIVE_DEVICE", action.device);
     // if our initial state has devices, then replace the device
     // otherwise return an array with just the device received
     if(state.length > 0) {
