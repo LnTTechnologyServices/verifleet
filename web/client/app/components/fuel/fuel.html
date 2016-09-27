@@ -45,7 +45,21 @@
             </div>
          </div>
       </div>
-      <div layout-xs="coloumn " layout-sm="row " layout-md="row " layout-gt-md="row "  flex-xs="100 " flex="100 " >
+
+      
+<div layout-xs="column " layout-sm="row " layout-md="row " layout-gt-md="row " flex-xs="100 " flex="100 ">
+    <div class="panel panel-primary " flex-xs="100 " flex="100 ">
+        <div class="panel-heading ">
+            <h3 class="panel-title ">Vehicle Details Graph</h3>
+        </div>
+
+        <div class="panel-body">
+            <basic-line-chart style="height:100px;" data="vm.lineChartData" ng-repeat="roll in vm.deviceslist"></basic-line-chart>
+        </div>
+    </div></div>
+
+
+          <div layout-xs="coloumn " layout-sm="row " layout-md="row " layout-gt-md="row "  flex-xs="100 " flex="100 " >
          <div class="panel panel-primary "  flex-xs="100 " flex="100 ">
             <div class="panel-heading ">
                <h3 class="panel-title ">Vehicle Detail</h3>
@@ -104,16 +118,7 @@
 </div>
       </div>
 
-      
-<div layout-xs="column " layout-sm="row " layout-md="row " layout-gt-md="row " flex-xs="100 " flex="100 ">
-    <div class="panel panel-primary " flex-xs="100 " flex="100 ">
-        <div class="panel-heading ">
-            <h3 class="panel-title ">Vehicle Details Graph</h3>
-        </div>
 
-        <div class="panel-body">
-            <basic-line-chart style="height:100px;" data="vm.lineChartData" ng-repeat="roll in vm.deviceslist"></basic-line-chart>
-        </div>
-    </div></div>
+
 </md-card-content>
 </md-card>

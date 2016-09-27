@@ -155,7 +155,7 @@ class FuelController {
 
    runMovingLineCharts() {
          this.lineChartData = [{
-            name: 'VM-121',
+            name: 'WM-212439',
             type: 'area',
             pointStart: Date.UTC(2016, 0, 1),
             pointInterval: 24 * 36e5,

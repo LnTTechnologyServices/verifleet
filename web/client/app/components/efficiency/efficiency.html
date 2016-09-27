@@ -28,21 +28,20 @@
                   <div  flex="50 ">
                      <!--<h3 class="panel-title " style="padding-left: 10px; ">Distance to Empty - {{ vm.distanceData.value }} </h3>
                      <bar-chart layout-fill data="vm.distanceData "></bar-chart>
-<<<<<<< HEAD
                      <br><br>
                      <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-warning-general"  number="{{vm.liveDGEHrs}}" header=" " content="DGE/Hrs" bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
-=======
+
                      <br><br>-->
 
                     <div id="bar-1" class="bar-main-container azure">
 
                       <div class="bar-percentage" data-percentage="46">Distance to Empty &nbsp; {{vm.distanceData.value }}</div>
                       <md-slider-container class="slider-container" style="margin-left: 10%;width:80%;">
-                            <!--<md-slider ng-disabled="true" flex min="0"  max="60" ng-model="50" aria-label="red" id="red-slider">
-                        </md-slider>-->
-                          <md-slider flex=""  flex min="0"  max="120" ng-model="12" aria-label="red" id="red-slider">
+                            <md-slider ng-disabled="true" flex min="0"  max="60" ng-model="vm.distanceData.value" aria-label="red" id="red-slider">
                         </md-slider>
-                        
+                          <!--<md-slider flex=""   flex min="0"  max="120" ng-model="vm.distanceData.value" aria-label="red" id="red-slider">
+                        </md-slider>
+                        -->
                         </md-slider-container>
                     </div>    
 
@@ -88,54 +87,7 @@
          </div>                   
       </div>
 
-            <!--<ul class="stats_box "  flex-xs="98 " flex="98 " style="padding-left:20%;margin-bottom: 0px; ">
-               <li>
-                  <div class="sparkline line_day ">
-                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
-                  </div>
-                  <div class="stat_text ">
-                     <strong>Engine Hours</strong>
-                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.engineHours}}</span> 
-                  </div>
-               </li>
-               <li>
-                  <div class="sparkline line_day ">
-                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
-                  </div>
-                  <div class="stat_text ">
-                     <strong>Miles Driven</strong>
-                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.milesDriven}}</span> 
-                  </div>
-               </li>
-               <li>
-                  <div class="sparkline line_day ">
-                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
-                  </div>
-                  <div class="stat_text ">
-                     <strong>Total Gas used</strong>
-                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.totalGasUsed}}</span> 
-                  </div>
-               </li>
-               <li>
-                  <div class="sparkline line_day ">
-                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
-                  </div>
-                  <div class="stat_text ">
-                     <strong>Fault Code</strong>
-                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.faultCode}}</span> 
-                  </div>
-               </li>
-               <li>
-                  <div class="sparkline line_day ">
-                     <md-icon style="font-size: 45px; " md-font-icon="icon-information "></md-icon>
-                  </div>
-                  <div class="stat_text ">
-                     <strong>DGE/Hrs</strong>
-                     <span class="percent up "> <i class="fa fa-caret-up "></i>{{vm.DGEHrs}}</span> 
-                  </div>
-               </li>
-            </ul>-->
-          
+         
          </div>
       </div>
       <div class="panel panel-primary "  flex-xs="100 " flex="100 ">
