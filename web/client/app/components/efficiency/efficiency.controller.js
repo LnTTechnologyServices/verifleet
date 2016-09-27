@@ -165,8 +165,8 @@ class EfficiencyController {
 
      updateVehicleLiveData(livedata) {
         this.liveDGEHrs = livedata.dge_hour;
-        this.gaugeData.value = livedata.dge.value;
-        this.distanceData.value = livedata.distance_empty;
+        this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
+        this.distanceData.value = Number((livedata.distance_empty).toFixed(2));
     }
 
     getDGEData() {
