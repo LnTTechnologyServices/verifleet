@@ -37,7 +37,7 @@ class FuelController {
         this.last15Days = Math.floor(last15Days / 1000);
 
         // this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc", "limit": 5 } }, { "alias": "ecu", "options": { "sort": "desc","starttime":"' + this.yestDate + '", "endtime": "' + this.currentDate + '","limit":100}}]';
-        this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc","limit": 100  } }, { "alias": "ecu", "options": { "sort": "desc", "limit":10 } }]';
+        this.aliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}, { "alias": "dge", "options": { "sort": "desc","limit": 1  } }, { "alias": "ecu", "options": { "sort": "desc", "limit":10 } }]';
         //"starttime":last15Days, 
         // create the list of sushi rolls 
         this.deviceslist = [];
