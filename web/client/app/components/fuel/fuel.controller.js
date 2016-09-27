@@ -100,7 +100,7 @@ class FuelController {
                         }
                         if (this.deviceslist)
                         // _.each(this.device, function(dev) {
-                            this.deviceslist.push({ name: device.name, type: device.type, location: device.data.gps[0].value, lastReported: device.updated,
+                            this.deviceslist.push({ name: device.name, type: device.type, lastReported: device.updated,
                                 rid : device.rid, status: "healthy", onClick: () => this.$state.go('efficiency', {vechicle_id: device.rid}) });
 
                             
