@@ -112,19 +112,11 @@
                     </tbody>
                     </table>
 
-           <ul class="stats_box"  flex-xs="98" flex="98" style="margin-bottom: 0px;width: 85%;">
-               <li>
-                  <div class="sparkline line_day">
-                     <md-icon style="font-size: 45px;" md-font-icon="icon-information"></md-icon>
-                  </div>
-                  <div class="stat_text">
-                     <strong>Next Maintenance</strong>
-                     <span class="percent up"> <i class="fa fa-caret-up"></i>{{ vm.engineAlerts.nextMaintenance }}</span> 
-                  </div>
-               </li>
-            </ul>
-            <center>
-            <center>
+                    <div flex="40">
+                    <tab-list flex="80" flex-xs="100" icon="icon-battery-0 "  number="{{ vm.engineAlerts.nextMaintenance }}" content="Next Maintenance" bgcolor="#73B9A2
+                    " style="margin-right:10px "></tab-list>
+                    </div>       
+
          </div>
           </div>
       </div>
