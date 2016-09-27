@@ -48,7 +48,7 @@
     }
 }
 
-@media screen and (max-width: 700px) and (min-width: 500px) {
+@media screen and (max-width: 700px) and (min-width: 600px) {
   .container{
         height:3em;
     }
@@ -67,17 +67,10 @@
     }
 }
 
-// @media screen and (max-width: 500px) and (min-width: 300px) {
-//   .contentNumber {
-//         margin-top: -2em;
-//         font-size: 5pt;
-//     }
+@media screen and (max-width: 600px) and (min-width: 300px) {
+  .container{
+      margin-bottom:1em;
+  }
+}
 
-//     .content {
-//         font-size: 3pt;
-//     }
 
-//     .tabListIcon {
-//         font-size: 10pt;
-//     }
-// }
