@@ -139,7 +139,7 @@ class EfficiencyController {
             var starttimemilliseconds = startdatetime.getTime() / 1000;
             var vehiclereportaliases = '[{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + '}}]';
             this.requestVehicleReportSent = true;
-            this.readDevice(this.vechicle_id, vehiclereportaliases);
+            this.readDeviceWithAction(this.vechicle_id, vehiclereportaliases, 'REQUEST_DEVICE_GASFILLED');
         }
     }
 
@@ -176,15 +176,15 @@ class EfficiencyController {
             var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - this.dateFilter);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             var starttimemilliseconds = startdatetime.getTime() / 1000;
-            var vehiclereportaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":100}},{"alias":"ecu","options": {"sort":"desc", "limit":1}}]';
+            var vehiclegetDGEDataaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":100, "starttime":' + starttimemilliseconds + '}}]';
             this.requestVehicleDGESent = true;
-            this.readDevice(this.vechicle_id, vehiclereportaliases);
+            this.readDeviceWithAction(this.vechicle_id, vehiclegetDGEDataaliases, 'REQUEST_DEVICE_GASCONSUMED');
         }
     }
 
     getLiveData() {
         if (this.vechicle_id && this.vehicleFilterList) {
-            console.log('getDGEData',this.dateFilter);
+            console.log('getLiveData',this.dateFilter);
             var today = new Date();
             var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours() - 1);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -310,6 +310,8 @@ class EfficiencyController {
                     this.getlasttripdata();
                     
                     this.getVehicleReport();
+
+                    this.getDGEData();
                 }
 
                 if(this.requestVehicleLiveSent)
@@ -335,11 +337,10 @@ class EfficiencyController {
                     for (var i = 0; i < nextState.devices.length; i++) {
                         if (nextState.devices[i].rid == this.vechicle_id) {
 
-                            console.log("Got it", this.vechicle_id)
-                            console.log("Got it", nextState.devices[i].data['gas_filled'])
-                            if (nextState.devices[i].data['gas_filled']) {
+                            console.log("Got it", nextState.devices[i].gasFilled)
+                            if (nextState.devices[i].gasFilled) {
                                 this.requestVehicleReportSent = false;
-                                this.updateVehicleReport(nextState.devices[i].data['gas_filled']);
+                                this.updateVehicleReport(nextState.devices[i].gasFilled);
                             }
                             break;
                         }
@@ -354,10 +355,10 @@ class EfficiencyController {
                         if (nextState.devices[i].rid == this.vechicle_id) {
 
                             console.log("Got it", this.vechicle_id)
-                            console.log("Got it", nextState.devices[i].data['dge'])
-                            if (nextState.devices[i].data['dge']) {
+                            console.log("Got it", nextState.devices[i].gasConsumed)
+                            if (nextState.devices[i].gasConsumed) {
                                 this.requestVehicleDGESent = false;
-                                this.updatedgelivegraph(nextState.devices[i].data['dge']);
+                                this.updatedgelivegraph(nextState.devices[i].gasConsumed);
                             }
                             break;
                         }
@@ -428,14 +429,10 @@ class EfficiencyController {
         return count;
     }
 
-    updatedgelivegraph(dgeCollection, ecudata)
+    updatedgelivegraph(dgeCollection)
     {    
-        //this.gaugeData = dgeCollection[0].value;
-        //this.liveDGEHrs = dgeCollection[0].value;
-        //this.distanceData = 
-
         console.log('updatedgelivegraph', dgeCollection);
-        //this.lineChartData[0].data.length = 0;
+        this.lineChartData[0].data.length = 0;
         var i = 0;
         for (i = 0; i < dgeCollection.length; i++) {
             this.lineChartData[0].data.push({x:dgeCollection[i].timestamp, y: Number((dgeCollection[i].value).toFixed(2))});

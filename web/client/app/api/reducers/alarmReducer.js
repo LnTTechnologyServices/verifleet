@@ -169,9 +169,11 @@ function alarmReducer(state=initialState.alarms, action) {
   switch (action.type) {
     case types.RECEIVE_DEVICES:
     case types.RECEIVE_DEVICES_LASTTRIP:
+    case types.RECEIVE_DEVICES_LIVEDATA:
       return [].concat(...action.devices.map(device => reduceAlarmFromDevice(device)))
     case types.RECEIVE_DEVICE:
     case types.RECEIVE_DEVICE_LASTTRIP:
+    case types.RECEIVE_DEVICES_LIVEDATA:
       return reduceAlarmFromDevice(action.device);
     case types.WEBSOCKET_LIVE_DATA:
       if(action.alias === ALARM_ALIAS) {

@@ -45,6 +45,26 @@ function requestDevices() {
     }
 }
 
+function requestDevicesWithAction(actiontype) {
+    return {
+        type: actiontype
+    }
+}
+
+function receiveDevicesActionType(devices,actiontype) {
+    console.log("receiveDevicesActionType", devices);
+    var receiveType = types.RECEIVE_DEVICES;
+    if(actiontype == types.REQUEST_DEVICES_GASFILLED)
+        receiveType = types.RECEIVE_DEVICES_GASFILLED;
+    if(actiontype == types.REQUEST_DEVICES_GASCONSUMED)
+        receiveType = types.RECEIVE_DEVICES_GASCONSUMED;
+
+    return {
+        type: receiveType,
+        devices: devices
+    }
+}
+
 function receiveDevices(devices) {
     console.log("receiveDevices", devices);
     return {
@@ -120,9 +140,30 @@ function requestReadDevice(rid) {
     }
 }
 
+function requestReadDeviceWithAction(rid, actionType) {
+    return {
+        type: actionType,
+        rid: rid
+    }
+}
+
 function receiveReadDevice(device) {
     return {
         type: types.RECEIVE_READ_DEVICE,
+        device: device
+    }
+}
+
+function receiveReadDeviceActionType(device,actiontype) {
+    console.log("receiveReadDeviceActionType", device);
+    var receiveType = types.RECEIVE_DEVICES;
+    if(actiontype == types.REQUEST_DEVICE_GASFILLED)
+        receiveType = types.RECEIVE_DEVICE_GASFILLED;
+    if(actiontype == types.REQUEST_DEVICE_GASCONSUMED)
+        receiveType = types.RECEIVE_DEVICE_GASCONSUMED;
+
+    return {
+        type: receiveType,
         device: device
     }
 }
@@ -153,9 +194,8 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
     "ngInject";
 
     function getDevices(aliases) {
-        // alert("2");
         return dispatch => {
-            dispatch(requestDevices());
+                dispatch(requestDevices());
             return $http({
                     url: `${projectConfig.api_base_url}/devices`,
                     method: "POST",
@@ -165,7 +205,28 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
                 .then(response => {
                     return response.data;
                 })
-                .then(devices => dispatch(receiveDevices(devices)))
+                .then(
+                    devices => dispatch(receiveDevices(devices))
+                    )
+        }
+    }
+
+    function getDevicesWithAction(aliases, actionType) {
+        console.log('getdevicesactionType 1', actionType);
+        return dispatch => {
+                dispatch(requestDevicesWithAction(actionType));
+            return $http({
+                    url: `${projectConfig.api_base_url}/devices`,
+                    method: "POST",
+                    headers: { 'Authorization': `${projectConfig.auth_token}` },
+                    data: aliases
+                })
+                .then(response => {
+                    return response.data;
+                })
+                .then(
+                    devices => dispatch(receiveDevicesActionType(devices,actionType))
+                    )
         }
     }
 
@@ -222,6 +283,26 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
                     return response.data;
                 })
                 .then(device => dispatch(receiveReadDevice(device)))
+        }
+    }
+
+    function readDeviceWithAction(did, aliases, actionType) {
+        console.log('readDeviceWithAction 1', actionType);
+        return dispatch => {
+                dispatch(requestReadDeviceWithAction(did, actionType));
+            return $http({
+                    url: `${projectConfig.api_base_url}/devices`,
+                    method: "POST",
+                    params: { "did": did },
+                    headers: { 'Authorization': `${projectConfig.auth_token}` },
+                    data: aliases
+                })
+                .then(response => {
+                    return response.data;
+                })
+                .then(
+                    device => dispatch(receiveReadDeviceActionType(device,actionType))
+                    )
         }
     }
 
@@ -388,6 +469,7 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
     return {
         getDevices,
         getDevicesLiveData,
+        getDevicesWithAction,
         getDevicesTrend,
         getDeviceslasttrip,
         getDevicesIfNeeded,
@@ -395,6 +477,7 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
         putDeviceNotes,
         readDevice,
         readDeviceLiveData,
+        readDeviceWithAction,
         subscribeToDevices,
         unsubscribeFromDevices
     }

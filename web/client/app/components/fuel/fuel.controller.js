@@ -41,10 +41,22 @@ class FuelController {
         //"starttime":last15Days, 
         // create the list of sushi rolls 
         this.deviceslist = [];
+        this.deviceListItems = [];
+
+        this.lineChartData = [{
+            type: 'area',
+            name: this.vechicle_id,
+            data: []
+        }];
 
         function loadAfterAuthed(vm) {
             if (vm.auth.isAuthenticated && vm.store.get("token")) {
-                vm.getDevices(vm.aliases);
+                var today = new Date();
+            var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours() - 1);
+            var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            var starttimemilliseconds = (startdatetime.getTime() / 1000);
+            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
+                vm.getDevicesLiveData(livetripaliases);
             } else {
                 if (self.Timer) $timeout.cancel(self.Timer);
                 self.Timer = vm.$timeout(() => loadAfterAuthed(vm), 50);
@@ -53,15 +65,170 @@ class FuelController {
 
         loadAfterAuthed(this);
 
-        this.runGasFilled();
-        this.runGasUsed();
+        var today = new Date();
+
+        //this.runGasFilled();
+        //this.runGasUsed();
         this.ontimeframeChange();
-        this.runMovingLineCharts();
+        //this.runMovingLineCharts();
 
         this.sortType = 'name'; // set the default sort type
         this.sortReverse = false; // set the default sort order
         this.searchFish = ''; // set the default search/filter term
 
+    }
+
+    getVehicleReport() {
+        if (this.deviceListItems && this.dateFilter) {
+            console.log('getVehicleReport',this.dateFilter);
+            var today = new Date();
+            var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - this.dateFilter);
+            var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            var starttimemilliseconds = startdatetime.getTime() / 1000;
+            var vehiclereportaliases = '[{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + '}}]';
+            this.requestVehicleReportSent = true;
+            this.getDevicesWithAction(vehiclereportaliases, 'REQUEST_DEVICES_GASFILLED');
+        }
+    }
+
+    UpdateSiteSummary(deviceListItems)
+    {
+         console.log('UpdateSiteSummary', this.deviceListItems);
+    }
+
+    updateVehicleReport(deviceListItems) {
+        console.log('updateVehicleReport', deviceListItems);
+
+        if(deviceListItems)
+        {
+//             this.milesGallonsFilledData = [];
+//             this.deviceData = [];
+//             var i = 0;
+//              for (i = 0; i < deviceListItems.length; i++) {
+                    
+//                     var j = 0;
+//                     for (j = 0; j < deviceListItems[i].dgeFilled.length; j++) {
+//                         this.deviceData.categories.push(this.convertDate(dgeFilled[i].timestamp));
+//                         this.deviceData.values.push(Number((dgeFilled[i].value).toFixed(2)));
+//                     }
+
+//  this.deviceslist.push({ name: device.name, type: device.type, lastReported: device.updated,
+//                                 rid : device.rid, status: "healthy", onClick: () => this.$state.go('efficiency', {vechicle_id: device.rid}) });
+                    
+//              }
+
+        }
+
+        // this.milesGallonsData.values.length = 0
+        // this.milesGallonsData.categories.length = 0
+        // var i = 0;
+        // for (i = 0; i < dgeFilled.length; i++) {
+        //     this.milesGallonsData.categories.push(this.convertDate(dgeFilled[i].timestamp));
+        //     this.milesGallonsData.values.push(Number((dgeFilled[i].value).toFixed(2)));
+        // }
+    }
+
+    updatefaultcodes() {
+        this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');
+        if (this.activityAlarmItems) {
+            this.faultCode = this.activityAlarmItems.length;
+        }
+    }
+    
+    updatedgelivegraph(deviceListItems)
+    {    
+        console.log('updatedgelivegraph', deviceListItems);
+         console.log('updatedgelivegraph 2', this.deviceslist);
+
+        if (deviceListItems && this.deviceslist ) {
+                
+                var devicefilteredItems = deviceListItems.filter(function(device) { if (device.gasConsumed) return true; });
+                if(devicefilteredItems && devicefilteredItems.length > 0)
+                {
+                    for(var device in devicefilteredItems)
+                    {
+                        console.log('device ---',devicefilteredItems[device].rid);
+                        //var deviceSelected = _.find(this.deviceslist , function(obj) { return obj.rid === devicefilteredItems[device].rid })
+                        
+                        for(var devicegraph in this.deviceslist)
+                        {
+                            if(this.deviceslist[devicegraph].rid === devicefilteredItems[device].rid)
+                            { 
+                                console.log('deviceSelected',this.deviceslist[devicegraph]);
+                                if(devicefilteredItems[device].gasConsumed)
+                                {
+                                    var i = 0;
+                                    for (i = 0; i < devicefilteredItems[device].gasConsumed.length; i++) {
+                                        this.deviceslist[devicegraph].lineChartData[0].data.length = 0;
+                                        this.deviceslist[devicegraph].lineChartData[0].data.push({x: devicefilteredItems[device].gasConsumed[i].timestamp, y: Number(( devicefilteredItems[device].gasConsumed[i].value).toFixed(2))});
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
+     updateVehicleLiveData(deviceListItems) {
+          console.log('deviceListItems',deviceListItems);
+
+          var totalAvgHr = 0;
+          var lowAvgHr = 0;
+          var highAvgHr = 0;
+
+          if (deviceListItems && deviceListItems.length > 0) {
+              
+            var devicefilteredItems = deviceListItems.filter(function(device) { if (device.liveData) return true; });
+                console.log('devicefilteredItems',devicefilteredItems);
+
+            if(devicefilteredItems && devicefilteredItems.length > 0)    {
+                for (var device in devicefilteredItems) {
+                    console.log('gasfilled', devicefilteredItems[device].liveData);
+                    if (devicefilteredItems[device].liveData) {
+                        totalAvgHr = totalAvgHr + devicefilteredItems[device].liveData.dge_hour;
+                    }
+                }
+                var truckMax = devicefilteredItems.reduce((prev, current) => (prev.liveData.dge_hour > current.liveData.dge_hour) ? prev : current)
+                var truckMin = devicefilteredItems.reduce((prev, current) => (prev.liveData.dge_hour < current.liveData.dge_hour) ? prev : current)
+                this.topTruckPerformer = truckMax.name;
+                this.lowTruckPerformer = truckMin.name;
+                this.avgDGEHr = Number((totalAvgHr / devicefilteredItems.length).toFixed(2));
+            }
+          }
+          else
+          {
+              console.log('No live data in device list items')
+          }
+
+        // this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
+        // this.distanceData.value = Number((livedata.distance_empty).toFixed(2));
+    }
+
+    getDGEData() {
+        if (this.deviceslist) {
+           console.log('getDGEData',this.dateFilter);
+            var today = new Date();
+            var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - this.dateFilter);
+            var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            var starttimemilliseconds = startdatetime.getTime() / 1000;
+            var vehiclegetDGEDataaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":100, "starttime":' + starttimemilliseconds + '}}]';
+            this.requestVehicleDGESent = true;
+            this.getDevicesWithAction(vehiclegetDGEDataaliases, 'REQUEST_DEVICES_GASCONSUMED');
+        }
+    }
+
+    getLiveData() {
+        if (this.deviceslist) {
+            console.log('getLiveData',this.dateFilter);
+            var today = new Date();
+            var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours() - 1);
+            var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            var starttimemilliseconds = (startdatetime.getTime() / 1000);
+            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
+            this.requestVehicleLiveSent = true;
+            this.getDevicesLiveData(livetripaliases);
+        }
     }
 
     // Which part of the Redux global state does our component want to receive?
@@ -77,8 +244,14 @@ class FuelController {
             isLoading
         };
     }
+
+    onDateChange() 
+    {
+        this.getVehicleReport();
+    }
+
     componentWillReceiveStateAndActions(nextState, nextActions) {
-        // alert(JSON.stringify(nextState.devices));
+        console.log("FuelController", nextState);
         if (nextState.devices)
             if (nextState.devices.length) {
                 //  console.log("trendscontroller",this.initialized);
@@ -99,38 +272,60 @@ class FuelController {
                             nextActions.subscribeToDevices([device.sn], _.keys(device.data))
                         }
                         if (this.deviceslist)
-                        // _.each(this.device, function(dev) {
-                            this.deviceslist.push({ name: device.name, type: device.type, lastReported: device.updated,
+                            this.deviceslist.push({ name: device.name, type: device.type, lastReported: device.updated,lineChartData : [{
+                                                type: 'area',
+                                                name: device.name,
+                                                data: []
+                                            }],
                                 rid : device.rid, status: "healthy", onClick: () => this.$state.go('efficiency', {vechicle_id: device.rid}) });
-
-                            
-                        // }, this);
-                        // this.plotData = [];
-                        // _.each(PLOT_DATAPORTS, (dataport) => {
-                        //     // console.log("device data" + this.device.data[dataport]);
-                        //     // console.log("devicecontroller" +dataport + JSON.stringify(this.device.data));
-                        //     if (this.device.data[dataport]) {
-                        //         this.plotData.push({
-                        //             name: dataport,
-                        //             data: this.plotFromData(this.device.data[dataport])
-                        //         })
-                        //     }
-                        // })
-
-                        // this.devicesTrendData.push({
-                        //     name: this.device.name,
-                        //     sn: this.device.sn,
-                        //     plotdata: this.plotData
-                        // })
                     })
 
                      if(this.deviceslist){ 
-                        this.VfSharedService .setVechicleData(this.deviceslist);
+                        this.VfSharedService.setVechicleData(this.deviceslist);
                     }
 
                     this.updated = true;
+
+                    //this.UpdateSiteSummary(this.deviceListItems);
+                    //this.updateVehicleLiveData(this.deviceListItems)
+
+                    this.getVehicleReport();
+
+                    this.getDGEData();
                     // console.log("trend data", this.devicesTrendData)
                 }
+
+                this.updateVehicleLiveData(nextState.devices);
+
+                this.updatedgelivegraph(nextState.devices);
+
+                if (this.requestVehicleReportSent) {
+
+                    console.log("requestVehicleReportSent", nextState.devices)
+
+                    this.requestVehicleReportSent = false;
+                    this.updateVehicleReport(nextState.devices);
+
+                }
+            }
+
+             if (nextState.alarms) {
+                    console.log("alarms", nextState.alarms)
+                    if(!this.activityAlarmItems)
+                    {
+                        this.activityAlarmItems = [];
+                    }
+                    let newAlarms = _.difference(nextState.alarms, this.activityAlarmItems)
+                    if (newAlarms.length) {
+                        this.updated = true;
+                        newAlarms = newAlarms.map(alarm => {
+                            alarm.onClick = () => this.$state.go('device', { product_id: alarm.pid, device_id: alarm.did })
+                            return alarm;
+                        })
+                        this.activityAlarmItems = this.activityAlarmItems.concat(newAlarms);
+                    }
+                    console.log("alarms", this.activityAlarmItems)
+                    this.updatefaultcodes();
             }
 
         if (this.updated) {
@@ -141,11 +336,17 @@ class FuelController {
 
     }
 
-    // refreshTrendData() {
-    //     // console.log(this.device1Selected)
-    //     // console.log(this.device2Selected)
-    //     this.updateResults();
-    // }
+     getCount(group) {
+        var count = 0;
+        if (this.activityAlarmItems) {
+            for (var i = 0; i < this.activityAlarmItems.length; i++) {
+                if (this.activityAlarmItems[i].group == group) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 
     ontimeframeChange() {
         this.initialized = false;

@@ -6,7 +6,25 @@ function reduceDevice(device) {
 
 console.log("reducedevice", device);
 
+//device.lastReported = device.updated
+   device.lastReported = _.max(_.map(device.data, (data, alias) => {
+     if(data.length) {
+       return data[data.length-1].timestamp
+     }
+   })) || 0;
+  device.icon = "icon-device"
 
+  return device
+}
+
+function reduceDeviceGasFilled(device) {
+
+console.log("reduceDeviceGasFilled", device);
+ if(device.data['gas_filled'])
+ {
+   device.gasFilled = device.data['gas_filled'];
+ }
+ 
 
 //device.lastReported = device.updated
    device.lastReported = _.max(_.map(device.data, (data, alias) => {
@@ -19,7 +37,29 @@ console.log("reducedevice", device);
   return device
 }
 
+function reduceDeviceGasConsumed(device) {
+
+console.log("reduceDeviceGasConsumed", device);
+ if(device.data['dge'])
+ {
+   device.gasConsumed = device.data['dge'];
+ }
+ 
+//device.lastReported = device.updated
+   device.lastReported = _.max(_.map(device.data, (data, alias) => {
+     if(data.length) {
+       return data[data.length-1].timestamp
+     }
+   })) || 0;
+  device.icon = "icon-device"
+
+  return device
+}
+
 function getDGEHours(totalGasConsumed, enginehours) {
+    if(enginehours == 0)
+        return 0;
+        
     return totalGasConsumed / enginehours
 }
 
@@ -82,9 +122,19 @@ console.log("reduceDeviceLiveData", device);
   var latestdge = dgeCollection[0];
   var latestecudata = ecudataCollection[0];
 
+  if(!latestdge)
+  {
+    latestdge = {value:0, timestatmp: 0}
+  }
+
+  if(!latestecudata)
+  {
+    latestecudata = {data: {average_fuel_economy: 0}}
+  }
+
   var liveDataResult = {
       dge: latestdge,
-      dge_hour: getDGEHours(totalGasConsumed, engineHoursResult).toFixed(2),
+      dge_hour: Number(getDGEHours(totalGasConsumed, engineHoursResult).toFixed(2)),
       distance_empty: latestdge.value * latestecudata.data.average_fuel_economy
   };
 
@@ -100,13 +150,51 @@ console.log("reduceDeviceLiveData", device);
 function deviceReducer(state=initialState.devices, action) {
   switch (action.type) {
   case types.RECEIVE_DEVICES:
-  
+  case types.RECEIVE_DEVICES_LASTTRIP:
   // console.log("types.RECEIVE_DEVICES");
     return action.devices.map(device => reduceDevice(device))
-  case types.RECEIVE_DEVICES_LASTTRIP:
-  
+  case types.RECEIVE_DEVICES_GASFILLED:
+    return action.devices.map(device => reduceDeviceGasFilled(device))
+ case types.RECEIVE_DEVICES_GASCONSUMED:
+    return action.devices.map(device => reduceDeviceGasConsumed(device))
+  case types.RECEIVE_DEVICES_LIVEDATA:
   // console.log("types.RECEIVE_DEVICES");
     return action.devices.map(device => reduceDeviceLiveData(device))
+    
+  case types.RECEIVE_DEVICE_GASFILLED:
+  
+     console.log("types.RECEIVE_DEVICE_GASFILLED", action);
+    // if our initial state has devices, then replace the device
+    // otherwise return an array with just the device received
+    if(state.length > 0) {
+      return state.map(device => {
+        if(device.rid === action.device.rid) {
+          // turn the new device we have into a reduced device
+          return reduceDeviceGasFilled(action.device)
+        } else {
+          return device
+        }
+      })
+    } else {
+      return [reduceDeviceGasFilled(action.device)];
+    }
+  case types.RECEIVE_DEVICE_GASCONSUMED:
+  
+     console.log("types.RECEIVE_DEVICE_GASCONSUMED", action);
+    // if our initial state has devices, then replace the device
+    // otherwise return an array with just the device received
+    if(state.length > 0) {
+      return state.map(device => {
+        if(device.rid === action.device.rid) {
+          // turn the new device we have into a reduced device
+          return reduceDeviceGasConsumed(action.device)
+        } else {
+          return device
+        }
+      })
+    } else {
+      return [reduceDeviceGasConsumed(action.device)];
+    }
   case types.RECEIVE_DEVICE:
   
      console.log("types.RECEIVE_DEVICE", action.device);

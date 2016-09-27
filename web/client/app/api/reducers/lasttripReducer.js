@@ -78,7 +78,7 @@ function reduceLastTripFromDevice(device) {
         return {
             enginehours: engineHoursResult.toFixed(2),
             milesdriven: getMilesDriven(ecudataCollection).toFixed(2),
-            dge_hr: getDGEHours(totalGasConsumed, engineHoursResult).toFixed(2),
+            dge_hr: Number(getDGEHours(totalGasConsumed, engineHoursResult).toFixed(2)),
             totalgasused: totalGasConsumed.toFixed(2)
         }
         /*return device.data[LASTTRIP_ALIAS].filter(function(data){

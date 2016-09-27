@@ -19,31 +19,31 @@
       </div>
 
       <div layout="row" style="margin-bottom:12px !important" layout-xs="column">
-        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="6 " header="Total " content="Truck Alerts " bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
-        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="35 " header="AVG " content="DGE/Hr " bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
-        <tab-list flex="25" flex-xs="100" icon="icon-battery-100" number="WM-212439" header="" content="Good Performance " bgcolor="#7B68EE
+        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="{{vm.faultCode}} " header="Total " content="Truck Alerts " bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
+        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="{{vm.avgDGEHr}} " header="AVG " content="DGE/Hr " bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
+        <tab-list flex="25" flex-xs="100" icon="icon-battery-100" number="{{vm.topTruckPerformer}}" header="" content="Good Performance " bgcolor="#7B68EE
         " style="margin-right:10px "></tab-list>
-        <tab-list flex="25" flex-xs="100" icon="icon-battery-0 " number="WM-212438" header="" content="Low Performance " bgcolor="#73B9A2
+        <tab-list flex="25" flex-xs="100" icon="icon-battery-0 " number="{{vm.lowTruckPerformer}}" header="" content="Low Performance " bgcolor="#73B9A2
         " style="margin-right:10px "></tab-list>
       </div>
 
       <div layout-xs="coloumn " layout-sm="row " layout-md="row " layout-gt-md="row "  flex-xs="100 " flex="100 " >
-         <div class="panel panel-primary "  flex-xs="100 " flex="50 ">
+         <div class="panel panel-primary "  flex-xs="100 " flex="100 ">
             <div class="panel-heading ">
                <h3 class="panel-title ">DGE Filled/Day</h3>
             </div>
             <div class="panel-body ">
-               <barline-chart layout-fill data="vm.milesGallonsFilledData " title="barChart "></barline-chart>
+               <!--<bar-chart layout-fill data="vm.milesGallonsFilledData " title="barChart "></bar-chart>-->
             </div>
          </div>
-         <div class="panel panel-primary " flex-xs="100 " flex="50 " style="margin-left: 5px; ">
+         <!--<div class="panel panel-primary " flex-xs="100 " flex="50 " style="margin-left: 5px; ">
             <div class="panel-heading ">
                <h3 class="panel-title ">DGE Used/Day</h3>
             </div>
             <div class="panel-body ">
                <barline-chart layout-fill data="vm.milesGallonsUsedData " title="barChart "></barline-chart>
             </div>
-         </div>
+         </div>-->
       </div>
       <div layout-xs="coloumn " layout-sm="row " layout-md="row " layout-gt-md="row "  flex-xs="100 " flex="100 " >
          <div class="panel panel-primary "  flex-xs="100 " flex="100 ">
@@ -112,7 +112,7 @@
         </div>
 
         <div class="panel-body">
-            <basic-line-chart style="height:100px;" data="vm.lineChartData" ng-repeat="roll in vm.deviceslist"></basic-line-chart>
+            <basic-line-chart style="height:100px;" data="roll.lineChartData" ng-repeat="roll in vm.deviceslist"></basic-line-chart>
         </div>
     </div></div>
 </md-card-content>
