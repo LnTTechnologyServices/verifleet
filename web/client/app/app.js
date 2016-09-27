@@ -175,7 +175,7 @@ angular.module('app', [
                 $ngRedux.dispatch(websocket.shouldConnect(true));
                 websocket.start(projectConfig.ws_url);
             });
-            $location.path('/');
+            $location.path('/fuel');
         });
 
         authProvider.on('authenticated', function($location, store, $ngRedux, userService, websocket) {
