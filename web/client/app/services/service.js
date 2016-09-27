@@ -12,30 +12,30 @@ class websocketserver {
         }
         this.devicedata = [{}];
         // this.ws = new WebSocket("ws://localhost/ws");
-        this.ws = new WebSocket("wss://m2.exosite.com/ws");
+        // this.ws = new WebSocket("wss://m2.exosite.com/ws");
 
-        this.ws.on("open", function() {
-            alert("Socket has been opened!");
-            this.ws.send(JSON.stringify({
-                "auth": {
-                    "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff"
-                }
-            }));
-        }, this);
+        // this.ws.on("open", function() {
+        //     alert("Socket has been opened!");
+        //     this.ws.send(JSON.stringify({
+        //         "auth": {
+        //             "cik": "07b03708551eb9e995fbff5fcbb762cfa079f9ff"
+        //         }
+        //     }));
+        // }, this);
 
-        this.ws.on("message", function(json_data, flags) {
-            let orig_data = JSON.parse(json_data);
-            let data = orig_data[0];
+        // this.ws.on("message", function(json_data, flags) {
+        //     let orig_data = JSON.parse(json_data);
+        //     let data = orig_data[0];
 
-            if (data) {
-                if (data.status === "ok") {
-                    if (data.result) {
-                        alert(data);
-                        //DGE data 
-                    }
-                }
-            }
-        });
+        //     if (data) {
+        //         if (data.status === "ok") {
+        //             if (data.result) {
+        //                 alert(data);
+        //                 //DGE data 
+        //             }
+        //         }
+        //     }
+        // });
     }
     get() {
             console.log("get Method");
@@ -101,7 +101,7 @@ class websocketserver {
         for (i = 0; i < this.devicedata.length; i++) {
             // alert(this.devicedata[i].name);
             temp = this.getGasFilled(this.devicedata[i].name, 5);
-           // alert(JSON.stringify(temp));
+            // alert(JSON.stringify(temp));
             if (Array.isArray(temp))
                 for (j = 0; i < temp.length; j++) {
                     let data = { timestamp: temp[j].timestamp, value: temp[j].value };
@@ -281,7 +281,7 @@ class websocketserver {
             });
 
             if (item) {
-                if (item.data) {
+                if (item.data && item.data.dge) {
                     let initial = item.data.dge.last().value;
                     let last = item.data.dge[0].value;
                     let temp = -1;

@@ -71,6 +71,8 @@ websocketClient.prototype.handleMessage = function(message) {
     } else {
         switch (message.type) {
             case "subscribe":
+                console.log("SUB");
+
                 var rid = message.rid;
                 var rids = message.rids;
                 var alias = message.alias;
@@ -159,6 +161,8 @@ var initWs = function(server) {
                     dataports = _.difference(dataports, wss.listeningTo[rid]);
                     _.map(dataports, function(dataport) {
                         //console.log("subscribing to: ", rid, ", ", dataport);
+                        alert("SUB");
+
                         exoLive.subscribe({ "alias": dataport, "rid": rid });
                         wss.listeningTo[rid].push(dataport);
                     });

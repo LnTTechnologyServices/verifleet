@@ -34,42 +34,42 @@ function requestDevices() {
 }
 
 function receiveDevices(devices) {
-    console.log("receiveDevices",devices);
+    console.log("receiveDevices", devices);
     return {
         type: types.RECEIVE_DEVICES,
         devices: devices
     }
 }
 
- function requestDeviceLastTrip(did) {
-     return {
-         type: types.REQUEST_DEVICE_LASTTRIP,
-         did: did
-     }
- }
- 
- function requestDevicesLastTrip() {
-     return {
-         type: types.REQUEST_DEVICES_LASTTRIP
-     }
- }
- 
- function receiveDeviceLastTrip(device) {
-     console.log("receiveDevicesLastTrip",device);
-     return {
-         type: types.RECEIVE_DEVICE_LASTTRIP,
-         device: device
-     }
- }
- 
- function receiveDevicesLastTrip(devices) {
-     console.log("receiveDevicesLastTrip",devices);
-     return {
-         type: types.RECEIVE_DEVICES_LASTTRIP,
-         devices: devices
-     }
- }
- 
+function requestDeviceLastTrip(did) {
+    return {
+        type: types.REQUEST_DEVICE_LASTTRIP,
+        did: did
+    }
+}
+
+function requestDevicesLastTrip() {
+    return {
+        type: types.REQUEST_DEVICES_LASTTRIP
+    }
+}
+
+function receiveDeviceLastTrip(device) {
+    console.log("receiveDevicesLastTrip", device);
+    return {
+        type: types.RECEIVE_DEVICE_LASTTRIP,
+        device: device
+    }
+}
+
+function receiveDevicesLastTrip(devices) {
+    console.log("receiveDevicesLastTrip", devices);
+    return {
+        type: types.RECEIVE_DEVICES_LASTTRIP,
+        devices: devices
+    }
+}
+
 function subscribeDevices(rids, aliases) {
     return {
         type: types.SUBSCRIBE_DEVICES,
@@ -131,41 +131,41 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
     }
 
     function getDeviceslasttrip(did, aliases) {
-       // alert("2");
-       return dispatch => {
-           dispatch(requestDeviceLastTrip(did));
-           return $http({
-                   url: `${projectConfig.api_base_url}/devices`,
-                   method: "POST",
-                   params: { "did": did},
-                   headers: { 'Authorization': `${projectConfig.auth_token}` },
-                   data: aliases
-               })
-               .then(response => {
-                   console.log('getDeviceslasttrip',did);
-                   console.log('getDeviceslasttrip',response.data);
-                   return response.data;
-               })
-               .then(device => dispatch(receiveDeviceLastTrip(device)))
-       }
-   }
+        // alert("2");
+        return dispatch => {
+            dispatch(requestDeviceLastTrip(did));
+            return $http({
+                    url: `${projectConfig.api_base_url}/devices`,
+                    method: "POST",
+                    params: { "did": did },
+                    headers: { 'Authorization': `${projectConfig.auth_token}` },
+                    data: aliases
+                })
+                .then(response => {
+                    console.log('getDeviceslasttrip', did);
+                    console.log('getDeviceslasttrip', response.data);
+                    return response.data;
+                })
+                .then(device => dispatch(receiveDeviceLastTrip(device)))
+        }
+    }
 
-   function readDevice(did, aliases) {
+    function readDevice(did, aliases) {
         return dispatch => {
             dispatch(requestReadDevice(did))
-              return $http({
-                   url: `${projectConfig.api_base_url}/devices`,
-                   method: "POST",
-                   params: { "did": did},
-                   headers: { 'Authorization': `${projectConfig.auth_token}` },
-                   data: aliases
-               })
-               .then(response => {
-                   console.log('readDevice',did);
-                   console.log('readDevice',response.data);
-                   return response.data;
-               })
-               .then(device => dispatch(receiveReadDevice(device)))
+            return $http({
+                    url: `${projectConfig.api_base_url}/devices`,
+                    method: "POST",
+                    params: { "did": did },
+                    headers: { 'Authorization': `${projectConfig.auth_token}` },
+                    data: aliases
+                })
+                .then(response => {
+                    console.log('readDevice', did);
+                    console.log('readDevice', response.data);
+                    return response.data;
+                })
+                .then(device => dispatch(receiveReadDevice(device)))
         }
     }
 
@@ -293,7 +293,7 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
         }
         return dispatch => {
             dispatch(subscribeDevices(rids, aliases))
-            websocket.subscribe(rids, aliases);
+            websocket.subscribe(rids, aliases); // TODO
         }
     }
 
