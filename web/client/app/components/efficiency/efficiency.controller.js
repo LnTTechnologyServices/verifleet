@@ -1,7 +1,12 @@
 import * as _ from 'lodash';
 
+function choice(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+
 class EfficiencyController {
-    constructor($timeout, $ngRedux, deviceService, $state, auth, store, $stateParams, $rootScope, $scope, websocketserver, VfSharedService, ) {
+    constructor($timeout, $ngRedux, deviceService, $state, auth, store, $stateParams, $rootScope, $scope, websocketserver, VfSharedService, $interval) {
         "ngInject";
 
         this.deviceService = deviceService;
@@ -13,6 +18,7 @@ class EfficiencyController {
         this.VfSharedService = VfSharedService;
         this.$state = $state;
         this.store = store;
+        this.$interval = $interval;
         this.websocketserver = websocketserver;
         this.unsubscribe = $ngRedux.connect(this.mapStateToThis, this.deviceService)((selectedState, actions) => {
             this.componentWillReceiveStateAndActions(selectedState, actions);
@@ -43,15 +49,6 @@ class EfficiencyController {
         this.paramsMG = "MGcurWeek"
         this.devicelistaliases = '[{"alias":"gps","options": {"sort":"desc", "limit":1 }}]';
         this.deviceId = this.vechicle_id;
-
-        this.lineChartData = [{
-            name: 'VM-121',
-            type: 'area',
-            pointStart: Date.UTC(2016, 0, 1),
-            pointInterval: 24 * 36e5,
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9]
-        }];
-
         this.dateFilterList = [{ "id": 5, "value": "Last 5 Days" },
             { "id": 10, "value": "Last 10 Days" },
             { "id": 15, "value": "Last 15 Days" },
@@ -84,6 +81,7 @@ class EfficiencyController {
 
         this.runBarMilesGallon();
         this.runFuelGuage();
+        this.runMovingLineChart();
         //this.gaugeData = this.websocketserver.gaugeData; for Websocket live update
         // this.gaugeData.value.pop();
         // this.gaugeData.value.push(this.websocketserver.getDGE(this.vechicle_id));
@@ -157,6 +155,20 @@ class EfficiencyController {
         this.getVehicleReport();
     }
 
+    runMovingLineChart() {
+         this.lineChartData = [{
+            name: 'VM-121',
+            type: 'area',
+            pointStart: Date.UTC(2016, 0, 1),
+            pointInterval: 24 * 36e5,
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9]
+        }];
+
+        this.$interval(() => {
+          this.lineChartData[0].data.push([choice(_.range(5,10))]);
+        }, 1000);
+
+    }
     runFuelGuage() {
         this.moons = true
         this.max = 60

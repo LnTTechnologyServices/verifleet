@@ -51,7 +51,7 @@ class BasicLineChartController {
                         ]
                     },
                     marker: {
-                        radius: 2
+                        radius: 0
                     },
                     lineWidth: 1,
                     states: {
@@ -71,6 +71,13 @@ class BasicLineChartController {
                     }
     };
   }
+
+   $onChanges(changes) {
+       if(changes.data && _.isArray(changes.data.currentValue)) {
+        this.configs.series = changes.data.currentValue
+       }
+    }
+
 }
 
 export default BasicLineChartController;
