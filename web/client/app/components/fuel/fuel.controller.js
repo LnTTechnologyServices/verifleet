@@ -1,6 +1,10 @@
 import * as _ from 'lodash';
+
+function choice(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 class FuelController {
-    constructor($timeout, $ngRedux, deviceService, $state, auth, store, websocketserver,VfSharedService,) {
+    constructor($timeout, $ngRedux, deviceService, $state, auth, store, websocketserver,VfSharedService, $interval) {
         "ngInject";
         this.deviceService = deviceService;
         this.headerUrl = require("./maps.jpg");
@@ -8,6 +12,7 @@ class FuelController {
         this.$timeout = $timeout
         this.$state = $state;
         this.store = store;
+        this.$interval = $interval;
         this.VfSharedService = VfSharedService;
         this.unsubscribe = $ngRedux.connect(this.mapStateToThis, this.deviceService)((selectedState, actions) => {
             this.componentWillReceiveStateAndActions(selectedState, actions);
@@ -48,10 +53,10 @@ class FuelController {
 
         loadAfterAuthed(this);
 
-
         this.runGasFilled();
         this.runGasUsed();
         this.ontimeframeChange();
+        this.runMovingLineCharts();
 
         this.sortType = 'name'; // set the default sort type
         this.sortReverse = false; // set the default sort order
@@ -148,6 +153,20 @@ class FuelController {
         //    this.getDevicesTrend('raw_data', (Date.now() - this.timeframeSelected));
     }
 
+   runMovingLineCharts() {
+         this.lineChartData = [{
+            name: 'VM-121',
+            type: 'area',
+            pointStart: Date.UTC(2016, 0, 1),
+            pointInterval: 24 * 36e5,
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9]
+        }];
+
+        this.$interval(() => {
+          this.lineChartData[0].data.push([choice(_.range(5,10))]);
+        }, 1000);
+
+    }
     runGasFilled() {
         this.barchart = true
         this.renderAgain = true;

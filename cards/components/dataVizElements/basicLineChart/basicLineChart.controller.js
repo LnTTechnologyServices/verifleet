@@ -34,7 +34,7 @@ class BasicLineChartController {
                 }
             },
             legend: {
-                enabled: false
+                enabled: true
             },
             plotOptions: {
                 area: {
