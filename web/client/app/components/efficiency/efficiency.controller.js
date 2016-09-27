@@ -28,6 +28,7 @@ class EfficiencyController {
         this.activityAlarmItems = [];
         this.requestVehicleReportSent = false;
         this.requestVehicleDGESent = false;
+        this.requestVehicleLiveSent = false;
         if (this.VfSharedService.getVechicleData().length > 0) {
             this.vehicleFilterList = this.VfSharedService.getVechicleData();
         } else {
@@ -77,6 +78,11 @@ class EfficiencyController {
         loadAfterAuthed(this);
 
         var today = new Date();
+        
+        if(this.vehicleFilterList.length != 0 && this.vechicle_id != 0)
+        {
+            this.getLiveData();
+        }
 
         if(this.vehicleFilterList.length != 0 && this.vechicle_id != 0)
         {
@@ -137,6 +143,32 @@ class EfficiencyController {
         }
     }
 
+    updateVehicleReport(dgeFilled) {
+        console.log('updateVehicleReport', dgeFilled);
+        
+        this.milesGallonsData.values.length = 0
+        this.milesGallonsData.categories.length = 0
+        var i = 0;
+        for (i = 0; i < dgeFilled.length; i++) {
+            this.milesGallonsData.categories.push(this.convertDate(dgeFilled[i].timestamp));
+            this.milesGallonsData.values.push(Number((dgeFilled[i].value).toFixed(2)));
+        }
+
+    }
+
+    updatefaultcodes() {
+        this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');
+        if (this.activityAlarmItems) {
+            this.faultCode = this.activityAlarmItems.length;
+        }
+    }
+
+     updateVehicleLiveData(livedata) {
+        this.liveDGEHrs = livedata.dge_hour;
+        this.gaugeData.value = livedata.dge.value;
+        this.distanceData.value = livedata.distance_empty;
+    }
+
     getDGEData() {
         if (this.vechicle_id && this.vehicleFilterList) {
             console.log('getDGEData',this.dateFilter);
@@ -147,6 +179,21 @@ class EfficiencyController {
             var vehiclereportaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":100}},{"alias":"ecu","options": {"sort":"desc", "limit":1}}]';
             this.requestVehicleDGESent = true;
             this.readDevice(this.vechicle_id, vehiclereportaliases);
+        }
+    }
+
+    getLiveData() {
+        if (this.vechicle_id && this.vehicleFilterList) {
+            console.log('getDGEData',this.dateFilter);
+            var today = new Date();
+            var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours() - 1);
+            var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            var starttimemilliseconds = (startdatetime.getTime() / 1000);
+           
+            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
+
+            this.requestVehicleLiveSent = true;
+            this.readDeviceLiveData(this.vechicle_id, livetripaliases);
         }
     }
 
@@ -171,6 +218,7 @@ class EfficiencyController {
     onvehicleChange() {
         this.vechicle_id = this.vehicleFilter;
         this.initialized = false;
+        this.getLiveData();
         this.getlasttripdata();
         this.getVehicleReport();
         this.getDGEData();
@@ -257,9 +305,27 @@ class EfficiencyController {
                         this.updated = true;
                     }
 
+                    this.getLiveData();
+
                     this.getlasttripdata();
                     
                     this.getVehicleReport();
+                }
+
+                if(this.requestVehicleLiveSent)
+                {
+                    console.log("requestVehicleLiveSent", nextState.devices);
+
+                    for (var i = 0; i < nextState.devices.length; i++) {
+                        if (nextState.devices[i].rid == this.vechicle_id) {
+                            console.log("Got it requestVehicleLiveSent", nextState.devices[i].liveData)
+                            if (nextState.devices[i].liveData) {
+                                this.requestVehicleLiveSent = false;
+                                this.updateVehicleLiveData(nextState.devices[i].liveData);
+                            }
+                            break;
+                        }
+                    }
                 }
 
                 if (this.requestVehicleReportSent) {
@@ -309,6 +375,10 @@ class EfficiencyController {
 
         if (nextState.alarms) {
             console.log("alarms", nextState.alarms)
+            if(!this.activityAlarmItems)
+            {
+                this.activityAlarmItems = [];
+            }
             let newAlarms = _.difference(nextState.alarms, this.activityAlarmItems)
             if (newAlarms.length) {
                 this.updated = true;
@@ -356,26 +426,6 @@ class EfficiencyController {
             }
         }
         return count;
-    }
-
-    updatefaultcodes() {
-        this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');
-        if (this.activityAlarmItems) {
-            this.faultCode = this.activityAlarmItems.length;
-        }
-    }
-
-    updateVehicleReport(dgeFilled) {
-        console.log('updateVehicleReport', dgeFilled);
-        
-        this.milesGallonsData.values.length = 0
-        this.milesGallonsData.categories.length = 0
-        var i = 0;
-        for (i = 0; i < dgeFilled.length; i++) {
-            this.milesGallonsData.categories.push(this.convertDate(dgeFilled[i].timestamp));
-            this.milesGallonsData.values.push(Number((dgeFilled[i].value).toFixed(2)));
-        }
-
     }
 
     updatedgelivegraph(dgeCollection, ecudata)

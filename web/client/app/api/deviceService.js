@@ -8,6 +8,13 @@ function requestDevice(rid) {
     }
 }
 
+function requestDeviceLiveData(rid) {
+    return {
+        type: types.REQUEST_DEVICE_LIVEDATA,
+        rid: rid
+    }
+}
+
 function requestDeviceTrend(alias, starttime) {
 
     // console.log("requestDeviceTrend: ");
@@ -19,9 +26,15 @@ function requestDeviceTrend(alias, starttime) {
 }
 
 function receiveDevice(device) {
-    // console.log("received device: ", device);
     return {
         type: types.RECEIVE_DEVICE,
+        device: device
+    }
+}
+
+function receiveDeviceLiveData(device) {
+    return {
+        type: types.RECEIVE_DEVICE_LIVEDATA,
         device: device
     }
 }
@@ -39,6 +52,21 @@ function receiveDevices(devices) {
         devices: devices
     }
 }
+
+function requestDevicesLiveData() {
+    return {
+        type: types.REQUEST_DEVICES_LIVEDATA
+    }
+}
+
+function receiveDevicesLiveData(devices) {
+    console.log("receiveDevicesLiveData", devices);
+    return {
+        type: types.RECEIVE_DEVICES_LIVEDATA,
+        devices: devices
+    }
+}
+
 
 function requestDeviceLastTrip(did) {
     return {
@@ -99,6 +127,20 @@ function receiveReadDevice(device) {
     }
 }
 
+function requestReadDeviceLiveData(rid) {
+    return {
+        type: types.REQUEST_READ_DEVICE_LIVEDATA,
+        rid: rid
+    }
+}
+
+function receiveReadDeviceLiveData(device) {
+    return {
+        type: types.RECEIVE_READ_DEVICE_LIVEDATA,
+        device: device
+    }
+}
+
 function receiveDeviceNotesNotifications(notifications) {
     return {
         type: types.RECEIVE_USER_NOTIFICATIONS,
@@ -121,11 +163,26 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
                     data: aliases
                 })
                 .then(response => {
-                    console.log("Hiiii");
-                    console.log(response.data);
                     return response.data;
                 })
                 .then(devices => dispatch(receiveDevices(devices)))
+        }
+    }
+
+    function getDevicesLiveData(aliases) {
+        // alert("2");
+        return dispatch => {
+            dispatch(requestDevicesLiveData());
+            return $http({
+                    url: `${projectConfig.api_base_url}/devices`,
+                    method: "POST",
+                    headers: { 'Authorization': `${projectConfig.auth_token}` },
+                    data: aliases
+                })
+                .then(response => {
+                    return response.data;
+                })
+                .then(devices => dispatch(receiveDevicesLiveData(devices)))
         }
     }
 
@@ -165,6 +222,25 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
                     return response.data;
                 })
                 .then(device => dispatch(receiveReadDevice(device)))
+        }
+    }
+
+     function readDeviceLiveData(did, aliases) {
+        return dispatch => {
+            dispatch(requestReadDeviceLiveData(did))
+            return $http({
+                    url: `${projectConfig.api_base_url}/devices`,
+                    method: "POST",
+                    params: { "did": did },
+                    headers: { 'Authorization': `${projectConfig.auth_token}` },
+                    data: aliases
+                })
+                .then(response => {
+                    console.log('readDevice', did);
+                    console.log('readDevice', response.data);
+                    return response.data;
+                })
+                .then(device => dispatch(receiveReadDeviceLiveData(device)))
         }
     }
 
@@ -311,12 +387,14 @@ export default function deviceService($http, $ngRedux, projectConfig, websocket)
 
     return {
         getDevices,
+        getDevicesLiveData,
         getDevicesTrend,
         getDeviceslasttrip,
         getDevicesIfNeeded,
         getDevice,
         putDeviceNotes,
         readDevice,
+        readDeviceLiveData,
         subscribeToDevices,
         unsubscribeFromDevices
     }
