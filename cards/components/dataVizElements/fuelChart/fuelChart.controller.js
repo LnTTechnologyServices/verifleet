@@ -95,10 +95,22 @@ class FuelChartController {
                 }]
             },
       },
-    series: [{
-                name: 'Fuel Level',
-                data: [this.data.value]
-            }],
+
+   series: [{
+	        name: 'Speed',
+	       data: [this.data.value],
+	        tooltip: {
+	            valueSuffix: ' km/h'
+	        },
+            dataLabels: {
+                    enabled: false,
+                    style: {
+                        fontWeight:'bold',
+                        fontSize: '12px'
+                    }
+                }
+	    }],
+  
     func: function(chart) {
             $timeout(function() {
                 chart.reflow();

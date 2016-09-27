@@ -385,6 +385,7 @@ class EfficiencyController {
         //this.distanceData = 
 
         console.log('updatedgelivegraph', dgeCollection);
+        //this.lineChartData[0].data.length = 0;
         var i = 0;
         for (i = 0; i < dgeCollection.length; i++) {
             this.lineChartData[0].data.push({x:dgeCollection[i].timestamp, y: Number((dgeCollection[i].value).toFixed(2))});
