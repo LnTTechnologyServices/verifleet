@@ -25,6 +25,9 @@ COPY . /app
 RUN echo "{ \"token\": \"$TSD_GITHUB_TOKEN\" }" >> /app/.tsdrct
 RUN cd /app && ./node_modules/.bin/tsd rate
 
+RUN chmod +x /installTypings.sh
+RUN chmod +x /transpile.sh
+
 RUN ["npm", "run", "installTypings"]
 RUN ["npm", "run", "transpile"]
 
