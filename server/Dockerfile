@@ -12,8 +12,8 @@ WORKDIR /app
 
 RUN chmod -R 777 /app /usr/bin
 
-EXPOSE 3000
-ENV PORT 3000
+EXPOSE 8080
+ENV PORT 8080
 
 RUN ln -s `which nodejs` /usr/bin/node
 
