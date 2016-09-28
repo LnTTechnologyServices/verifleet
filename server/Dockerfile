@@ -25,9 +25,9 @@ COPY . /app
 RUN echo "{ \"token\": \"$TSD_GITHUB_TOKEN\" }" >> /app/.tsdrct
 RUN cd /app && ./node_modules/.bin/tsd rate
 
-RUN ["npm", "run", "installTypings"]
-RUN ["npm", "run", "transpile"]
+RUN cd /app && ./node_modules/.bin/tsd reinstall -so
+RUN cd /app && ./node_modules/.bin/tsc --sourcemap --module commonjs ./bin/www.ts ./definitions/model_*.ts
 
 RUN chmod -R 777 /app /usr/bin
 
-CMD ["npm", "start"]
+CMD ["/app/bin/www"]
