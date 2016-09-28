@@ -22,16 +22,14 @@ RUN npm install
 
 COPY . /app
 
-RUN setup.sh
-
 RUN echo "{ \"token\": \"$TSD_GITHUB_TOKEN\" }" >> /app/.tsdrct
 RUN cd /app && ./node_modules/.bin/tsd rate
 
-RUN install_typings.sh
-RUN transpile.sh
+CMD ["sh", "install_typings.sh"]
+CMD ["run", "run"]
 
 RUN chmod -R 777 /app /usr/bin
 RUN run.sh
 
-#CMD ["run", "run"]
+CMD ["run", "run"]
 
