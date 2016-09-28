@@ -170,6 +170,7 @@ class FuelController {
                 var devicefilteredItems = deviceListItems.filter(function(device) { if (device.gasConsumed) return true; });
                 if(devicefilteredItems && devicefilteredItems.length > 0)
                 {
+                    this.requestVehicleDGESent = false;
                     for(var device in devicefilteredItems)
                     {
                         console.log('device ---',devicefilteredItems[device].rid);
@@ -219,6 +220,8 @@ class FuelController {
                 this.topTruckPerformer = truckMax.name;
                 this.lowTruckPerformer = truckMin.name;
                 this.avgDGEHr = Number((totalAvgHr / devicefilteredItems.length).toFixed(2));
+
+                this.requestVehicleLiveSent = false;
             }
           }
           else
@@ -287,8 +290,7 @@ class FuelController {
                     this.initialized = true;
                     this.deviceListItems = nextState.devices;
                     // console.log("devices trend",this.deviceListItems );
-                    if (this.websocketserver)
-                        this.websocketserver.initData(nextState.devices);
+                    
                     nextState.devices.map((device) => {
                         this.device = device;
 
@@ -296,11 +298,11 @@ class FuelController {
                         console.log("device status check");
 
                         // console.log(device.data.gps[0].value);
-                        if (_.keys(device.data).length) {
-                            nextActions.subscribeToDevices([device.sn], _.keys(device.data))
-                        }
+                        // if (_.keys(device.data).length) {
+                        //     nextActions.subscribeToDevices([device.sn], _.keys(device.data))
+                        // }
                         if (this.deviceslist)
-
+                        {
                           //  console.log(device.data.gps[0].value,);
                            console.log("Location" , device);
 
@@ -314,7 +316,8 @@ class FuelController {
                                                 data: [],
                                             }],
                                 rid : device.rid,status: "healthy", onClick: () => this.$state.go('efficiency', {vechicle_id: device.rid}) });
-                    })
+                        }
+                })
 
                      if(this.deviceslist){ 
                         this.VfSharedService.setVechicleData(this.deviceslist);
@@ -331,9 +334,13 @@ class FuelController {
                     // console.log("trend data", this.devicesTrendData)
                 }
 
-                this.updateVehicleLiveData(nextState.devices);
+                if (this.requestVehicleLiveSent) {
+                 this.updateVehicleLiveData(nextState.devices);
+                }
 
-                this.updatedgelivegraph(nextState.devices);
+                if (this.requestVehicleDGESent) {
+                    this.updatedgelivegraph(nextState.devices);
+                }
 
                 if (this.requestVehicleReportSent) {
 
@@ -366,7 +373,7 @@ class FuelController {
 
         if (this.updated) {
             this.updated = false;
-            this.updateResults();
+            //this.updateResults();
         }
 
 

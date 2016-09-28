@@ -97,6 +97,11 @@ class EfficiencyController {
         {
             this.getDGEData();
         }
+
+        if(this.vehicleFilterList.length != 0 && this.vechicle_id != 0)
+        {
+            this.getVehicleReport();
+        }
     }
 
     getlasttripdata() {
