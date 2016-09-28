@@ -54,8 +54,8 @@ import './javascriptExtensions';
 // a0 configuration
 // TODO AUTH: remove this when using Murano login system
 let auth0Auth = {
-    AUTH0_CLIENT_ID: 'WEehSzsjp3hosMfkfOZfpWMceVFdnFBa',
-    AUTH0_DOMAIN: 'exosite-pcc-seed.auth0.com',
+    AUTH0_CLIENT_ID: 'Vggsg6L3VSk8q8JT14Xak4gWmb1z68vZ',
+    AUTH0_DOMAIN: 'prashanthypdev.auth0.com',
     AUTH0_CALLBACK_URL: 'http://localhost:3000'
 }
 

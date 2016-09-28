@@ -6,9 +6,9 @@
        layout-align-gt-md="start center"
        layout="column"
        flex="70">
-    <h3 class="md-headline" flex-gt-md="50"><b>{{ vm.alarm.title }}</b></h3>
-    <h4 class="md-subhead" flex-gt-md="30">{{ vm.alarm.subtitle }}</h4>
-    <p class="md-caption">{{ vm.alarm.description }}</p>
+    <h3 class="md-headline"  flex-gt-md="50" style="color:#ffc200;"><b>{{ vm.alarm.title }} {{ vm.alarm.status }}</b></h3>
+    <h4 class="md-subhead" style="color:#ffc200;" ng-class="{warning-text: vm.alarm.status == 'warning', healthy-text: vm.alarm.status == 'healthy', critical-text: vm.alarm.status == 'critical',inactive-text:vm.alarm.status == 'inactive'}" flex-gt-md="30">{{ vm.alarm.subtitle }}</h4>
+    <p class="md-caption" style="color:#ffc200;" ng-class="{warning-text: vm.alarm.status == 'warning', healthy-text: vm.alarm.status == 'healthy', critical-text: vm.alarm.status == 'critical',inactive-text:vm.alarm.status == 'inactive'}">{{ vm.alarm.description }}</p>
   </div>
   <div class="md-list-item-text addition-info"
        flex
@@ -23,4 +23,3 @@
      <more-options ng-if="vm.alarm.moreOptions" class="md-secondary"></more-options>
    </div>
 </md-list-item>
-

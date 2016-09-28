@@ -117,10 +117,10 @@ class LogsController {
       this.filteredActivityAlarmItems = this.activityAlarmItems;
     }
 
-   this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');
-   this.amber_lamp_status =  this.getCount('amber_lamp_status');
-   this.malfunction_indicator_lamp_status = this.getCount('malfunction_indicator_lamp_status');
-   this.protect_lamp_status =  this.getCount('protect_lamp_status');
+    this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');
+    this.amber_lamp_status =  this.getCount('amber_lamp_status');
+    this.malfunction_indicator_lamp_status = this.getCount('malfunction_indicator_lamp_status');
+    this.protect_lamp_status =  this.getCount('protect_lamp_status');
 
   }
 
@@ -162,7 +162,7 @@ class LogsController {
       if(newAlarms.length) {
         this.updated = true;
         newAlarms = newAlarms.map( alarm => {
-            alarm.onClick = () => this.$state.go('device', {product_id: alarm.pid, device_id: alarm.did})
+            alarm.onClick = () => this.$state.go('', {product_id: alarm.pid, device_id: alarm.did})
             return alarm;
         })
         this.activityAlarmItems = this.activityAlarmItems.concat(newAlarms);
@@ -177,7 +177,7 @@ class LogsController {
       if(newActivities.length) {
         this.updated = true;
          newActivities = newActivities.map(activity => {
-          activity.onClick = () => this.$state.go('device', {product_id: activity.pid, device_id: activity.did})
+          activity.onClick = () => this.$state.go('', {product_id: activity.pid, device_id: activity.did})
           return activity;
         })
         this.activityAlarmItems = this.activityAlarmItems.concat(newActivities);

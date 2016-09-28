@@ -4,6 +4,7 @@ class FuelChartController {
     this.name = 'fuelChart';
     this.$element = $element
     this.$timeout = $timeout
+
     this.config = {
       options: {
             chart: {
@@ -86,10 +87,10 @@ class FuelChartController {
                    
                 }, {
                     from: 15,
-                    to: 30,
+                    to: 40,
                     color: '#ffb91d' // yellow
                 }, {
-                    from: 30,
+                    from: 40,
                     to: 60,
                      color: '#09A80E' // green
                 }]
@@ -97,11 +98,8 @@ class FuelChartController {
       },
 
    series: [{
-	        name: 'Speed',
+	        name: 'Fuel',
 	       data: [this.data.value],
-	        tooltip: {
-	            valueSuffix: ' km/h'
-	        },
             dataLabels: {
                     enabled: false,
                     style: {
@@ -120,9 +118,8 @@ class FuelChartController {
   }
 
   $onChanges(changes) {
-    console.log(changes);
     if(changes.data.currentValue.value) {
-        this.config.series.data =  changes.data.currentValue.value;
+        this.config.series[0].data[0] =  changes.data.currentValue.value;
     }
   } 
 

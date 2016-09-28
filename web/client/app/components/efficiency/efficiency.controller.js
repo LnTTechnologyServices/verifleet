@@ -163,9 +163,20 @@ class EfficiencyController {
             this.liveDGEHrs = livedata.dge_hour;
             if(livedata.dge)
             {
-                //this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
+                this.gaugeData = {} ;
+                this.gaugeData = {
+                                "max": 60,
+                                "min": 0,
+                                "value": Number((livedata.dge.value).toFixed(2))
+                            }
+
+                this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
+
             }
             this.distancetoEmpty = Number((livedata.distance_empty).toFixed(2));
+
+             this.distancetoProgress = Number(120 - (livedata.distance_empty).toFixed(2));
+            
             //this.gaugeData.value.push(this.gaugeData.value);
         }
     }
@@ -250,7 +261,7 @@ class EfficiencyController {
     initializeFuelGuage() {
         this.moons = true
         this.gaugeData = {
-                "max": 120,
+                "max": 60,
                 "min": 0,
                 "value": 0,
             }

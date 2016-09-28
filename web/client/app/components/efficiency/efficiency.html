@@ -35,13 +35,13 @@
 
                     <div id="bar-1" class="bar-main-container azure">
 
-                      <div class="bar-percentage" data-percentage="46">Distance to Empty &nbsp; {{vm.distancetoEmpty }}</div>
+                      <div class="bar-percentage" data-percentage="46">Distance to Empty &nbsp; <span>{{ vm.distancetoEmpty }}</span></div>
                       <md-slider-container class="slider-container" style="margin-left: 10%;width:80%;">
-                            <md-slider ng-disabled="true" flex min="0"  max="120" ng-model="vm.distancetoEmpty" aria-label="red" id="red-slider">
+                            <!--<md-slider ng-disabled="true" flex min="0"  max="120" ng-model="vm.distancetoEmpty" aria-label="red" id="red-slider">
+                        </md-slider>-->
+                          <md-slider flex=""   flex min="0"  max="120" ng-model="vm.distancetoProgress" aria-label="red" id="red-slider">
                         </md-slider>
-                          <!--<md-slider flex=""   flex min="0"  max="120" ng-model="vm.distanceData.value" aria-label="red" id="red-slider">
-                        </md-slider>
-                        -->
+                        
                         </md-slider-container>
                     </div>    
 
@@ -74,14 +74,14 @@
           </div>
             <br>
           <div layout="row">
-            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-battery-100"  number="{{vm.totalGasUsed}}" header="" content="Total Gas used" bgcolor="#7B68EE
+            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-warning-general"  number="{{vm.totalGasUsed}}" header="" content="Total Gas used" bgcolor="#7B68EE
             " style="margin-right:10px "></tab-list>
-            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-battery-0 "  number="{{vm.faultCode}}" header="" content="Fault Code" bgcolor="#73B9A2
+            <tab-list style="margin-left: 15px;width: 40%;" flex="45" flex-xs="100" icon="icon-warning-general"  number="{{vm.faultCode}}" header="" content="Fault Code" bgcolor="#73B9A2
             " style="margin-right:10px "></tab-list>       
            </div>
             <br>    
          <div layout="row">
-            <tab-list style="margin-left: 15px;width:40%;" flex="45" flex-xs="100" icon="icon-running "  number="{{vm.DGEHrs}}" header="" content=" DGE/Hrs" bgcolor="#AEACA0 " style="margin-right:10px "></tab-list>
+            <tab-list style="margin-left: 15px;width:40%;" flex="45" flex-xs="100" icon="icon-warning-general"  number="{{vm.DGEHrs}}" header="" content=" DGE/Hrs" bgcolor="#AEACA0 " style="margin-right:10px "></tab-list>
          </div>                   
       </div>
          </div>

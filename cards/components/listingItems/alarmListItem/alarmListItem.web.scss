@@ -1,3 +1,39 @@
 .alarm-list-item {
 
+    .warning-text {
+        color:#ffc200 !important;
+    }   
+
+    .healthy-text {
+        color: #0AC410;
+    } 
+
+    .critical-text {
+        color: #D11515;
+    }     
+
+    .inactive-text {
+        color: #BFCCDD;
+    } 
+
+
+  .healthy {
+    background-color: #0AC410;
+  }
+
+  .critical {
+    background-color: #D11515;
+  }
+
+  .inactive {
+    background-color: #BFCCDD;
+  }
+
+  .warning {
+    background-color: #ffc200;
+  }
+
+
+
+
 }
