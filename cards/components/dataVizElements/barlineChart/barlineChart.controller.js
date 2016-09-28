@@ -21,8 +21,12 @@ class barlineChartController {
                  }
             },
             legend: {
-            enabled: true
-        },
+                enabled: true
+            },
+            scrollbar: {
+                enabled: true
+            },
+        
         tooltip: { enabled: false },
         plotOptions: {
              series: {
@@ -63,8 +67,9 @@ class barlineChartController {
             }
         }
         console.log("Changes data2 ", categories);
-
+        categories = categories.sort(function(a,b) { return new Date(b).getTime() - new Date(a).getTime() } );
         this.config.options.xAxis.categories = categories;
+        this.config.options.xAxis.min = 1;
         this.config.series =  changes.data.currentValue;
         
         console.log("Changes data2 ", this.config.series);
