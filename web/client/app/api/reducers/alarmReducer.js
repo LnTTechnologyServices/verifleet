@@ -67,25 +67,25 @@ function titleFromECUData(ecudata) {
   }
 }
 
-function subtitleFromECUData(ecudata) {
+function getstatusFromECUData(ecudata) {
   if(angular.isUndefined(ecudata))
-    return 'Unknown error';
+    return 'warning';
 
   if(ecudata.red_stop_lamp_status == 1)
   {
-    return "Critical"
+    return "critical"
   }
   if(ecudata.amber_lamp_status == 1)
   {
-    return "Warning"
+    return "warning"
   }
   if(ecudata.malfunction_indicator_lamp_status == 1)
   {
-    return "Warning"
+    return "warning"
   }
   if(ecudata.protect_lamp_status == 1)
   {
-    return "Warning"
+    return "warning"
   }
 }
 
@@ -134,7 +134,7 @@ function reduceAlarmFromData(device, data) {
 
   //console.log(ecu_data);
   return {
-    status: data.status,
+    status: getstatusFromECUData(ecu_data),
     title: device.name,
     //description: descriptionFromECUData(ecu_data),
     group: descriptionFromECUData(ecu_data),

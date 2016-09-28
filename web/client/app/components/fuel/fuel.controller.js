@@ -57,7 +57,7 @@ class FuelController {
             var starttimemilliseconds = (startdatetime.getTime() / 1000);
             // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
             //     vm.getDevicesLiveData(livetripaliases);
-            vm.getLiveData();
+                vm.getLiveData();
             } else {
                 if (self.Timer) $timeout.cancel(self.Timer);
                 self.Timer = vm.$timeout(() => loadAfterAuthed(vm), 50);
@@ -252,7 +252,7 @@ class FuelController {
             var starttimemilliseconds = (startdatetime.getTime() / 1000);
             // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
 
-            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":13}},{"alias":"ecu","options": {"sort":"desc", "limit":13}},{"alias":"gas_filled","options": {"sort":"desc", "limit":13}}]';   
+            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":13}},{"alias":"ecu","options": {"sort":"desc", "limit":13}},{"alias":"gas_filled","options": {"sort":"desc", "limit":13}},{"alias":"gps","options": {"sort":"desc", "limit":1}}]';   
 
             this.requestVehicleLiveSent = true;
             this.getDevicesLiveData(livetripaliases);

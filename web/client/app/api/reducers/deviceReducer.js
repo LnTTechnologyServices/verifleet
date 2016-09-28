@@ -165,7 +165,13 @@ function reduceDeviceLiveData(device) {
   };
 
   device.liveData = liveDataResult;
-  device.lastReported = device.updated
+  //device.lastReported = device.
+  
+  device.lastReported = _.max(_.map(device.data, (data, alias) => {
+     if(data.length) {
+       return data[data.length-1].timestamp
+     }
+   })) || 0;
 
   device.icon = "icon-device"
 
