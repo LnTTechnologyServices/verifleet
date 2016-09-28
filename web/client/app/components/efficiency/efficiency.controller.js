@@ -34,7 +34,6 @@ class EfficiencyController {
             this.vehicleFilterList = [];
         }
 
-
         this.distancetoEmpty;
         // this.websocketserver.validate();
         // this.websocketserver.get();
@@ -65,7 +64,10 @@ class EfficiencyController {
             name: this.vechicle_id,
             data: []
         }];
-
+        
+        this.initializeBarChart();
+        this.initializeFuelGuage();
+        this.initializeDistancetoEmpty();
 
         function loadAfterAuthed(vm) {
             if (vm.auth.isAuthenticated && vm.store.get("token")) {
@@ -95,23 +97,6 @@ class EfficiencyController {
         {
             this.getDGEData();
         }
-
-
-        this.runBarMilesGallon();
-        this.runFuelGuage();
-        //this.runMovingLineChart();
-        //this.gaugeData = this.websocketserver.gaugeData; for Websocket live update
-        // this.gaugeData.value.pop();
-        // this.gaugeData.value.push(this.websocketserver.getDGE(this.vechicle_id));
-        /*this.runDistancetoEmpty();
-        this.engineHours = this.websocketserver.getEngineHours(this.vechicle_id);
-        this.milesDriven = this.websocketserver.getMilesDriven(this.vechicle_id);
-        this.DGEHrs = this.websocketserver.getDGEperHours(this.vechicle_id);
-        this.faultCode = this.websocketserver.getFaultCode(this.vechicle_id);
-        this.totalGasUsed = this.websocketserver.getTotalGasUsed(this.vechicle_id);*/
-
-        //Websocket
-        this.websocketserver.get();
     }
 
     getlasttripdata() {
@@ -166,13 +151,18 @@ class EfficiencyController {
     }
 
      updateVehicleLiveData(livedata) {
-        this.liveDGEHrs = livedata.dge_hour;
-        this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
-        this.distanceData.value = Number((livedata.distance_empty).toFixed(2));
-      //  this.distancetoEmpty = 110;
-         this.gaugeData.vale.push(this.gaugeData.value);
-       //  alert("this.gaugeData");
-         console.log(this.gaugeData);
+
+        if(livedata)
+        {
+            console.log('updateVehicleLiveData',livedata);
+            this.liveDGEHrs = livedata.dge_hour;
+            if(livedata.dge)
+            {
+                //this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
+            }
+            this.distancetoEmpty = Number((livedata.distance_empty).toFixed(2));
+            //this.gaugeData.value.push(this.gaugeData.value);
+        }
     }
 
     getDGEData() {
@@ -196,8 +186,11 @@ class EfficiencyController {
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             var starttimemilliseconds = (startdatetime.getTime() / 1000);
            
-            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
+            // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
 
+            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20}},{"alias":"ecu","options": {"sort":"desc", "limit":20}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20}}]';   
+
+            console.log('getlivedata', livetripaliases);
             this.requestVehicleLiveSent = true;
             this.readDeviceLiveData(this.vechicle_id, livetripaliases);
         }
@@ -248,35 +241,26 @@ class EfficiencyController {
         }, 1000);
 
     }
-    runFuelGuage() {
+
+    initializeFuelGuage() {
         this.moons = true
-        this.max = 60
-        this.min = 0
         this.gaugeData = {
-                "max": this.max,
-                "min": this.min,
-                "value": this.websocketserver.getDGE(this.vechicle_id)
+                "max": 120,
+                "min": 0,
+                "value": 0,
             }
-
-    //        alert(this.gaugeData.value.push(Math.round(this.websocketserver.getDGE(this.vechicle_id))));
-
-      //      this.gaugeData.value.pop();
-        //    this.gaugeData.value.push(Math.round(this.websocketserver.getDGE(this.vechicle_id)));
     }
 
-    runDistancetoEmpty() {
+    initializeDistancetoEmpty() {
         this.distanceData = {
             "max": this.max,
             "min": this.min,
-            "value": this.websocketserver.getDistanceToEmpty(this.vechicle_id)
+            "value": 0
         }
-        
-        this.distanceData.value = Math.round(this.websocketserver.getDistanceToEmpty(this.vechicle_id));
-      //  alert("Distance to Empty" + this.distanceData.value);
     }
 
     //Miiles/Gallon
-    runBarMilesGallon() {
+    initializeBarChart() {
         this.milesGallonsData = {
             "categories": [],
             "yaxisText": "Gallons",
@@ -407,26 +391,26 @@ class EfficiencyController {
 
         // if (this.updated) {
         this.updated = false;
-        this.updateResults();
+        //this.updateResults();
         // }
-        if (nextState.websocket) {
+        // if (nextState.websocket) {
 
-            console.log("Websockeettt",nextState.websocket)
-            if (nextState.websocket.alias == 10) // 10 : test(alias)
-                if (this.distanceData)
-                    this.distanceData.value = nextState.websocket.data; // * average_fuel_economy
-            if (this.gaugeData)
-                this.gaugeData.value = nextState.websocket.data;
-            if (this.lineChartData)
-                if (this.lineChartData.data) {
-                   // this.lineChartData.data.push(nextState.websocket.data);
-                }
-            console.log("SUCCESS" + JSON.stringify(nextState.websocket));
-        }
-        if (this.lineChartData)
-            if (this.lineChartData.data) {
-               // this.lineChartData.data.push(12);
-            }
+        //     console.log("Websockeettt",nextState.websocket)
+        //     if (nextState.websocket.alias == 10) // 10 : test(alias)
+        //         if (this.distanceData)
+        //             this.distanceData.value = nextState.websocket.data; // * average_fuel_economy
+        //     if (this.gaugeData)
+        //         this.gaugeData.value = nextState.websocket.data;
+        //     if (this.lineChartData)
+        //         if (this.lineChartData.data) {
+        //            // this.lineChartData.data.push(nextState.websocket.data);
+        //         }
+        //     console.log("SUCCESS" + JSON.stringify(nextState.websocket));
+        // }
+        // if (this.lineChartData)
+        //     if (this.lineChartData.data) {
+        //        // this.lineChartData.data.push(12);
+        //     }
     }
 
     getCount(group) {

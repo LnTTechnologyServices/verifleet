@@ -1,5 +1,5 @@
 import * as types from '../constants';
-
+var _ = require('lodash');
 import initialState from './initialState';
 
 function reduceDevice(device) {
@@ -68,20 +68,23 @@ function getTotalGasUsed(dgeCollection, dgeFilledCollection) {
     var latestDGE = 0;
     if (dgeCollection)
         if (dgeCollection.length > 0)
-            initialDGE = dgeCollection[0].value;
+            latestDGE = dgeCollection[0];
 
     if (dgeCollection)
         if (dgeCollection.length > 0)
-            latestDGE = dgeCollection[dgeCollection.length - 1].value;
+            initialDGE = dgeCollection[dgeCollection.length - 1];
 
     console.log('dgeCollection', dgeCollection);
     console.log('dgeFilledCollection', dgeFilledCollection);
     var totalGasFilled = 0;
     if (dgeFilledCollection) {
         for (var gasfilled in dgeFilledCollection) {
-            console.log('gasfilled', dgeFilledCollection[gasfilled].value);
-            if (dgeFilledCollection[gasfilled].value) {
-                totalGasFilled = totalGasFilled + dgeFilledCollection[gasfilled].value;
+            if(dgeFilledCollection[gasfilled].timestamp >= initialDGE.timestamp && dgeFilledCollection[gasfilled].timestamp <= latestDGE.timestamp  )
+            {
+              console.log('gasfilled', dgeFilledCollection[gasfilled].value);
+              if (dgeFilledCollection[gasfilled].value) {
+                  totalGasFilled = totalGasFilled + dgeFilledCollection[gasfilled].value;
+              }
             }
         }
     }
@@ -89,13 +92,31 @@ function getTotalGasUsed(dgeCollection, dgeFilledCollection) {
     //       return sum + gasfilled.value;
     //   }, 0);
 
-    return initialDGE + totalGasFilled - latestDGE;
+    return initialDGE.value + totalGasFilled - latestDGE.value;
 
 }
 
-function getEngineHours(ecudataCollection) {
-    var firstecudata = ecudataCollection[0];
-    var lastecudata = ecudataCollection[ecudataCollection.length - 1];
+function getEngineHours(dgeCollection, ecudataCollection) {
+
+   var initialDGE = 0;
+    var latestDGE = 0;
+    if (dgeCollection)
+        if (dgeCollection.length > 0)
+            latestDGE = dgeCollection[0];
+
+    if (dgeCollection)
+        if (dgeCollection.length > 0)
+            initialDGE = dgeCollection[dgeCollection.length - 1];
+
+    var ecudataCollectionFiltered = ecudataCollection.filter(function(ecudata) { return (ecudata.timestamp >= initialDGE.timestamp && ecudata.timestamp <= latestDGE.timestamp) })
+
+
+ console.log("ecudataCollectionFiltered initialDGE", initialDGE);
+ console.log("ecudataCollectionFiltered ecudataCollection", ecudataCollection);
+ console.log("ecudataCollectionFiltered latestDGE", latestDGE);
+ console.log("ecudataCollectionFiltered --100", ecudataCollectionFiltered);
+    var lastecudata = ecudataCollectionFiltered[0];
+    var firstecudata = ecudataCollectionFiltered[ecudataCollectionFiltered.length - 1];
     if (firstecudata && lastecudata)
         return lastecudata.data.engine_hours - firstecudata.data.engine_hours;
     else
@@ -111,16 +132,21 @@ function reduceecutojsoncollection(device, data) {
 
 function reduceDeviceLiveData(device) {
 
-console.log("reduceDeviceLiveData", device);
+  console.log("reduceDeviceLiveData", device);
 
   var ecudataCollection = device.data['ecu'].map(data => reduceecutojsoncollection(device, data));
   var dgeCollection = device.data['dge'];
   var dgeFilledCollection = device.data['gas_filled'];
 
-  var engineHoursResult = getEngineHours(ecudataCollection);
+  var engineHoursResult = getEngineHours(dgeCollection, ecudataCollection);
   var totalGasConsumed = getTotalGasUsed(dgeCollection, dgeFilledCollection);
   var latestdge = dgeCollection[0];
   var latestecudata = ecudataCollection[0];
+
+  console.log('engineHoursResult', engineHoursResult)
+  console.log('totalGasConsumed', totalGasConsumed)
+  console.log('latestdge', latestdge)
+  console.log('latestecudata', latestecudata)
 
   if(!latestdge)
   {
