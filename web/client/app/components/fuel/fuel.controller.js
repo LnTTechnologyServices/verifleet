@@ -68,7 +68,8 @@ class FuelController {
 
         var today = new Date();
 
-        this.runGasFilled();
+        //this.runGasFilled();
+        this.initializeBarChart();
         //this.runGasUsed();
         this.ontimeframeChange();
         //this.runMovingLineCharts();
@@ -128,6 +129,46 @@ class FuelController {
 
         if(deviceListItems)
         {
+               var gasFilledChartdata = [];
+              var d = 0;
+              for (d = 0; d < deviceListItems.length; d++) {
+
+                   
+                   
+                   
+                     var dgeFilled = deviceListItems[d].gasFilled;
+                     if(dgeFilled)
+                     {
+                          var milesGallonsDataTemp = {
+                            "categories": [],
+                            "yaxisText": "DGE",
+                            "plotLines": [{
+                                value: 150,
+                                color: 'green',
+                            }, {
+                                value: 350,
+                                color: 'red',
+                            }],
+                            "id": deviceListItems[d].name,
+                            "name": deviceListItems[d].name,
+                            "data": []
+                        };
+
+                         var i = 0;
+                         for (i = 0; i < dgeFilled.length; i++) {
+                             milesGallonsDataTemp.categories.push( this.convertDate(dgeFilled[i].timestamp));
+                             milesGallonsDataTemp.data.push(Number((dgeFilled[i].value).toFixed(2)));
+                         }
+
+                         gasFilledChartdata.push(milesGallonsDataTemp);
+                         
+                         this.milesGallonsData = gasFilledChartdata;
+                         console.log('milesGallonsData' ,this.milesGallonsData)
+
+                         this.requestVehicleReportSent = false;
+                    }
+                }    
+        }
 //             this.milesGallonsFilledData = [];
 //             this.deviceData = [];
 //             var i = 0;
@@ -144,7 +185,7 @@ class FuelController {
                     
 //              }
 
-        }
+       // }
 
         // this.milesGallonsData.values.length = 0
         // this.milesGallonsData.categories.length = 0
@@ -352,7 +393,6 @@ class FuelController {
 
                     console.log("requestVehicleReportSent", nextState.devices)
 
-                    this.requestVehicleReportSent = false;
                     this.updateVehicleReport(nextState.devices);
 
                 }
@@ -417,36 +457,23 @@ class FuelController {
         }, 1000);
 
     }
-    runGasFilled() {
-        this.barchart = true
-        this.renderAgain = true;
 
-        this.milesGallonsFilledData = [{
-        name: 'WM-212441',
-        data: [942, 930, 310, 543, 998],
-        showInLegend: false
-    }, {
-        name: 'WM-212442',
-        data: [549, 558, 568, 153, 889],
-        showInLegend: false
-    }, {
-        name: 'WM-212440',
-        data: [459, 53, 657, 369, 447],
-        showInLegend: false
-    },
-     {
-        name: 'WM-212439',
-        data: [459, 53, 657, 369, 447],
-        showInLegend: false
-    },
-     {
-        name: 'WM-212438',
-        data: [459, 53, 657, 369, 447],
-        showInLegend: false
-    }];
-
-
+    initializeBarChart() {
+        this.milesGallonsData = [];
+        // this.milesGallonsData = [{
+        //     "categories": [],
+        //     "yaxisText": "Gallons",
+        //     "plotLines": [{
+        //         value: 150,
+        //         color: 'green',
+        //     }, {
+        //         value: 350,
+        //         color: 'red',
+        //     }],
+        //     "data": []
+        // }]
     }
+
 
     runGasUsed() {
         this.barchart = true
@@ -477,6 +504,19 @@ class FuelController {
                 }
             })
         }
+    }
+
+    convertDate(unix_timestamp) {
+        var a = new Date(unix_timestamp);
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+        return time;
     }
 
 }

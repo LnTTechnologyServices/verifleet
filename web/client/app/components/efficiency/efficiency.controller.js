@@ -34,7 +34,7 @@ class EfficiencyController {
             this.vehicleFilterList = [];
         }
 
-        this.distancetoEmpty;
+        this.distancetoEmpty = 0;
         // this.websocketserver.validate();
         // this.websocketserver.get();
 
@@ -135,16 +135,30 @@ class EfficiencyController {
         }
     }
 
-    updateVehicleReport(dgeFilled) {
+    updateVehicleReport(devicename, dgeFilled) {
         console.log('updateVehicleReport', dgeFilled);
         
-        this.milesGallonsData.values.length = 0
-        this.milesGallonsData.categories.length = 0
+
+        var milesGallonsDataTemp = {
+                            "categories": [],
+                            "plotLines": [{
+                                value: 150,
+                                color: 'green',
+                            }, {
+                                value: 350,
+                                color: 'red',
+                            }],
+                            "name": devicename,
+                            "data": []
+        };
+
         var i = 0;
         for (i = 0; i < dgeFilled.length; i++) {
-            this.milesGallonsData.categories.push(this.convertDate(dgeFilled[i].timestamp));
-            this.milesGallonsData.values.push(Number((dgeFilled[i].value).toFixed(2)));
+            milesGallonsDataTemp.categories.push( this.convertDate(dgeFilled[i].timestamp));
+            milesGallonsDataTemp.data.push(Number((dgeFilled[i].value).toFixed(2)));
         }
+
+        this.milesGallonsData = [milesGallonsDataTemp];
 
     }
 
@@ -277,7 +291,7 @@ class EfficiencyController {
 
     //Miiles/Gallon
     initializeBarChart() {
-        this.milesGallonsData = {
+        this.milesGallonsData = [{
             "categories": [],
             "yaxisText": "Gallons",
             "plotLines": [{
@@ -287,8 +301,8 @@ class EfficiencyController {
                 value: 350,
                 color: 'red',
             }],
-            "values": []
-        }
+            "data": []
+        }]
     }
 
     componentWillReceiveStateAndActions(nextState, nextActions) {
@@ -352,7 +366,7 @@ class EfficiencyController {
                             console.log("Got it", nextState.devices[i].gasFilled)
                             if (nextState.devices[i].gasFilled) {
                                 this.requestVehicleReportSent = false;
-                                this.updateVehicleReport(nextState.devices[i].gasFilled);
+                                this.updateVehicleReport(nextState.devices[i].name, nextState.devices[i].gasFilled);
                             }
                             break;
                         }

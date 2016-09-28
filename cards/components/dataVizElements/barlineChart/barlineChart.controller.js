@@ -13,30 +13,29 @@ class barlineChartController {
                 text: null
             },
             xAxis: {
-                categories: this.data.categories
+                
             },
             yAxis: {
                  title: {
-                 text: null
-            }
+                     text: null
+                 }
             },
             legend: {
-            enabled: false
+            enabled: true
         },
         tooltip: { enabled: false },
         plotOptions: {
-            bar: {
+             series: {
                 dataLabels: {
-                    enabled: false
+                    enabled: false,
+                    style: {
+                        color: '#fff'
+                    }
                 }
             }
         },
     },
-    series: [{
-                name: "Distance to empty",
-                showInLegend: false,
-                data: this.data.values
-            }],
+    series: this.data,
             func: function(chart) {
                 $timeout(function() {
                     chart.reflow();
@@ -49,9 +48,26 @@ class barlineChartController {
 
     console.log("Changes data");
     console.log(changes);
-    
-    if(changes.data.currentValue.values) {
-        this.config.series[0].data =  changes.data.currentValue.values;
+
+    if(changes.data.currentValue) {
+        console.log("Changes data2 ");
+
+        var categories = [];
+        var i = 0;
+        for(i =0; i< changes.data.currentValue.length; i++)
+        {
+            var j = 0;
+            for(j =0; j < changes.data.currentValue[i].categories.length; j++)
+            {
+               categories.push(changes.data.currentValue[i].categories[j]);
+            }
+        }
+        console.log("Changes data2 ", categories);
+
+        this.config.options.xAxis.categories = categories;
+        this.config.series =  changes.data.currentValue;
+        
+        console.log("Changes data2 ", this.config.series);
     }
   }
 
