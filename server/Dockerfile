@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     git \
     nodejs \
     npm \
+    nodemon \
     postgresql && \ 
     mkdir -p /app
 
@@ -30,5 +31,5 @@ CMD ["sh", "transpile.sh"]
 
 RUN chmod -R 777 /app /usr/bin
 
-CMD ["sh", "run.sh"]
+CMD ["sh", "run_windows.sh"]
 
