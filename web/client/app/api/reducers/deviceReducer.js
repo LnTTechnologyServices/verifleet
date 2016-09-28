@@ -166,10 +166,14 @@ function reduceDeviceLiveData(device) {
 
   device.liveData = liveDataResult;
   //device.lastReported = device.
+  if(device.data['gps'] )
+  {
+    device.location = device.data['gps'][0].value;
+  }
   
   device.lastReported = _.max(_.map(device.data, (data, alias) => {
      if(data.length) {
-       return data[data.length-1].timestamp
+       return data[0].timestamp
      }
    })) || 0;
 

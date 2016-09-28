@@ -183,8 +183,8 @@ class FuelController {
                                 if(devicefilteredItems[device].gasConsumed)
                                 {
                                     var i = 0;
+                                    this.deviceslist[devicegraph].lineChartData[0].data.length = 0;
                                     for (i = 0; i < devicefilteredItems[device].gasConsumed.length; i++) {
-                                        this.deviceslist[devicegraph].lineChartData[0].data.length = 0;
                                         this.deviceslist[devicegraph].lineChartData[0].data.push({x: devicefilteredItems[device].gasConsumed[i].timestamp, y: Number(( devicefilteredItems[device].gasConsumed[i].value).toFixed(2))});
                                     }
                                 }
@@ -302,13 +302,16 @@ class FuelController {
                         if (this.deviceslist)
 
                           //  console.log(device.data.gps[0].value,);
-                          //  console.log("Location");
+                           console.log("Location" , device);
 
 
-                            this.deviceslist.push({ name: device.name, type: device.type, lastReported: device.updated,lineChartData : [{
+                            this.deviceslist.push({ name: device.name, type: device.type, 
+                                                location: device.location,
+                                                lastReported: device.lastReported,
+                                                lineChartData : [{
                                                 type: 'area',
                                                 name: device.name,
-                                                data: []
+                                                data: [],
                                             }],
                                 rid : device.rid,status: "healthy", onClick: () => this.$state.go('efficiency', {vechicle_id: device.rid}) });
                     })
