@@ -26,10 +26,9 @@ RUN echo "{ \"token\": \"$TSD_GITHUB_TOKEN\" }" >> /app/.tsdrct
 RUN cd /app && ./node_modules/.bin/tsd rate
 
 CMD ["sh", "install_typings.sh"]
-CMD ["run", "run"]
+CMD ["sh", "transpile.sh"]
 
 RUN chmod -R 777 /app /usr/bin
-RUN run.sh
 
-CMD ["run", "run"]
+CMD ["sh", "run.sh"]
 
