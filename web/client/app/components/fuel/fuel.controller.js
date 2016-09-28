@@ -306,6 +306,12 @@ class FuelController {
                           //  console.log(device.data.gps[0].value,);
                            console.log("Location" , device);
 
+                           if(device.location){
+                               if(device.location.includes("0.0") || device.location.includes("nan"))
+                                    device.location = 'Info not available';
+                           }
+
+
 
                             this.deviceslist.push({ name: device.name, type: device.type, 
                                                 location: device.location,
