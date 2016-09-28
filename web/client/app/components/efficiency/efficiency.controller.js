@@ -4,7 +4,6 @@ function choice(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-
 class EfficiencyController {
     constructor($timeout, $ngRedux, deviceService, $state, auth, store, $stateParams, $rootScope, $scope, websocketserver, VfSharedService, $interval) {
         "ngInject";
@@ -168,6 +167,7 @@ class EfficiencyController {
         this.liveDGEHrs = livedata.dge_hour;
         this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
         this.distanceData.value = Number((livedata.distance_empty).toFixed(2));
+        vm.distancetoEmpty = this.distanceData.value;
     }
 
     getDGEData() {
