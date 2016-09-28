@@ -5,7 +5,6 @@ RUN apt-get update && apt-get install -y \
     git \
     nodejs \
     npm \
-    nodemon \
     postgresql && \ 
     mkdir -p /app
 
@@ -26,6 +25,7 @@ COPY . /app
 RUN echo "{ \"token\": \"$TSD_GITHUB_TOKEN\" }" >> /app/.tsdrct
 RUN cd /app && ./node_modules/.bin/tsd rate
 
+CMD ["npm", "install","nodemon"]
 CMD ["sh", "install_typings.sh"]
 CMD ["sh", "transpile.sh"]
 
