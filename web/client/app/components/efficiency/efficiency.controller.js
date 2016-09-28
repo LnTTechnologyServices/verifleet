@@ -188,7 +188,7 @@ class EfficiencyController {
            
             // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
 
-            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20}},{"alias":"ecu","options": {"sort":"desc", "limit":20}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20}}]';   
+            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":13}},{"alias":"ecu","options": {"sort":"desc", "limit":13}},{"alias":"gas_filled","options": {"sort":"desc", "limit":13}}]';   
 
             console.log('getlivedata', livetripaliases);
             this.requestVehicleLiveSent = true;

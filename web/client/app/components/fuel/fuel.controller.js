@@ -55,8 +55,9 @@ class FuelController {
             var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours() - 1);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             var starttimemilliseconds = (startdatetime.getTime() / 1000);
-            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
-                vm.getDevicesLiveData(livetripaliases);
+            // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
+            //     vm.getDevicesLiveData(livetripaliases);
+            vm.getLiveData();
             } else {
                 if (self.Timer) $timeout.cancel(self.Timer);
                 self.Timer = vm.$timeout(() => loadAfterAuthed(vm), 50);
@@ -249,7 +250,10 @@ class FuelController {
             var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours() - 1);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             var starttimemilliseconds = (startdatetime.getTime() / 1000);
-            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
+            // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
+
+            var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":13}},{"alias":"ecu","options": {"sort":"desc", "limit":13}},{"alias":"gas_filled","options": {"sort":"desc", "limit":13}}]';   
+
             this.requestVehicleLiveSent = true;
             this.getDevicesLiveData(livetripaliases);
         }

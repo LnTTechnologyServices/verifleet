@@ -19,11 +19,11 @@
       </div>
 
       <div layout="row" style="margin-bottom:12px !important" layout-xs="column">
-        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="6 " header="Total " content="Truck Alerts " bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
-        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="35 " header="AVG " content="DGE/Hr " bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
-        <tab-list flex="25" flex-xs="100" icon="icon-battery-100" number="WM-212439" header="" content="Good Performance " bgcolor="#7B68EE
+        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="{{vm.faultCode}} " header="" content="Truck Alerts " bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
+        <tab-list flex="25" flex-xs="100" icon="icon-warning-general" number="{{vm.avgDGEHr}} " header="" content="DGE/Hr " bgcolor="#52D5F5 " style="margin-right:10px "></tab-list>
+        <tab-list flex="25" flex-xs="100" icon="icon-battery-100" number="{{vm.topTruckPerformer}}" header="" content="Good Performance " bgcolor="#7B68EE
         " style="margin-right:10px "></tab-list>
-        <tab-list flex="25" flex-xs="100" icon="icon-battery-0 " number="WM-212438" header="" content="Low Performance " bgcolor="#73B9A2
+        <tab-list flex="25" flex-xs="100" icon="icon-battery-0 " number="{{vm.lowTruckPerformer}}" header="" content="Low Performance " bgcolor="#73B9A2
         " style="margin-right:10px "></tab-list>
       </div>
 
