@@ -129,7 +129,7 @@ class EfficiencyController {
             var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - this.dateFilter);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             var starttimemilliseconds = startdatetime.getTime() / 1000;
-            var vehiclereportaliases = '[{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + '}}]';
+            var vehiclereportaliases = '[{"alias":"gas_filled","options": {"sort":"desc", "limit":1000, "starttime":' + starttimemilliseconds + '}}]';
             this.requestVehicleReportSent = true;
             this.readDeviceWithAction(this.vechicle_id, vehiclereportaliases, 'REQUEST_DEVICE_GASFILLED');
         }
@@ -202,7 +202,7 @@ class EfficiencyController {
             var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - this.dateFilter);
             var enddatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             var starttimemilliseconds = startdatetime.getTime() / 1000;
-            var vehiclegetDGEDataaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":100, "starttime":' + starttimemilliseconds + '}}]';
+            var vehiclegetDGEDataaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":1000, "starttime":' + starttimemilliseconds + '}}]';
             this.requestVehicleDGESent = true;
             this.readDeviceWithAction(this.vechicle_id, vehiclegetDGEDataaliases, 'REQUEST_DEVICE_GASCONSUMED');
         }
