@@ -19,18 +19,15 @@ RUN ln -s `which nodejs` /usr/bin/node
 
 COPY package.json /app/package.json
 RUN npm install
-RUN npm install nodemon -g 
 
 COPY . /app
 
 RUN echo "{ \"token\": \"$TSD_GITHUB_TOKEN\" }" >> /app/.tsdrct
 RUN cd /app && ./node_modules/.bin/tsd rate
 
-CMD ["npm", "install","nodemon"]
-CMD ["sh", "install_typings.sh"]
-CMD ["sh", "transpile.sh"]
+RUN ["npm", "run", "installTypings"]
+RUN ["npm", "run", "transpile"]
 
 RUN chmod -R 777 /app /usr/bin
 
-CMD ["sh", "run_windows.sh"]
-
+CMD ["npm", "start"]
