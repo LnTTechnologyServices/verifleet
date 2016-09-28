@@ -34,6 +34,8 @@ class EfficiencyController {
             this.vehicleFilterList = [];
         }
 
+
+        this.distancetoEmpty;
         // this.websocketserver.validate();
         // this.websocketserver.get();
 
@@ -167,7 +169,10 @@ class EfficiencyController {
         this.liveDGEHrs = livedata.dge_hour;
         this.gaugeData.value = Number((livedata.dge.value).toFixed(2));
         this.distanceData.value = Number((livedata.distance_empty).toFixed(2));
-        vm.distancetoEmpty = this.distanceData.value;
+      //  this.distancetoEmpty = 110;
+         this.gaugeData.vale.push(this.gaugeData.value);
+       //  alert("this.gaugeData");
+         console.log(this.gaugeData);
     }
 
     getDGEData() {
@@ -252,8 +257,11 @@ class EfficiencyController {
                 "min": this.min,
                 "value": this.websocketserver.getDGE(this.vechicle_id)
             }
-            //     this.gaugeData.value.pop();
-            // this.gaugeData.value.push(Math.round(this.websocketserver.getDGE(this.vechicle_id)));
+
+    //        alert(this.gaugeData.value.push(Math.round(this.websocketserver.getDGE(this.vechicle_id))));
+
+      //      this.gaugeData.value.pop();
+        //    this.gaugeData.value.push(Math.round(this.websocketserver.getDGE(this.vechicle_id)));
     }
 
     runDistancetoEmpty() {
@@ -262,7 +270,9 @@ class EfficiencyController {
             "min": this.min,
             "value": this.websocketserver.getDistanceToEmpty(this.vechicle_id)
         }
+        
         this.distanceData.value = Math.round(this.websocketserver.getDistanceToEmpty(this.vechicle_id));
+      //  alert("Distance to Empty" + this.distanceData.value);
     }
 
     //Miiles/Gallon

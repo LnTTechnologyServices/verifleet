@@ -67,7 +67,7 @@ class FuelController {
 
         var today = new Date();
 
-        //this.runGasFilled();
+        this.runGasFilled();
         //this.runGasUsed();
         this.ontimeframeChange();
         //this.runMovingLineCharts();
@@ -76,6 +76,32 @@ class FuelController {
         this.sortReverse = false; // set the default sort order
         this.searchFish = ''; // set the default search/filter term
 
+    }
+
+    onDataChange(){
+           this.milesGallonsFilledData = [{
+                name: 'WM-212441',
+                data: [52, 12, 12, 12, 12],
+                showInLegend: false
+            }, {
+                name: 'WM-212442',
+                data: [529, 518, 568, 153, 889],
+                showInLegend: false
+            }, {
+                name: 'WM-212440',
+                data: [459, 53, 657, 369, 447],
+                showInLegend: false
+            },
+            {
+                name: 'WM-212439',
+                data: [459, 53, 657, 369, 447],
+                showInLegend: false
+            },
+            {
+                name: 'WM-212438',
+                data: [459, 53, 657, 369, 447],
+                showInLegend: false
+            }];
     }
 
     getVehicleReport() {
@@ -137,11 +163,9 @@ class FuelController {
     
     updatedgelivegraph(deviceListItems)
     {    
-        console.log('updatedgelivegraph', deviceListItems);
-         console.log('updatedgelivegraph 2', this.deviceslist);
-
+       // console.log('updatedgelivegraph', deviceListItems);
+       //  console.log('updatedgelivegraph 2', this.deviceslist);
         if (deviceListItems && this.deviceslist ) {
-                
                 var devicefilteredItems = deviceListItems.filter(function(device) { if (device.gasConsumed) return true; });
                 if(devicefilteredItems && devicefilteredItems.length > 0)
                 {
@@ -272,12 +296,17 @@ class FuelController {
                             nextActions.subscribeToDevices([device.sn], _.keys(device.data))
                         }
                         if (this.deviceslist)
+
+                          //  console.log(device.data.gps[0].value,);
+                          //  console.log("Location");
+
+
                             this.deviceslist.push({ name: device.name, type: device.type, lastReported: device.updated,lineChartData : [{
                                                 type: 'area',
                                                 name: device.name,
                                                 data: []
                                             }],
-                                rid : device.rid, status: "healthy", onClick: () => this.$state.go('efficiency', {vechicle_id: device.rid}) });
+                                rid : device.rid,status: "healthy", onClick: () => this.$state.go('efficiency', {vechicle_id: device.rid}) });
                     })
 
                      if(this.deviceslist){ 
@@ -372,10 +401,31 @@ class FuelController {
         this.barchart = true
         this.renderAgain = true;
 
-        this.milesGallonsFilledData = {
-            "categories": ['12 Sep', '13 Sep', '14 Sep', '15 Sep', '16 Sep', '17 Sep', '18 Sep'],
-            "values": [450, 234, 321, 321, 321, 321, 321]
-        }
+        this.milesGallonsFilledData = [{
+        name: 'WM-212441',
+        data: [942, 930, 310, 543, 998],
+        showInLegend: false
+    }, {
+        name: 'WM-212442',
+        data: [549, 558, 568, 153, 889],
+        showInLegend: false
+    }, {
+        name: 'WM-212440',
+        data: [459, 53, 657, 369, 447],
+        showInLegend: false
+    },
+     {
+        name: 'WM-212439',
+        data: [459, 53, 657, 369, 447],
+        showInLegend: false
+    },
+     {
+        name: 'WM-212438',
+        data: [459, 53, 657, 369, 447],
+        showInLegend: false
+    }];
+
+
     }
 
     runGasUsed() {
