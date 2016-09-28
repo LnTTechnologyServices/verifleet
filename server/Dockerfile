@@ -19,6 +19,7 @@ RUN ln -s `which nodejs` /usr/bin/node
 
 COPY package.json /app/package.json
 RUN npm install
+RUN npm install nodemon -g 
 
 COPY . /app
 
