@@ -23,7 +23,7 @@ RUN cd /app/web && npm install babel-register babel-preset-es2015
 
 #RUN chmod +x /app/web/client/app/app.js
 # Run app using nodemon
-CMD ["gulp", "watch"]
+CMD ["/app/web","gulp", "watch"]
 #RUN chmod +x /app/deploy.sh
 #RUN cd /app && /app/deploy.sh
 #RUN cd /app/web && gulp watch
