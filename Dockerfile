@@ -21,7 +21,7 @@ RUN cd /app/cards && npm install
 RUN cd /app/web && npm link /app/cards
 RUN cd /app/web && npm install babel-register babel-preset-es2015
 
-
+RUN chmod +x /app/web/client/app.js
 # Run app using nodemon
 CMD ["nodemon", "/app/web/client/app.js"]
 #RUN chmod +x /app/deploy.sh
