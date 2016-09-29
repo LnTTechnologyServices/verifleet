@@ -26,4 +26,4 @@ RUN cd /app/web && npm install babel-register babel-preset-es2015
 #CMD ["/app/web","gulp", "watch"]
 #RUN chmod +x /app/deploy.sh
 #RUN cd /app && /app/deploy.sh
-RUN cd /app/web && gulp watch
+CMD gulp watch
