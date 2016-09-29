@@ -8,9 +8,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
-RUN npm install -g gulp phantomjs2
-# Install nodemon
-RUN npm install -g nodemon
+RUN npm install -g gulp phantomjs2 nodemon
+
 #RUN pip install exosite
 
 RUN mkdir -p /app/web /app/cards
@@ -22,7 +21,6 @@ RUN cd /app/cards && npm install
 RUN cd /app/web && npm link /app/cards
 RUN cd /app/web && npm install babel-register babel-preset-es2015
 
-COPY . /app
 
 # Run app using nodemon
 CMD ["nodemon", "/app/web/client/app.js"]
