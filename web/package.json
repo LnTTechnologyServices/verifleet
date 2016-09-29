@@ -34,8 +34,7 @@
         "sass-loader": "^3.2.0",
         "transform-loader": "^0.2.3",
         "ui-leaflet": "^1.0.1",
-        "ws": "^1.1.0",
-        "utf-8-validate": "1.2.x"
+        "ws": "^1.1.0"
     },
     "devDependencies": {
         "angular-mocks": "^1.5.0",
