@@ -52,7 +52,7 @@ app.use(bodyParser.json());
 //app.use(session({ secret: config_1.config.APP_SECRET, resave: false, saveUninitialized: false }));
 //app.use(passport.initialize());
 //app.use(passport.session());
-var whitelist = [/https:\/\/.*\.exosite\.io/, /http:\/\/localhost:.*/];
+var whitelist = [/https:\/\/.*\.exosite\.io/, /http:\/\/localhost:.*/,/http:\/\/59.145.122.180:.*/];
 var corsOptions = {
     origin: whitelist,
     credentials: true
