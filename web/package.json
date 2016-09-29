@@ -1,8 +1,8 @@
 {
-    "name": "exosite-ps-proof-of-feasibility",
+    "name": "veriflo-web",
     "version": "0.0.1",
     "description": "Proof of Feasibility",
-    "main": "index.js",
+    "main": "./client/app/app.js",
     "dependencies": {
         "angular": "^1.5.0",
         "angular-animate": "^1.5.6",
@@ -93,21 +93,13 @@
         "tls": false
     },
     "scripts": {
-        "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-        "start:dev": "webpack-dev-server --inline --hot --content-base client --history-api-fallback",
-        "start:prod": "webpack && node server.js",
-        "compile": "NODE_ENV=production webpack",
-        "test": "karma start"
+
     },
     "keywords": [
         "angular",
         "webpack",
         "es6"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/exosite/ps-parker-seed-app"
-    },
     "author": "AngularClass",
     "license": "Apache-2.0"
 }
