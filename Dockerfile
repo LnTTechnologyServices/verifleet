@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
-#RUN npm install -g gulp phantomjs2
+RUN npm install -g gulp phantomjs2
 # Install nodemon
 RUN npm install -g nodemon
 #RUN pip install exosite
