@@ -79,7 +79,7 @@ function getTotalGasUsed(dgeCollection, dgeFilledCollection) {
     var totalGasFilled = 0;
     if (dgeFilledCollection) {
         for (var gasfilled in dgeFilledCollection) {
-            if(dgeFilledCollection[gasfilled].timestamp >= initialDGE.timestamp && dgeFilledCollection[gasfilled].timestamp <= latestDGE.timestamp  )
+            if(dgeFilledCollection[gasfilled].timestamp  >= (initialDGE.timestamp - 100000) && dgeFilledCollection[gasfilled].timestamp <= (latestDGE.timestamp + 100000)  )
             {
               console.log('gasfilled', dgeFilledCollection[gasfilled].value);
               if (dgeFilledCollection[gasfilled].value) {

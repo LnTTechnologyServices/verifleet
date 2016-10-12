@@ -312,7 +312,7 @@ class EfficiencyController {
         if (nextState.devices)
             if (nextState.devices.length) {
                 //  console.log("trendscontroller",this.initialized);
-                this.websocketserver.initData(nextState.devices);
+                //this.websocketserver.initData(nextState.devices);
 
                 if (!this.initialized) {
                     this.initialized = true;

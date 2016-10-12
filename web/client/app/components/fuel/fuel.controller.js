@@ -20,7 +20,7 @@ class FuelController {
         });
 
         this.$timeout = $timeout;
-        this.websocketserver = websocketserver;
+        //this.websocketserver = websocketserver;
         this.dateFilterList = [{ "id": 5, "value": "Last 5 Days" },
             { "id": 10, "value": "Last 10 Days" },
             { "id": 15, "value": "Last 15 Days" },
@@ -389,13 +389,13 @@ class FuelController {
                     this.updatedgelivegraph(nextState.devices);
                 }
 
-                if (this.requestVehicleReportSent) {
+                //if (this.requestVehicleReportSent) {
 
                     console.log("requestVehicleReportSent", nextState.devices)
 
                     this.updateVehicleReport(nextState.devices);
 
-                }
+                //}
             }
 
              if (nextState.alarms) {
