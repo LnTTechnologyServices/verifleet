@@ -5,32 +5,40 @@
     }   
 
     .healthy-text {
-        color: #0AC410;
+        color: #0AC410 !important;
     } 
 
     .critical-text {
-        color: #D11515;
+        color: #D11515 !important;
     }     
 
     .inactive-text {
-        color: #BFCCDD;
+        color: #BFCCDD !important;
+    } 
+
+     .fault-text {
+        color: #fd7c00 !important;
     } 
 
 
   .healthy {
-    background-color: #0AC410;
+    background-color: #0AC410 !important;
   }
 
   .critical {
-    background-color: #D11515;
+    background-color: #D11515 !important;
   }
 
   .inactive {
-    background-color: #BFCCDD;
+    background-color: #BFCCDD !important;
   }
 
   .warning {
-    background-color: #fd7c00;
+    background-color: #fd7c00 !important;
+  }
+
+   .fault {
+    background-color: #fd7c00 !important;
   }
 
 

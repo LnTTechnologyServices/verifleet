@@ -21,12 +21,12 @@ class BasicLineChartController {
             },
             labels: {
             //You can format the label according to your need
-            format: '{value:%m/%d - %H:%m}'
+            //format: '{value:%m/%d - %H:%m}'
+            format: '{value: %d %b / %H:%m / %a}'
         },
         legend: {
             enabled: false
         },
-
         },
             yAxis: {
                 title: {

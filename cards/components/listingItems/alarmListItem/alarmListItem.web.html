@@ -6,8 +6,8 @@
        layout-align-gt-md="start center"
        layout="column"
        flex="70">
-    <h3 class="md-headline"  ng-class="{'warning-text': vm.alarm.status == 'warning','healthy-text': vm.alarm.status == 'healthy','critical-text': vm.alarm.status == 'critical','inactive-text':vm.alarm.status == 'inactive'}" flex-gt-md="50"><b>{{ vm.alarm.title }}</b></h3>
-    <h4 class="md-subhead" ng-class="{'warning-text': vm.alarm.status == 'warning','healthy-text': vm.alarm.status == 'healthy','critical-text': vm.alarm.status == 'critical','inactive-text':vm.alarm.status == 'inactive'}"  flex-gt-md="30">{{ vm.alarm.subtitle }}</h4>
+    <h3 class="md-headline"  ng-class="{'fault-text': vm.alarm.status == 'fault','warning-text': vm.alarm.status == 'warning','healthy-text': vm.alarm.status == 'healthy','critical-text': vm.alarm.status == 'critical','inactive-text':vm.alarm.status == 'inactive'}" flex-gt-md="50"><b>{{ vm.alarm.title }}</b></h3>
+    <h4 class="md-subhead" ng-class="{'fault-text': vm.alarm.status == 'fault','warning-text': vm.alarm.status == 'warning','healthy-text': vm.alarm.status == 'healthy','critical-text': vm.alarm.status == 'critical','inactive-text':vm.alarm.status == 'inactive'}"  flex-gt-md="30">{{ vm.alarm.subtitle }}</h4>
     <p class="md-caption">{{ vm.alarm.description }}</p>
   </div>
   <div class="md-list-item-text addition-info"
