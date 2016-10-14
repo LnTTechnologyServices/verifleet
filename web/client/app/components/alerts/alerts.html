@@ -29,11 +29,12 @@
 
 
          <div layout="row" style="margin-bottom:12px !important" layout-xs="column">
-            <tab-list style="margin-left: 15px;width: 40%;" flex="25" flex-xs="100" icon="icon-warning-general" number="{{vm.red_stop_lamp_status}}" header="Red Stop" content="Lamp Status" bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
-            <tab-list style="margin-left: 15px;width: 40%;" flex="25" flex-xs="100" icon="icon-warning-general"  number="{{ vm.malfunction_indicator_lamp_status }}" header="Malf" content="Indicator Lamp Status" bgcolor="#52D5F5 " style="margin-right:10px"></tab-list>
-            <tab-list style="margin-left: 15px;width: 40%;" flex="25" flex-xs="100" icon="icon-warning-general"  number="{{vm.protect_lamp_status}}" header="Protect" content="Lamp Status" bgcolor="#7B68EE
+            <tab-list style="margin-left: 15px;width: 40%;" flex="20" flex-xs="100" icon="icon-warning-general" number="{{vm.red_stop_lamp_status}}" header="Red Stop" content="Lamp Status" bgcolor="#FF6103 " style="margin-right:10px "></tab-list>
+            <tab-list style="margin-left: 15px;width: 40%;" flex="20" flex-xs="100" icon="icon-warning-general"  number="{{ vm.malfunction_indicator_lamp_status }}" header="Malf Ind" content="Lamp Status" bgcolor="#52D5F5 " style="margin-right:10px"></tab-list>
+            <tab-list style="margin-left: 15px;width: 40%;" flex="20" flex-xs="100" icon="icon-warning-general"  number="{{vm.protect_lamp_status}}" header="Protect" content="Lamp Status" bgcolor="#7B68EE
             " style="margin-right:10px "></tab-list>
-            <tab-list style="margin-left: 15px;width: 40%;" flex="25" flex-xs="100" icon="icon-warning-general"  number="{{vm.amber_lamp_status}}" header="Amber" content="Lamp Status" bgcolor="#fd7c00" style="margin-right:10px "></tab-list>       
+            <tab-list style="margin-left: 15px;width: 40%;" flex="20" flex-xs="100" icon="icon-warning-general"  number="{{vm.amber_lamp_status}}" header="Amber" content="Lamp Status" bgcolor="#fd7c00" style="margin-right:10px "></tab-list>       
+            <tab-list style="margin-left: 15px;width: 40%;" flex="20" flex-xs="100" icon="icon-warning-general"  number="4" header="Fault" content="Code Status" bgcolor="#73b9a2" style="margin-right:10px "></tab-list>            
       </div>
 
 
@@ -111,6 +112,9 @@
 
          </div>
           </div>-->
+
+
+          
       </div>
       <div layout-xs="coloumn" layout-sm="row" layout-md="row" layout-gt-md="row">
       <div flex-xs="100" flex="100">
@@ -134,6 +138,11 @@
             </div>
          </div>
       </div>
+      
+
+
+
+      
    </md-card-content>
 </md-card>
 <div>

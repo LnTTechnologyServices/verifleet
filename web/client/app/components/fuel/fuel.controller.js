@@ -57,6 +57,8 @@ class FuelController {
             var starttimemilliseconds = (startdatetime.getTime() / 1000);
             // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
             //     vm.getDevicesLiveData(livetripaliases);
+
+            
                 vm.getLiveData();
             } else {
                 if (self.Timer) $timeout.cancel(self.Timer);
@@ -65,6 +67,13 @@ class FuelController {
         }
 
         loadAfterAuthed(this);
+
+
+        this.$interval(() => {
+             getLiveData();
+             alert("called");
+        }, 100000);
+       
 
         var today = new Date();
 
@@ -132,14 +141,26 @@ class FuelController {
                var gasFilledChartdata = [];
               var d = 0;
               for (d = 0; d < deviceListItems.length; d++) {
-
-                   
-                   
-                   
+                  
                      var dgeFilled = deviceListItems[d].gasFilled;
                      if(dgeFilled)
                      {
-                          var milesGallonsDataTemp = {
+                        //   var milesGallonsDataTemp = {
+                        //     "categories": [],
+                        //     "yaxisText": "DGE",
+                        //     "plotLines": [{
+                        //         value: 150,
+                        //         color: 'green',
+                        //     }, {
+                        //         value: 350,
+                        //         color: 'red',
+                        //     }],
+                        //     "id": deviceListItems[d].name,
+                        //     "name": deviceListItems[d].name,
+                        //     "data": []
+                        // };
+
+                         var milesGallonsDataTemp1 = {
                             "categories": [],
                             "yaxisText": "DGE",
                             "plotLines": [{
@@ -154,15 +175,54 @@ class FuelController {
                             "data": []
                         };
 
+                         var arraySelection = [];
+                        for (var i = 0; i < dgeFilled.length; i++) {
+                            var startOfDay = new Date(dgeFilled[i].timestamp);
+                            startOfDay.setUTCHours(0,0,0,0);
+                            arraySelection.push({categories: startOfDay.getTime(),data:(Number((dgeFilled[i].value).toFixed(2)))}); 
+                        }
+                      
+                        var result = [];
+                        arraySelection.reduce(function (res, value) {
+                            if (!res[value.categories]) {
+                                res[value.categories] = {
+                                data: 0,
+                                categories: value.categories
+                                };
+                                result.push(res[value.categories])
+                            }
+                            res[value.categories].data += value.data
+                            return res;
+                        }, {});
+
+                        console.log(result);
+                        console.log("arraySelection");
+
+                         console.log('milesGallonsData-arr' ,result)
+
                          var i = 0;
-                         for (i = 0; i < dgeFilled.length; i++) {
-                             milesGallonsDataTemp.categories.push( this.convertDate(dgeFilled[i].timestamp));
-                             milesGallonsDataTemp.data.push(Number((dgeFilled[i].value).toFixed(2)));
+                       
+                         for (i = 0; i < result.length; i++) {
+                              console.log("dgeFilled.length");
+                             console.log(result.length);
+                             milesGallonsDataTemp1.categories.push(result[i].categories);
+                             milesGallonsDataTemp1.data.push(Number((result[i].data).toFixed(2)));
                          }
 
-                         gasFilledChartdata.push(milesGallonsDataTemp);
+                        //  var i = 0;
+                        //  for (i = 0; i < dgeFilled.length; i++) {
+                        //       console.log("dgeFilled.length");
+                        //      console.log(dgeFilled.length);
+                        //      milesGallonsDataTemp.categories.push( this.convertDate(dgeFilled[i].timestamp));
+                        //      milesGallonsDataTemp.data.push(Number((dgeFilled[i].value).toFixed(2)));
+                        //  }
+
+    
+
+                         gasFilledChartdata.push(milesGallonsDataTemp1);
                          
                          this.milesGallonsData = gasFilledChartdata;
+                         console.log('milesGallonsData-arr' ,milesGallonsDataTemp1)
                          console.log('milesGallonsData' ,this.milesGallonsData)
 
                          this.requestVehicleReportSent = false;
@@ -233,6 +293,8 @@ class FuelController {
                             }
                         }
                     }
+
+
                 }
         }
     }
@@ -261,7 +323,7 @@ class FuelController {
                 this.topTruckPerformer = truckMax.name;
                 this.lowTruckPerformer = truckMin.name;
                 this.avgDGEHr = Number((totalAvgHr / devicefilteredItems.length).toFixed(2));
-
+                // this.avgDGEHr = this.avgDGEHr.replace(/-/g, "");
                 this.requestVehicleLiveSent = false;
             }
           }
@@ -352,8 +414,6 @@ class FuelController {
                                     device.location = 'Info not available';
                            }
 
-
-
                             this.deviceslist.push({ name: device.name, type: device.type, 
                                                 location: device.location,
                                                 lastReported: device.lastReported,
@@ -390,10 +450,7 @@ class FuelController {
                 }
 
                 //if (this.requestVehicleReportSent) {
-
-                    console.log("requestVehicleReportSent", nextState.devices)
-
-                    this.updateVehicleReport(nextState.devices);
+                this.updateVehicleReport(nextState.devices);
 
                 //}
             }
@@ -421,8 +478,6 @@ class FuelController {
             this.updated = false;
             //this.updateResults();
         }
-
-
     }
 
      getCount(group) {
@@ -455,7 +510,6 @@ class FuelController {
         this.$interval(() => {
           this.lineChartData[0].data.push([choice(_.range(5,10))]);
         }, 1000);
-
     }
 
     initializeBarChart() {
@@ -509,13 +563,15 @@ class FuelController {
     convertDate(unix_timestamp) {
         var a = new Date(unix_timestamp);
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
         var year = a.getFullYear();
         var month = months[a.getMonth()];
         var date = a.getDate();
         var hour = a.getHours();
         var min = a.getMinutes();
         var sec = a.getSeconds();
-        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+        var day = days[a.getDay()];
+        var time = date + ' ' + month + ' ' + year  + '/' + day;
         return time;
     }
 

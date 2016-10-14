@@ -108,13 +108,56 @@ class LogsController {
  }
 
   updateResults() {
-     console.log("updatere" + JSON.stringify(this.activityAlarmItems));
+    
+    var d = new Date();
+    var n = d.getTime();
+
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212440","group":"amber_lamp_status","subtitle":"Fault code Status 459","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
+    
+    n = (n - 5 * 60 * 1000);
+
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212441","group":"amber_lamp_status","subtitle":"Fault code Status 806","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
+    
+     n = (n - 10 * 60 * 1000);
+    
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212438","group":"amber_lamp_status","subtitle":"Fault code Status 159","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
+    
+     n = (n - 15 * 60 * 1000);
+
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212439","group":"amber_lamp_status","subtitle":"Fault code Status 127","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});     
+
+ console.log("updatere" + JSON.stringify(this.activityAlarmItems));
+
     if(this.search !== "") {
       this.filteredActivityAlarmItems = _.filter(this.activityAlarmItems, item => {
         return this.shouldBeIncluded(item, this.search)
       })
     } else {
+
+      console.log("activityAlarmItems");
+      console.log(this.activityAlarmItems);
+
       this.filteredActivityAlarmItems = this.activityAlarmItems;
+
+// alerts.push({num : 3, app:'helloagain_again',message:'yet another message'});
+
+// this.stackedChartdata = [{
+//       name: 'Critical',
+//       data: [3, 4, 4, 2, 5],
+//       color: '#c01a00'
+//     },
+//       {
+//         name: 'High',
+//         data: [2, 2, 3, 2, 1],
+//         color: '#ffb91d'
+//       },
+//       {
+//         name: 'Low',
+//         data: [5, 3, 4, 7, 2],
+//         color: '#A8C3BF'
+//       }];
+
+
     }
 
     this.red_stop_lamp_status = this.getCount('red_stop_lamp_status');

@@ -116,9 +116,7 @@ class EfficiencyController {
             console.log('starttimemilliseconds', starttimemilliseconds);
             console.log('endtimemilliseconds', endtimemilliseconds);
             var lasttripaliases = '[{"alias":"dge","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + ', "endtime":' + endtimemilliseconds + '}},{"alias":"ecu","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + ', "endtime":' + endtimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"asc", "limit":300, "starttime":' + starttimemilliseconds + ', "endtime":' + endtimemilliseconds + '}}]';
-
             this.getDeviceslasttrip(this.vechicle_id, lasttripaliases);
-
         }
     }
 
@@ -137,8 +135,6 @@ class EfficiencyController {
 
     updateVehicleReport(devicename, dgeFilled) {
         console.log('updateVehicleReport', dgeFilled);
-        
-
         var milesGallonsDataTemp = {
                             "categories": [],
                             "plotLines": [{
@@ -152,11 +148,45 @@ class EfficiencyController {
                             "data": []
         };
 
-        var i = 0;
-        for (i = 0; i < dgeFilled.length; i++) {
-            milesGallonsDataTemp.categories.push( this.convertDate(dgeFilled[i].timestamp));
-            milesGallonsDataTemp.data.push(Number((dgeFilled[i].value).toFixed(2)));
+        var arraySelection = [];
+        for (var i = 0; i < dgeFilled.length; i++) {
+            var currentDate = new Date(this.convertDate(dgeFilled[i].timestamp));
+            var startOfDay = new Date(dgeFilled[i].timestamp);
+            startOfDay.setUTCHours(0,0,0,0);
+            arraySelection.push({categories: startOfDay.getTime(),data:(Number((dgeFilled[i].value).toFixed(2)))}); 
         }
+                      
+        var result = [];
+        arraySelection.reduce(function (res, value) {
+            if (!res[value.categories]) {
+                res[value.categories] = {
+                data: 0,
+                categories: value.categories
+                };
+                result.push(res[value.categories])
+            }
+            res[value.categories].data += value.data
+            return res;
+        }, {});
+
+        for (var i = 0; i < result.length; i++) {
+                console.log("dgeFilled.length");
+                console.log(result.length);
+                milesGallonsDataTemp.categories.push(result[i].categories);
+                milesGallonsDataTemp.data.push(Number((result[i].data).toFixed(2)));
+            }
+
+        console.log(milesGallonsDataTemp);
+        console.log("milesGallonsDataTemp");
+        // console.log(result);
+        // console.log("result");
+
+
+
+        // for (var i = 0; i < dgeFilled.length; i++) {
+        //     milesGallonsDataTemp.categories.push( this.convertDate(dgeFilled[i].timestamp));
+        //     milesGallonsDataTemp.data.push(Number((dgeFilled[i].value).toFixed(2)));
+        // }
 
         this.milesGallonsData = [milesGallonsDataTemp];
 
@@ -526,13 +556,16 @@ class EfficiencyController {
     convertDate(unix_timestamp) {
         var a = new Date(unix_timestamp);
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+         var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
         var year = a.getFullYear();
         var month = months[a.getMonth()];
         var date = a.getDate();
         var hour = a.getHours();
         var min = a.getMinutes();
         var sec = a.getSeconds();
-        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+        var day = days[a.getDay()];
+        var time = date + ' ' + month + ' ' + year  + '/' + day;
+      //  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
         return time;
     }
 }

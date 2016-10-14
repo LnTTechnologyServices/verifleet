@@ -207,7 +207,7 @@ angular.module('app', [
                     }
                 } else {
                     // Either show the login page or use the refresh token to get a new idToken
-                    $location.path('/');
+                    $location.path('/fuel');
                 }
             }
         });
