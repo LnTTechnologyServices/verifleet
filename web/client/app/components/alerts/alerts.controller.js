@@ -13,7 +13,18 @@ class LogsController {
     this.activityAlarmItems = []
     this.filteredActivityAlarmItems = []
     this.initialized = false;
-  
+
+     var d = new Date();
+    var n = d.getTime();
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212440","group":"amber_lamp_status","subtitle":"Fault code Status 459","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
+    n = (n - 5 * 60 * 1000);
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212441","group":"amber_lamp_status","subtitle":"Fault code Status 806","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
+     n = (n - 10 * 60 * 1000);
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212438","group":"amber_lamp_status","subtitle":"Fault code Status 159","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
+     n = (n - 15 * 60 * 1000);
+    this.activityAlarmItems.push({"status":"fault","title":"WM-212439","group":"amber_lamp_status","subtitle":"Fault code Status 127","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});     
+
+
     var today = new Date();
     var startdatetime = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7); //Last Week
     var milliseconds = startdatetime.getTime() / 1000;
@@ -109,23 +120,6 @@ class LogsController {
 
   updateResults() {
     
-    var d = new Date();
-    var n = d.getTime();
-
-    this.activityAlarmItems.push({"status":"fault","title":"WM-212440","group":"amber_lamp_status","subtitle":"Fault code Status 459","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
-    
-    n = (n - 5 * 60 * 1000);
-
-    this.activityAlarmItems.push({"status":"fault","title":"WM-212441","group":"amber_lamp_status","subtitle":"Fault code Status 806","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
-    
-     n = (n - 10 * 60 * 1000);
-    
-    this.activityAlarmItems.push({"status":"fault","title":"WM-212438","group":"amber_lamp_status","subtitle":"Fault code Status 159","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});
-    
-     n = (n - 15 * 60 * 1000);
-
-    this.activityAlarmItems.push({"status":"fault","title":"WM-212439","group":"amber_lamp_status","subtitle":"Fault code Status 127","timestamp":n,"icon":"icon-warning-general","did":null,"type":"alarm","onClick":"test"});     
-
  console.log("updatere" + JSON.stringify(this.activityAlarmItems));
 
     if(this.search !== "") {

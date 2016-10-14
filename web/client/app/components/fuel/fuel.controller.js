@@ -57,8 +57,6 @@ class FuelController {
             var starttimemilliseconds = (startdatetime.getTime() / 1000);
             // var livetripaliases = '[{"alias":"dge","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"ecu","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}},{"alias":"gas_filled","options": {"sort":"desc", "limit":20, "starttime":' + starttimemilliseconds + '}}]';
             //     vm.getDevicesLiveData(livetripaliases);
-
-            
                 vm.getLiveData();
             } else {
                 if (self.Timer) $timeout.cancel(self.Timer);
@@ -70,9 +68,8 @@ class FuelController {
 
 
         this.$interval(() => {
-             getLiveData();
-             alert("called");
-        }, 100000);
+             this.getLiveData();
+        }, 300000);
        
 
         var today = new Date();
